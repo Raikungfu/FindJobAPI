@@ -23,14 +23,15 @@ var environment = builder.Environment.EnvironmentName;
 
 var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").GetChildren().FirstOrDefault(x => x.Key == environment)?.Value?.Split(',');
 
-/*
+
+builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(500);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-*/
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -101,7 +102,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-// app.UseSession();
+app.UseSession();
 
 app.UseMiddleware<JwtMiddleware>();
 

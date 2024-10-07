@@ -24,4 +24,13 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Key\privateKey.pem">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Key\publicKey.pem">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
