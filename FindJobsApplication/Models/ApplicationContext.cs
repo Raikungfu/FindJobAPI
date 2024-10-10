@@ -42,6 +42,12 @@ namespace FindJobsApplication.Models
                 .WithOne(r => r.Employee)
                 .HasForeignKey(r => r.EmployeeId);
 
+            modelBuilder.Entity<Job>()
+                .HasOne(h => h.JobCategory)
+                .WithMany(e => e.Jobs)
+                .HasForeignKey(h => h.JobCategoryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<EmployeeCertification>()
             .HasKey(ec => new { ec.EmployeeId, ec.CertificationId });
 
