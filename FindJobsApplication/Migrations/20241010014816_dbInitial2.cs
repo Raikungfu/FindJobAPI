@@ -81,9 +81,9 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobCategoryId", "JobCategoryDescription", "JobCategoryName" },
                 values: new object[,]
                 {
-                    { 1, null, "Software Development" },
-                    { 2, null, "Web Design" },
-                    { 3, null, "UX/UI Design" }
+                    { 1, null, "Lập trình viên phần mềm" },
+                    { 2, null, "Thiết kế web" },
+                    { 3, null, "Thiết kế UX/UI" }
                 });
 
             migrationBuilder.UpdateData(
