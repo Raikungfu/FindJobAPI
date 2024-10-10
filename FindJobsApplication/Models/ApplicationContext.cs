@@ -100,10 +100,16 @@ namespace FindJobsApplication.Models
                 new Employee { EmployeeId = 2, FirstName = "Tom", LastName = "Smith", Phone = "0987654321", Address = "456 Avenue", City = "City", Region = "Region", Country = "Country", PostalCode = "67890", Description = "Experienced designer.", UserId = 5 }
             );
 
+            modelBuilder.Entity<JobCategory>().HasData(
+                new JobCategory { JobCategoryId = 1, JobCategoryName = "Software Development" },
+                new JobCategory { JobCategoryId = 2, JobCategoryName = "Web Design" },
+                new JobCategory { JobCategoryId = 3, JobCategoryName = "UX/UI Design" }
+            );
+
             modelBuilder.Entity<Job>().HasData(
-                new Job { JobId = 1, Title = "Software Developer", Description = "Develop applications.", Salary = 60000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(1), EmployerId = 1 },
-                new Job { JobId = 2, Title = "Web Designer", Description = "Create beautiful websites.", Salary = 50000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(2), EmployerId = 1 },
-                new Job { JobId = 3, Title = "UX/UI Designer", Description = "Enhance user experience.", Salary = 55000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(3), EmployerId = 2 }
+                new Job { JobId = 1, Title = "Software Developer", Description = "Develop applications.", Salary = 60000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(1), JobType = JobType.FullTime, JobCategoryId = 1, EmployerId = 1 },
+                new Job { JobId = 2, Title = "Web Designer", Description = "Create beautiful websites.", Salary = 50000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(2), JobType = JobType.FullTime, JobCategoryId = 1, EmployerId = 1 },
+                new Job { JobId = 3, Title = "UX/UI Designer", Description = "Enhance user experience.", Salary = 55000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(3), JobType = JobType.PartTime, JobCategoryId = 1, EmployerId = 2 }
             );
 
             modelBuilder.Entity<JobService>().HasData(

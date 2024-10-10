@@ -3,6 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FindJobsApplication.Models
 {
+    public enum JobType
+    {
+        FullTime,
+        PartTime,
+        Contract,
+        Internship
+    }
+
     public class Job
     {
         [Key]
@@ -19,7 +27,14 @@ namespace FindJobsApplication.Models
 
         public DateTime DateTo { get; set; }
 
+        public JobType JobType { get; set; }
+
         public int EmployerId { get; set; }
+
+        public int JobCategoryId { get; set; }
+
+        [ForeignKey("JobCategoryId")]
+        public JobCategory JobCategory { get; set; }
 
         [ForeignKey("EmployerId")]
         public Employer Employer { get; set; }
