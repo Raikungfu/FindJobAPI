@@ -468,7 +468,7 @@ namespace FindJobsApplication.Migrations
                             Description = "Công ty tư vấn chiến lược cho các doanh nghiệp.",
                             Name = "Công ty Tư vấn Chiến lược Kinh doanh",
                             UserId = 8
-                        }
+                        },
                         new
                         {
                             EmployerId = 7,
