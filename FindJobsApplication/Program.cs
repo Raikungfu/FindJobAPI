@@ -1,4 +1,6 @@
 using FindJobsApplication.Models;
+using FindJobsApplication.Repository.IRepository;
+using FindJobsApplication.Repository;
 using FindJobsApplication.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +24,8 @@ builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 var environment = builder.Environment.EnvironmentName;
 
 var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").GetChildren().FirstOrDefault(x => x.Key == environment)?.Value?.Split(',');
+
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
 
 builder.Services.AddDistributedMemoryCache();
@@ -86,6 +90,7 @@ builder.Services.AddAuthorization(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 

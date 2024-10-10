@@ -1,4 +1,5 @@
 ﻿using FindJobsApplication.Models;
+using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace FindJobsApplication.Controllers
         
         // Register
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterModels model)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModels model)
         {
             if (await _context.Users.AnyAsync(u => u.Username == model.Username))
                 return BadRequest(new { Message = "Username is already taken." });
@@ -83,27 +84,48 @@ namespace FindJobsApplication.Controllers
 
         // Login
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModels model)
+        public async Task<IActionResult> Login([FromBody] LoginViewModels model)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == model.Username);
+            var user = (from u in _context.Users
+                        where ((u.Username == model.Username || u.Email == model.Username) && u.PasswordHash == model.Password)
+                        join a in _context.Admins on u.UserId equals a.UserId into adminGroup
+                        from admin in adminGroup.DefaultIfEmpty()
+                        join emplee in _context.Employees on u.UserId equals emplee.UserId into employeeGroup
+                        from employee in employeeGroup.DefaultIfEmpty()
+                        join empler in _context.Employers on u.UserId equals empler.UserId into employerGroup
+                        from employer in employerGroup.DefaultIfEmpty()
+                        select new
+                        {
+                            Name = u.UserType == UserType.Admin ? admin.Name
+                                 : u.UserType == UserType.Employee ? employee.LastName + employee.FirstName
+                                 : employer.Name,
+                            Avatar = u.UserType == UserType.Admin ? admin.Avt
+                                   : u.UserType == UserType.Employee ? employee.Avt
+                                   : employer.Avt,
+
+                            u.Username,
+                            u.UserId,
+                            u.UserType
+                        }).FirstOrDefault();
+
             //  if (user == null || !PasswordHelper.VerifyPassword(model.Password, user.Password)) 
-            if (user == null || user.PasswordHash != model.Password)
+            if (user == null)
                 return Unauthorized(new { Message = "Invalid credentials." });
 
-            var token = GenerateJwtToken(user);
+            var token = GenerateJwtToken(user.UserId, user.Username, user.UserType);
 
-            return Ok(new { Token = token, Message = "Login successful!" });
+            return Ok(new { Token = token, Message = "Login successful!", User = user });
         }
 
-        private string GenerateJwtToken(User user)
+        private string GenerateJwtToken(int UserId, string Username, UserType UserType)
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                new Claim("Id", user.UserId.ToString()),
-                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.NameIdentifier, UserId.ToString()),
+                new Claim("Id", UserId.ToString()),
+                new Claim(ClaimTypes.Name, Username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, user.UserType.ToString())
+                new Claim(ClaimTypes.Role, UserType.ToString())
             };
 
             var key = new RsaSecurityKey(KeyHelper.GetPrivateKey());

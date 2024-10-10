@@ -1,8 +1,8 @@
 ﻿using FindJobsApplication.Models;
 
-namespace FindJobsApplication.Controllers
+namespace FindJobsApplication.Models.ViewModel
 {
-    public class RegisterModels
+    public class RegisterViewModels
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
