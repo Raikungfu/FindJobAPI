@@ -19,5 +19,4 @@ namespace FindJobsApplication.Models
         [ForeignKey("CertificationId")]
         public Certification Certification { get; set; }
     }
-
 }
