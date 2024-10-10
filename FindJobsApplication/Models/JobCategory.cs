@@ -12,6 +12,10 @@ namespace FindJobsApplication.Models
         [Required]
         public string JobCategoryName { get; set; }
 
+        public string? Image { get; set; }
+
+        public string? Cover { get; set; }
+
         public string? JobCategoryDescription { get; set; }
 
         public virtual ICollection<Job> Jobs { get; set; }

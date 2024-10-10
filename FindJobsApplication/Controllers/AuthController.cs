@@ -2,6 +2,7 @@
 using FindJobsApplication.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -21,8 +22,7 @@ namespace FindJobsApplication.Controllers
             _context = context;
             _configuration = configuration;
         }
-
-        /*
+        
         // Register
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterModels model)
@@ -36,7 +36,7 @@ namespace FindJobsApplication.Controllers
             {
                 Username = model.Username,
                 //            Password = hashedPassword,
-                Password = model.Password,
+                PasswordHash = model.Password,
                 Email = model.Email,
                 Phone = model.Phone,
                 UserType = model.UserType
@@ -55,21 +55,21 @@ namespace FindJobsApplication.Controllers
                     await _context.SaveChangesAsync();
 
                     break;
-                case UserType.Seller:
-                    var seller = new Seller
+                case UserType.Employer:
+                    var employer = new Employer
                     {
                         UserId = user.UserId
                     };
-                    _context.Sellers.Add(seller);
+                    _context.Employers.Add(employer);
                     await _context.SaveChangesAsync();
 
                     break;
-                case UserType.Customer:
-                    var customer = new Customer
+                case UserType.Employee:
+                    var employee = new Employee
                     {
                         UserId = user.UserId
                     };
-                    _context.Customers.Add(customer);
+                    _context.Employees.Add(employee);
                     await _context.SaveChangesAsync();
 
                     break;
@@ -87,7 +87,7 @@ namespace FindJobsApplication.Controllers
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == model.Username);
             //  if (user == null || !PasswordHelper.VerifyPassword(model.Password, user.Password)) 
-            if (user == null || user.Password != model.Password)
+            if (user == null || user.PasswordHash != model.Password)
                 return Unauthorized(new { Message = "Invalid credentials." });
 
             var token = GenerateJwtToken(user);
@@ -119,14 +119,14 @@ namespace FindJobsApplication.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-
+        /*
         [HttpGet("user/{type}")]
         public async Task<IActionResult> GetUserByType(UserType type)
         {
             var users = await _context.Users.Where(u => u.UserType == type).ToListAsync();
             return Ok(users);
         }
-
+        */
         [HttpGet("GetUserNameAndAvt")]
         public async Task<IActionResult> GetUserNameAndAvt()
         {
@@ -138,23 +138,25 @@ namespace FindJobsApplication.Controllers
 
             var user = (from u in _context.Users
                         where u.UserId == userId
-                        join s in _context.Sellers on u.UserId equals s.UserId into sellerGroup
-                        from seller in sellerGroup.DefaultIfEmpty()
-                        join c in _context.Customers on u.UserId equals c.UserId into customerGroup
-                        from customer in customerGroup.DefaultIfEmpty()
                         join a in _context.Admins on u.UserId equals a.UserId into adminGroup
                         from admin in adminGroup.DefaultIfEmpty()
+                        join emplee in _context.Employees on u.UserId equals emplee.UserId into employeeGroup
+                        from employee in employeeGroup.DefaultIfEmpty()
+                        join empler in _context.Employers on u.UserId equals empler.UserId into employerGroup
+                        from employer in employerGroup.DefaultIfEmpty()
                         select new
                         {
-                            Name = u.UserType == UserType.Seller ? seller.CompanyName
-                                 : u.UserType == UserType.Customer ? customer.Name
-                                 : u.Username,
-                            Avatar = u.UserType == UserType.Seller ? seller.Avt
-                                   : u.UserType == UserType.Customer ? customer.Avt
-                                   : admin.Avt,
+                            Name = u.UserType == UserType.Admin ? admin.Name
+                                 : u.UserType == UserType.Employee ? employee.LastName + employee.FirstName
+                                 : employer.Name,
+                            Avatar = u.UserType == UserType.Admin ? admin.Avt
+                                   : u.UserType == UserType.Employee ? employee.Avt
+                                   : employer.Avt,
+
                             Cover = u.UserType == UserType.Admin ? admin.Cover
-                           : u.UserType == UserType.Seller ? seller.Cover
-                           : null,
+                           : u.UserType == UserType.Employer ? employer.Cover
+                           : employee.Cover,
+
                             u.Email,
                             u.Phone,
                             u.UserType
@@ -165,7 +167,5 @@ namespace FindJobsApplication.Controllers
             }
             return Ok(user);
         }
-
-        */
     }
 }

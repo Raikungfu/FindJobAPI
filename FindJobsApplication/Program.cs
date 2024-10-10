@@ -110,6 +110,6 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers().AllowAnonymous();
+app.MapControllers();
 
 app.Run();

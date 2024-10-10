@@ -49,6 +49,14 @@ namespace FindJobsApplication.Models
 
         public string? CompanyServices { get; set; }
 
+        public string? Avt { get; set; }
+
+        public string? Cover { get; set; }
+
+        public string? CIFront { get; set; }
+
+        public string? CIBehind { get; set; }
+
         [Required]
         public int UserId { get; set; }
 

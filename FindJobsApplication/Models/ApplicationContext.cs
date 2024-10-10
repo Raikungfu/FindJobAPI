@@ -82,12 +82,12 @@ namespace FindJobsApplication.Models
             );
 
             modelBuilder.Entity<Admin>().HasData(
-                new Admin { AdminId = 1, Name = "John Doe", UserId = 1 }
+                new Admin { AdminId = 1, Name = "John Doe", UserId = 1, Avt = "", Cover = "" }
             );
 
             modelBuilder.Entity<Employer>().HasData(
-                new Employer { EmployerId = 1, Name = "Company A", Description = "A great company.", CompanyName = "Company A Ltd.", UserId = 2 },
-                new Employer { EmployerId = 2, Name = "Company B", Description = "Another great company.", CompanyName = "Company B Ltd.", UserId = 4 }
+                new Employer { EmployerId = 1, Name = "Company A", Description = "A great company.", CompanyName = "Company A Ltd.", UserId = 2, Avt = "", Cover = "" },
+                new Employer { EmployerId = 2, Name = "Company B", Description = "Another great company.", CompanyName = "Company B Ltd.", UserId = 4, Avt = "", Cover = "" }
                 );
 
             modelBuilder.Entity<Certification>().HasData(
@@ -102,14 +102,14 @@ namespace FindJobsApplication.Models
             );
 
             modelBuilder.Entity<Employee>().HasData(
-                new Employee { EmployeeId = 1, FirstName = "Jane", LastName = "Doe", Phone = "1234567890", Address = "123 Street", City = "City", Region = "Region", Country = "Country", PostalCode = "12345", Description = "Skilled developer.", UserId = 3 },
-                new Employee { EmployeeId = 2, FirstName = "Tom", LastName = "Smith", Phone = "0987654321", Address = "456 Avenue", City = "City", Region = "Region", Country = "Country", PostalCode = "67890", Description = "Experienced designer.", UserId = 5 }
+                new Employee { EmployeeId = 1, FirstName = "Jane", LastName = "Doe", Phone = "1234567890", Address = "123 Street", City = "City", Region = "Region", Country = "Country", PostalCode = "12345", Description = "Skilled developer.", UserId = 3, Avt = "", Cover = "" },
+                new Employee { EmployeeId = 2, FirstName = "Tom", LastName = "Smith", Phone = "0987654321", Address = "456 Avenue", City = "City", Region = "Region", Country = "Country", PostalCode = "67890", Description = "Experienced designer.", UserId = 5, Avt = "", Cover = "" }
             );
 
             modelBuilder.Entity<JobCategory>().HasData(
-                new JobCategory { JobCategoryId = 1, JobCategoryName = "Software Development" },
-                new JobCategory { JobCategoryId = 2, JobCategoryName = "Web Design" },
-                new JobCategory { JobCategoryId = 3, JobCategoryName = "UX/UI Design" }
+                new JobCategory { JobCategoryId = 1, JobCategoryName = "Software Development", Image = "" },
+                new JobCategory { JobCategoryId = 2, JobCategoryName = "Web Design", Image = "" },
+                new JobCategory { JobCategoryId = 3, JobCategoryName = "UX/UI Design", Image = "" }
             );
 
             modelBuilder.Entity<Job>().HasData(
@@ -140,7 +140,6 @@ namespace FindJobsApplication.Models
                 new Review { ReviewId = 3, Rating = 5, Comment = "Excellent work!", EmployeeId = 1 }
             );
         }
-
     }
 
 }

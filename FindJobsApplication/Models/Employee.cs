@@ -45,6 +45,12 @@ namespace FindJobsApplication.Models
 
         public string? Status { get; set; }
 
+        public string? Avt { get; set; }
+
+        public string? Cv { get; set; }
+
+        public string? Cover { get; set; }
+
         [Required]
         public int UserId { get; set; }
 

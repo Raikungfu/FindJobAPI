@@ -14,10 +14,15 @@ namespace FindJobsApplication.Models
         [Required]
         public int UserId { get; set; }
 
+        public string? Avt { get; set; }
+
+        public string? Cover { get; set; }
+
         [ForeignKey("UserId")]
         public User User { get; set; }
 
         public ICollection<JobService> JobServices { get; set; }
+
         public ICollection<User> BannedUsers { get; set; }
     }
 }
