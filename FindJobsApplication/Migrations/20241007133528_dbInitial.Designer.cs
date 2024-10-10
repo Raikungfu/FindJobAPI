@@ -221,7 +221,7 @@ namespace FindJobsApplication.Migrations
                             PostalCode = "900000",
                             Region = "Miền Tây",
                             UserId = 9
-                        }
+                        },
                         new
                         {
                             EmployeeId = 5,

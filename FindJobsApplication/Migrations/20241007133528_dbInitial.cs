@@ -377,7 +377,7 @@ namespace FindJobsApplication.Migrations
                 {
                     { 1, 1, "Đăng tin tuyển dụng.", 100m, "Đăng Tuyển Dụng" },
                     { 2, 1, "Làm nổi bật tin tuyển dụng của bạn.", 150m, "Nổi Bật Tuyển Dụng" }
-                };);
+                });
 
             migrationBuilder.InsertData(
                 table: "Jobs",
