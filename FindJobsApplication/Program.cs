@@ -40,6 +40,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
         options.JsonSerializerOptions.IgnoreNullValues = true;
     });

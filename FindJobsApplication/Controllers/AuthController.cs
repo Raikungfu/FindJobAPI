@@ -28,8 +28,8 @@ namespace FindJobsApplication.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModels model)
         {
-            if (await _context.Users.AnyAsync(u => u.Username == model.Username))
-                return BadRequest(new { Message = "Username is already taken." });
+            if (await _context.Users.AnyAsync(u => u.Username == model.Username || u.Email == u.Email))
+                return BadRequest(new { Message = "Username/Email is already taken." });
 
             //         var hashedPassword = PasswordHelper.HashPassword(model.Password);
 
@@ -40,7 +40,7 @@ namespace FindJobsApplication.Controllers
                 PasswordHash = model.Password,
                 Email = model.Email,
                 Phone = model.Phone,
-                UserType = model.UserType
+                UserType = model.UserType ?? UserType.Employee
             };
 
             _context.Users.Add(user);
@@ -50,24 +50,26 @@ namespace FindJobsApplication.Controllers
                 case UserType.Admin:
                     var admin = new Admin
                     {
+                        Name = model.FirstName + model.LastName,
                         UserId = user.UserId
                     };
                     _context.Admins.Add(admin);
                     await _context.SaveChangesAsync();
-
                     break;
                 case UserType.Employer:
                     var employer = new Employer
                     {
+                        Name = model.FirstName + model.LastName,
                         UserId = user.UserId
                     };
                     _context.Employers.Add(employer);
                     await _context.SaveChangesAsync();
-
                     break;
                 case UserType.Employee:
                     var employee = new Employee
                     {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
                         UserId = user.UserId
                     };
                     _context.Employees.Add(employee);
@@ -77,7 +79,6 @@ namespace FindJobsApplication.Controllers
                 default:
                     return BadRequest(new { Message = "Role of user not correct!" });
             }
-
 
             return Ok(new { Message = "Registration successful." });
         }
