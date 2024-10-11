@@ -375,8 +375,8 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobServiceId", "AdminId", "Description", "Price", "ServiceName" },
                 values: new object[,]
                 {
-                    { 1, 1, "Post a job.", 100m, "Job Posting" },
-                    { 2, 1, "Highlight your job posting.", 150m, "Job Highlight" }
+                    { 1, 1, "Đăng tin tuyển dụng.", 100m, "Đăng Tuyển Dụng" },
+                    { 2, 1, "Làm nổi bật tin tuyển dụng của bạn.", 150m, "Nổi Bật Tuyển Dụng" }
                 });
 
             migrationBuilder.InsertData(
@@ -394,9 +394,9 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "ReviewId", "Comment", "EmployeeId", "Rating", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Great job!", 1, 5, null },
-                    { 2, "Good performance.", 2, 4, null },
-                    { 3, "Excellent work!", 1, 5, null }
+                    { 1, "Công việc rất tốt!", 1, 5, null },
+                    { 2, "Hiệu suất tốt.", 2, 4, null },
+                    { 3, "Công việc tuyệt vời!", 1, 5, null }
                 });
 
             migrationBuilder.InsertData(

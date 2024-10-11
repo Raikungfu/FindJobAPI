@@ -89,16 +89,16 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             CertificationId = 1,
-                            Description = "Certification for software development.",
-                            Name = "Certified Developer",
-                            Subject = "Software Engineer"
+                            Description = "Chứng chỉ phát triển phần mềm.",
+                            Name = "Lập trình viên được chứng nhận",
+                            Subject = "Kỹ sư phần mềm"
                         },
                         new
                         {
                             CertificationId = 2,
-                            Description = "Certification for project management.",
-                            Name = "Certified Project Manager",
-                            Subject = "Project Manager"
+                            Description = "Chứng chỉ quản lý dự án.",
+                            Name = "Quản lý dự án được chứng nhận",
+                            Subject = "Người quản lý dự án"
                         });
                 });
 
@@ -352,21 +352,61 @@ namespace FindJobsApplication.Migrations
                         {
                             EmployerId = 1,
                             Avt = "",
-                            CompanyName = "Company A Ltd.",
+                            CompanyName = "Công ty TNHH An Phát",
                             Cover = "",
-                            Description = "A great company.",
-                            Name = "Company A",
+                            Description = "Một công ty tuyệt vời.",
+                            Name = "Công ty An Phát",
                             UserId = 2
                         },
                         new
                         {
                             EmployerId = 2,
                             Avt = "",
-                            CompanyName = "Company B Ltd.",
+                            CompanyName = "Công ty TNHH Hoàng Gia",
                             Cover = "",
-                            Description = "Another great company.",
-                            Name = "Company B",
+                            Description = "Một công ty tuyệt vời khác.",
+                            Name = "Công ty Hoàng Gia",
                             UserId = 4
+                        },
+                        new
+                        {
+                            EmployerId = 3,
+                            Avt = "",
+                            CompanyName = "Công ty TNHH Bình Minh",
+                            Cover = "",
+                            Description = "Doanh nghiệp hàng đầu về dịch vụ.",
+                            Name = "Công ty Bình Minh",
+                            UserId = 6
+                        },
+                        new
+                        {
+                            EmployerId = 4,
+                            Avt = "",
+                            CompanyName = "Công ty Cổ phần TechPro",
+                            Cover = "",
+                            Description = "Công ty nổi tiếng về công nghệ.",
+                            Name = "Công ty TechPro",
+                            UserId = 8
+                        },
+                        new
+                        {
+                            EmployerId = 5,
+                            Avt = "",
+                            CompanyName = "Công ty TNHH Minh Tâm",
+                            Cover = "",
+                            Description = "Chuyên gia trong lĩnh vực sản xuất.",
+                            Name = "Công ty Minh Tâm",
+                            UserId = 10
+                        },
+                        new
+                        {
+                            EmployerId = 6,
+                            Avt = "",
+                            CompanyName = "Công ty Cổ phần Long Hải",
+                            Cover = "",
+                            Description = "Nhà cung cấp dịch vụ tài chính hàng đầu.",
+                            Name = "Công ty Long Hải",
+                            UserId = 12
                         });
                 });
 
@@ -436,9 +476,35 @@ namespace FindJobsApplication.Migrations
                             HireDate = new DateTime(2024, 10, 5, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4123),
                             JobId = 2,
                             Status = "Hired"
+                        },
+                        new
+                        {
+                            HireId = 4,
+                            EmployeeId = 3,
+                            EmployerId = 1,
+                            HireDate = new DateTime(2024, 10, 12, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4128),
+                            JobId = 3,
+                            Status = "Hired"
+                        },
+                        new
+                        {
+                            HireId = 5,
+                            EmployeeId = 4,
+                            EmployerId = 2,
+                            HireDate = new DateTime(2024, 10, 15, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4133),
+                            JobId = 2,
+                            Status = "Hired"
+                        },
+                        new
+                        {
+                            HireId = 6,
+                            EmployeeId = 5,
+                            EmployerId = 2,
+                            HireDate = new DateTime(2024, 10, 20, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4138),
+                            JobId = 1,
+                            Status = "Hired"
                         });
                 });
-
             modelBuilder.Entity("FindJobsApplication.Models.Invoice", b =>
                 {
                     b.Property<int>("InvoiceId")
@@ -531,36 +597,72 @@ namespace FindJobsApplication.Migrations
                             JobId = 1,
                             DateFrom = new DateTime(2024, 10, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4033),
                             DateTo = new DateTime(2024, 11, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4048),
-                            Description = "Develop applications.",
+                            Description = "Phát triển ứng dụng.",
                             EmployerId = 1,
                             JobCategoryId = 1,
                             JobType = 0,
                             Salary = 60000m,
-                            Title = "Software Developer"
+                            Title = "Lập Trình Viên Phần Mềm"
                         },
                         new
                         {
                             JobId = 2,
                             DateFrom = new DateTime(2024, 10, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4059),
                             DateTo = new DateTime(2024, 12, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4059),
-                            Description = "Create beautiful websites.",
+                            Description = "Tạo ra các trang web đẹp.",
                             EmployerId = 1,
                             JobCategoryId = 1,
                             JobType = 0,
                             Salary = 50000m,
-                            Title = "Web Designer"
+                            Title = "Thiết Kế Web"
                         },
                         new
                         {
                             JobId = 3,
                             DateFrom = new DateTime(2024, 10, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4061),
                             DateTo = new DateTime(2025, 1, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4062),
-                            Description = "Enhance user experience.",
+                            Description = "Cải thiện trải nghiệm người dùng.",
                             EmployerId = 2,
                             JobCategoryId = 1,
                             JobType = 1,
                             Salary = 55000m,
-                            Title = "UX/UI Designer"
+                            Title = "Thiết Kế UX/UI"
+                        },
+                        new
+                        {
+                            JobId = 4,
+                            DateFrom = new DateTime(2024, 10, 15, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4065),
+                            DateTo = new DateTime(2025, 2, 15, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4066),
+                            Description = "Quản lý dự án phát triển phần mềm.",
+                            EmployerId = 2,
+                            JobCategoryId = 2,
+                            JobType = 0,
+                            Salary = 65000m,
+                            Title = "Quản Lý Dự Án"
+                        },
+                        new
+                        {
+                            JobId = 5,
+                            DateFrom = new DateTime(2024, 10, 20, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4070),
+                            DateTo = new DateTime(2025, 3, 20, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4071),
+                            Description = "Phân tích và thiết kế hệ thống.",
+                            EmployerId = 1,
+                            JobCategoryId = 3,
+                            JobType = 1,
+                            Salary = 70000m,
+                            Title = "Nhà Phân Tích Hệ Thống"
+                        },
+                        new
+                        {
+                            JobId = 6,
+                            DateFrom = new DateTime(2024, 10, 25, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4075),
+                            DateTo = new DateTime(2025, 4, 25, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4076),
+                            Description = "Cung cấp hỗ trợ kỹ thuật cho khách hàng.",
+                            EmployerId = 3,
+                            JobCategoryId = 4,
+                            JobType = 0,
+                            Salary = 48000m,
+                            Title = "Nhân Viên Hỗ Trợ Kỹ Thuật"
                         });
                 });
 
@@ -645,17 +747,17 @@ namespace FindJobsApplication.Migrations
                         {
                             JobServiceId = 1,
                             AdminId = 1,
-                            Description = "Post a job.",
+                            Description = "Đăng tin tuyển dụng.",
                             Price = 100m,
-                            ServiceName = "Job Posting"
+                            ServiceName = "Đăng Tuyển Dụng"
                         },
                         new
                         {
                             JobServiceId = 2,
                             AdminId = 1,
-                            Description = "Highlight your job posting.",
+                            Description = "Làm nổi bật tin tuyển dụng của bạn.",
                             Price = 150m,
-                            ServiceName = "Job Highlight"
+                            ServiceName = "Nổi Bật Tuyển Dụng"
                         });
                 });
 
@@ -691,21 +793,21 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             ReviewId = 1,
-                            Comment = "Great job!",
+                            Comment = "Công việc rất tốt!",
                             EmployeeId = 1,
                             Rating = 5
                         },
                         new
                         {
                             ReviewId = 2,
-                            Comment = "Good performance.",
+                            Comment = "Hiệu suất tốt.",
                             EmployeeId = 2,
                             Rating = 4
                         },
                         new
                         {
                             ReviewId = 3,
-                            Comment = "Excellent work!",
+                            Comment = "Công việc tuyệt vời!",
                             EmployeeId = 1,
                             Rating = 5
                         });
