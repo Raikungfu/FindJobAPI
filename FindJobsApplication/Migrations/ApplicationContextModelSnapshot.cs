@@ -95,7 +95,7 @@ namespace FindJobsApplication.Migrations
                             CertificationId = 2,
                             Description = "Chứng chỉ quản lý dự án.",
                             Name = "Quản lý dự án được chứng nhận",
-                            Subject = "Quản lý dự án"
+                            Subject = "Người quản lý dự án"
                         });
                 });
 
@@ -183,98 +183,34 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             EmployeeId = 1,
-                            Address = "Số 123, Đường A",
+                            Address = "123 Street",
                             Avt = "",
-                            City = "Thành phố A",
-                            Country = "Việt Nam",
+                            City = "City",
+                            Country = "Country",
                             Cover = "",
-                            Description = "Lập trình viên tài năng.",
+                            Description = "Skilled developer.",
                             FirstName = "Jane",
                             LastName = "Doe",
                             Phone = "1234567890",
                             PostalCode = "12345",
-                            Region = "Khu vực A",
+                            Region = "Region",
                             UserId = 3
                         },
                         new
                         {
                             EmployeeId = 2,
-                            Address = "Số 456, Đường B",
+                            Address = "456 Avenue",
                             Avt = "",
-                            City = "Thành phố A",
-                            Country = "Việt Nam",
+                            City = "City",
+                            Country = "Country",
                             Cover = "",
-                            Description = "Nhà thiết kế có kinh nghiệm.",
+                            Description = "Experienced designer.",
                             FirstName = "Tom",
                             LastName = "Smith",
                             Phone = "0987654321",
                             PostalCode = "67890",
-                            Region = "Khu vực B",
+                            Region = "Region",
                             UserId = 5
-                        },
-                        new
-                        {
-                            EmployeeId = 3,
-                            Address = "Số 789, Đường C",
-                            Avt = "",
-                            City = "Thành phố B",
-                            Country = "Việt Nam",
-                            Cover = "",
-                            Description = "Chuyên viên phát triển web.",
-                            FirstName = "Nguyễn",
-                            LastName = "Văn A",
-                            Phone = "1112223334",
-                            PostalCode = "13579",
-                            Region = "Khu vực C",
-                            UserId = 6
-                        },
-                        new
-                        {
-                            EmployeeId = 4,
-                            Address = "Số 101, Đường D",
-                            Avt = "",
-                            City = "Thành phố B",
-                            Country = "Việt Nam",
-                            Cover = "",
-                            Description = "Chuyên viên thiết kế đồ họa.",
-                            FirstName = "Trần",
-                            LastName = "Thị B",
-                            Phone = "4445556667",
-                            PostalCode = "24680",
-                            Region = "Khu vực D",
-                            UserId = 7
-                        },
-                        new
-                        {
-                            EmployeeId = 5,
-                            Address = "Số 202, Đường E",
-                            Avt = "",
-                            City = "Thành phố C",
-                            Country = "Việt Nam",
-                            Cover = "",
-                            Description = "Lập trình viên ứng dụng di động.",
-                            FirstName = "Lê",
-                            LastName = "Quốc C",
-                            Phone = "7778889990",
-                            PostalCode = "98765",
-                            Region = "Khu vực E",
-                            UserId = 8
-                        },
-                        new
-                        {
-                            EmployeeId = 6,
-                            Address = "Số 303, Đường F",
-                            Avt = "",
-                            City = "Thành phố C",
-                            Country = "Việt Nam",
-                            Cover = "",
-                            Description = "Chuyên viên phân tích dữ liệu.",
-                            FirstName = "Phạm",
-                            LastName = "Minh D",
-                            Phone = "0001112223",
-                            PostalCode = "65432",
-                            Region = "Khu vực F",
-                            UserId = 9
                         });
                 });
 
@@ -413,101 +349,21 @@ namespace FindJobsApplication.Migrations
                         {
                             EmployerId = 1,
                             Avt = "",
-                            CompanyName = "Công ty Phát triển Công nghệ Việt",
+                            CompanyName = "Công ty Quản lý Dự án Toàn cầu Ltd.",
                             Cover = "",
-                            Description = "Một công ty công nghệ hàng đầu tại Việt Nam.",
-                            Name = "Công ty Phát triển Công nghệ Việt",
+                            Description = "A great company.",
+                            Name = "Công ty Quản lý Dự án Toàn cầu",
                             UserId = 2
                         },
                         new
                         {
                             EmployerId = 2,
                             Avt = "",
-                            CompanyName = "Công ty Thiết kế Đồ họa Sáng tạo",
+                            CompanyName = "Công ty Sản xuất Thiết bị Điện tử Ltd. ",
                             Cover = "",
-                            Description = "Công ty thiết kế sáng tạo với nhiều dự án thành công.",
-                            Name = "Công ty Thiết kế Đồ họa Sáng tạo",
-                            UserId = 4
-                        },
-                        new
-                        {
-                            EmployerId = 3,
-                            Avt = "",
-                            CompanyName = "Công ty Dịch vụ Khách hàng Hoàn hảo",
-                            Cover = "",
-                            Description = "Công ty cung cấp dịch vụ khách hàng tốt nhất.",
-                            Name = "Công ty Dịch vụ Khách hàng Hoàn hảo",
-                            UserId = 5
-                        },
-                        new
-                        {
-                            EmployerId = 4,
-                            Avt = "",
-                            CompanyName = "Công ty Giải pháp Công nghệ Thông tin",
-                            Cover = "",
-                            Description = "Công ty cung cấp giải pháp công nghệ hiệu quả.",
-                            Name = "Công ty Giải pháp Công nghệ Thông tin",
-                            UserId = 6
-                        },
-                        new
-                        {
-                            EmployerId = 5,
-                            Avt = "",
-                            CompanyName = "Công ty Phát triển Ứng dụng Di động",
-                            Cover = "",
-                            Description = "Công ty chuyên phát triển ứng dụng di động.",
-                            Name = "Công ty Phát triển Ứng dụng Di động",
-                            UserId = 7
-                        },
-                        new
-                        {
-                            EmployerId = 6,
-                            Avt = "",
-                            CompanyName = "Công ty Tư vấn Chiến lược Kinh doanh",
-                            Cover = "",
-                            Description = "Công ty tư vấn chiến lược cho các doanh nghiệp.",
-                            Name = "Công ty Tư vấn Chiến lược Kinh doanh",
-                            UserId = 8
-                        },
-                        new
-                        {
-                            EmployerId = 7,
-                            Avt = "",
-                            CompanyName = "Công ty Quản lý Dự án Toàn cầu",
-                            Cover = "",
-                            Description = "Công ty chuyên quản lý các dự án quốc tế.",
-                            Name = "Công ty Quản lý Dự án Toàn cầu",
-                            UserId = 9
-                        },
-                        new
-                        {
-                            EmployerId = 8,
-                            Avt = "",
-                            CompanyName = "Công ty Sản xuất Thiết bị Điện tử",
-                            Cover = "",
-                            Description = "Công ty hàng đầu trong sản xuất thiết bị điện tử.",
+                            Description = "Another great company.",
                             Name = "Công ty Sản xuất Thiết bị Điện tử",
-                            UserId = 10
-                        },
-                        new
-                        {
-                            EmployerId = 9,
-                            Avt = "",
-                            CompanyName = "Công ty Đào tạo Kỹ năng Mềm",
-                            Cover = "",
-                            Description = "Công ty cung cấp khóa học kỹ năng mềm chất lượng cao.",
-                            Name = "Công ty Đào tạo Kỹ năng Mềm",
-                            UserId = 11
-                        },
-                        new
-                        {
-                            EmployerId = 10,
-                            Avt = "",
-                            CompanyName = "Công ty Marketing Số Hiện đại",
-                            Cover = "",
-                            Description = "Công ty cung cấp dịch vụ marketing số và truyền thông.",
-                            Name = "Công ty Marketing Số Hiện đại",
-                            UserId = 12
+                            UserId = 4
                         });
                 });
 
@@ -556,27 +412,27 @@ namespace FindJobsApplication.Migrations
                             HireId = 1,
                             EmployeeId = 1,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 10, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4111),
+                            HireDate = new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7136),
                             JobId = 1,
-                            Status = "Hired"
+                            Status = "Đã được thuê"
                         },
                         new
                         {
                             HireId = 2,
                             EmployeeId = 2,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 9, 30, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4116),
+                            HireDate = new DateTime(2024, 10, 6, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7139),
                             JobId = 1,
-                            Status = "Hired"
+                            Status = "Đã được thuê"
                         },
                         new
                         {
                             HireId = 3,
                             EmployeeId = 1,
                             EmployerId = 2,
-                            HireDate = new DateTime(2024, 10, 5, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4123),
+                            HireDate = new DateTime(2024, 10, 11, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7143),
                             JobId = 2,
-                            Status = "Hired"
+                            Status = "Đã được thuê"
                         });
                 });
 
@@ -609,14 +465,14 @@ namespace FindJobsApplication.Migrations
                             InvoiceId = 1,
                             Amount = 150m,
                             EmployerId = 1,
-                            IssueDate = new DateTime(2024, 10, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4149)
+                            IssueDate = new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7171)
                         },
                         new
                         {
                             InvoiceId = 2,
                             Amount = 200m,
                             EmployerId = 2,
-                            IssueDate = new DateTime(2024, 10, 5, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4150)
+                            IssueDate = new DateTime(2024, 10, 11, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7173)
                         });
                 });
 
@@ -670,8 +526,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 1,
-                            DateFrom = new DateTime(2024, 10, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4033),
-                            DateTo = new DateTime(2024, 11, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4048),
+                            DateFrom = new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7057),
+                            DateTo = new DateTime(2024, 11, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7069),
                             Description = "Phát triển ứng dụng.",
                             EmployerId = 1,
                             JobCategoryId = 1,
@@ -682,74 +538,26 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 2,
-                            DateFrom = new DateTime(2024, 10, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4059),
-                            DateTo = new DateTime(2024, 12, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4059),
-                            Description = "Tạo ra các trang web đẹp mắt.",
+                            DateFrom = new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7079),
+                            DateTo = new DateTime(2024, 12, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7080),
+                            Description = "Tạo các trang web đẹp.",
                             EmployerId = 1,
                             JobCategoryId = 1,
                             JobType = 0,
                             Salary = 50000m,
-                            Title = "Thiết kế web"
+                            Title = "Nhà thiết kế web"
                         },
                         new
                         {
                             JobId = 3,
-                            DateFrom = new DateTime(2024, 10, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4061),
-                            DateTo = new DateTime(2025, 1, 10, 11, 26, 19, 629, DateTimeKind.Local).AddTicks(4062),
-                            Description = "Cải thiện trải nghiệm người dùng.",
+                            DateFrom = new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7082),
+                            DateTo = new DateTime(2025, 1, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7082),
+                            Description = "Nâng cao trải nghiệm người dùng.",
                             EmployerId = 2,
                             JobCategoryId = 1,
                             JobType = 1,
                             Salary = 55000m,
-                            Title = "Thiết kế UX/UI"
-                        },
-                        new
-                        {
-                            JobId = 4,
-                            DateFrom = new DateTime(2024, 10, 15, 11, 30, 00, 000, DateTimeKind.Local),
-                            DateTo = new DateTime(2025, 1, 15, 11, 30, 00, 000, DateTimeKind.Local),
-                            Description = "Xây dựng và duy trì hệ thống cơ sở dữ liệu.",
-                            EmployerId = 1,
-                            JobCategoryId = 2,
-                            JobType = 0,
-                            Salary = 70000m,
-                            Title = "Kỹ sư cơ sở dữ liệu"
-                        },
-                        new
-                        {
-                            JobId = 5,
-                            DateFrom = new DateTime(2024, 11, 1, 9, 0, 0, 000, DateTimeKind.Local),
-                            DateTo = new DateTime(2025, 2, 1, 9, 0, 0, 000, DateTimeKind.Local),
-                            Description = "Tạo và quản lý nội dung cho trang web.",
-                            EmployerId = 2,
-                            JobCategoryId = 3,
-                            JobType = 0,
-                            Salary = 45000m,
-                            Title = "Biên tập viên nội dung"
-                        },
-                        new
-                        {
-                            JobId = 6,
-                            DateFrom = new DateTime(2024, 11, 5, 10, 0, 0, 000, DateTimeKind.Local),
-                            DateTo = new DateTime(2025, 2, 5, 10, 0, 0, 000, DateTimeKind.Local),
-                            Description = "Phát triển chiến lược tiếp thị số cho doanh nghiệp.",
-                            EmployerId = 3,
-                            JobCategoryId = 4,
-                            JobType = 1,
-                            Salary = 52000m,
-                            Title = "Chuyên viên marketing số"
-                        },
-                        new
-                        {
-                            JobId = 7,
-                            DateFrom = new DateTime(2024, 12, 1, 8, 0, 0, 000, DateTimeKind.Local),
-                            DateTo = new DateTime(2025, 3, 1, 8, 0, 0, 000, DateTimeKind.Local),
-                            Description = "Thiết kế giao diện cho ứng dụng di động.",
-                            EmployerId = 4,
-                            JobCategoryId = 1,
-                            JobType = 0,
-                            Salary = 58000m,
-                            Title = "Nhà thiết kế giao diện di động"
+                            Title = "Nhà thiết kế UX/UI"
                         });
                 });
 
@@ -782,20 +590,20 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobCategoryId = 1,
-                            Image = "",
-                            JobCategoryName = "Lập trình viên phần mềm"
+                            Image = "https://blog.planview.com/wp-content/uploads/2020/01/Top-6-Software-Development-Methodologies.jpg",
+                            JobCategoryName = "Phát triển phần mềm"
                         },
                         new
                         {
                             JobCategoryId = 2,
-                            Image = "",
-                            JobCategoryName = "Thiết kế web"
+                            Image = "https://miro.medium.com/v2/resize:fit:1400/1*fHrAZJ1_L0Ff9dvVexL5_A.png",
+                            JobCategoryName = "Thiết Kế Web"
                         },
                         new
                         {
                             JobCategoryId = 3,
-                            Image = "",
-                            JobCategoryName = "Thiết kế UX/UI "
+                            Image = "https://www.applify.com.sg/blog/wp-content/uploads/2023/09/Key-Differences-Between-UX-Designer-vs.-UI-Designer.png",
+                            JobCategoryName = "Thiết kế UX/UI"
                         });
                 });
 
@@ -834,9 +642,9 @@ namespace FindJobsApplication.Migrations
                         {
                             JobServiceId = 1,
                             AdminId = 1,
-                            Description = "Đăng tin tuyển dụng.",
+                            Description = "Đăng Tuyển Dụng.",
                             Price = 100m,
-                            ServiceName = "Đăng Tuyển Dụng"
+                            ServiceName = "Đăng tin tuyển dụng"
                         },
                         new
                         {

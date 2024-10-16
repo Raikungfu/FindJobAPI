@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Security.Claims;
 using System.Text.Json.Serialization;
+using FindJobsApplication.Service.IService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -92,6 +93,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 var app = builder.Build();
 

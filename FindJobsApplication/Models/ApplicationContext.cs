@@ -86,13 +86,13 @@ namespace FindJobsApplication.Models
             );
 
             modelBuilder.Entity<Employer>().HasData(
-                new Employer { EmployerId = 1, Name = "Company A", Description = "A great company.", CompanyName = "Company A Ltd.", UserId = 2, Avt = "", Cover = "" },
-                new Employer { EmployerId = 2, Name = "Company B", Description = "Another great company.", CompanyName = "Company B Ltd.", UserId = 4, Avt = "", Cover = "" }
+                new Employer { EmployerId = 1, Name = "Công ty Quản lý Dự án Toàn cầu", Description = "A great company.", CompanyName = "Công ty Quản lý Dự án Toàn cầu Ltd.", UserId = 2, Avt = "", Cover = "" },
+                new Employer { EmployerId = 2, Name = "Công ty Sản xuất Thiết bị Điện tử", Description = "Another great company.", CompanyName = "Công ty Sản xuất Thiết bị Điện tử Ltd. ", UserId = 4, Avt = "", Cover = "" }
                 );
 
             modelBuilder.Entity<Certification>().HasData(
-                new Certification { CertificationId = 1, Name = "Certified Developer", Subject = "Software Engineer", Description = "Certification for software development." },
-                new Certification { CertificationId = 2, Name = "Certified Project Manager", Subject = "Project Manager", Description = "Certification for project management." }
+                new Certification { CertificationId = 1, Name = "Lập trình viên được chứng nhận", Subject = "Kỹ sư phần mềm", Description = "Chứng chỉ phát triển phần mềm." },
+                new Certification { CertificationId = 2, Name = "Quản lý dự án được chứng nhận", Subject = "Người quản lý dự án", Description = "Chứng chỉ quản lý dự án." }
             );
 
             modelBuilder.Entity<EmployeeCertification>().HasData(
@@ -107,26 +107,26 @@ namespace FindJobsApplication.Models
             );
 
             modelBuilder.Entity<JobCategory>().HasData(
-                new JobCategory { JobCategoryId = 1, JobCategoryName = "Software Development", Image = "" },
-                new JobCategory { JobCategoryId = 2, JobCategoryName = "Web Design", Image = "" },
-                new JobCategory { JobCategoryId = 3, JobCategoryName = "UX/UI Design", Image = "" }
+                new JobCategory { JobCategoryId = 1, JobCategoryName = "Phát triển phần mềm", Image = "https://blog.planview.com/wp-content/uploads/2020/01/Top-6-Software-Development-Methodologies.jpg" },
+                new JobCategory { JobCategoryId = 2, JobCategoryName = "Thiết Kế Web", Image = "https://miro.medium.com/v2/resize:fit:1400/1*fHrAZJ1_L0Ff9dvVexL5_A.png" },
+                new JobCategory { JobCategoryId = 3, JobCategoryName = "Thiết kế UX/UI", Image = "https://www.applify.com.sg/blog/wp-content/uploads/2023/09/Key-Differences-Between-UX-Designer-vs.-UI-Designer.png" }
             );
 
             modelBuilder.Entity<Job>().HasData(
-                new Job { JobId = 1, Title = "Software Developer", Description = "Develop applications.", Salary = 60000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(1), JobType = JobType.FullTime, JobCategoryId = 1, EmployerId = 1 },
-                new Job { JobId = 2, Title = "Web Designer", Description = "Create beautiful websites.", Salary = 50000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(2), JobType = JobType.FullTime, JobCategoryId = 1, EmployerId = 1 },
-                new Job { JobId = 3, Title = "UX/UI Designer", Description = "Enhance user experience.", Salary = 55000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(3), JobType = JobType.PartTime, JobCategoryId = 1, EmployerId = 2 }
+                new Job { JobId = 1, Title = "Lập trình viên phần mềm", Description = "Phát triển ứng dụng.", Salary = 60000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(1), JobType = JobType.FullTime, JobCategoryId = 1, EmployerId = 1 },
+                new Job { JobId = 2, Title = "Nhà thiết kế web", Description = "Tạo các trang web đẹp.", Salary = 50000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(2), JobType = JobType.FullTime, JobCategoryId = 1, EmployerId = 1 },
+                new Job { JobId = 3, Title = "Nhà thiết kế UX/UI", Description = "Nâng cao trải nghiệm người dùng.", Salary = 55000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(3), JobType = JobType.PartTime, JobCategoryId = 1, EmployerId = 2 }
             );
 
             modelBuilder.Entity<JobService>().HasData(
-                new JobService { JobServiceId = 1, ServiceName = "Job Posting", Description = "Post a job.", Price = 100, AdminId = 1 },
-                new JobService { JobServiceId = 2, ServiceName = "Job Highlight", Description = "Highlight your job posting.", Price = 150, AdminId = 1 }
+                new JobService { JobServiceId = 1, ServiceName = "Đăng tin tuyển dụng", Description = "Đăng Tuyển Dụng.", Price = 100, AdminId = 1 },
+                new JobService { JobServiceId = 2, ServiceName = "Nổi Bật Tuyển Dụng", Description = "Làm nổi bật tin tuyển dụng của bạn.", Price = 150, AdminId = 1 }
             );
 
             modelBuilder.Entity<Hire>().HasData(
-                new Hire { HireId = 1, HireDate = DateTime.Now, Status = "Hired", JobId = 1, EmployerId = 1, EmployeeId = 1 },
-                new Hire { HireId = 2, HireDate = DateTime.Now.AddDays(-10), Status = "Hired", JobId = 1, EmployerId = 1, EmployeeId = 2 },
-                new Hire { HireId = 3, HireDate = DateTime.Now.AddDays(-5), Status = "Hired", JobId = 2, EmployerId = 2, EmployeeId = 1 }
+                new Hire { HireId = 1, HireDate = DateTime.Now, Status = "Đã được thuê", JobId = 1, EmployerId = 1, EmployeeId = 1 },
+                new Hire { HireId = 2, HireDate = DateTime.Now.AddDays(-10), Status = "Đã được thuê", JobId = 1, EmployerId = 1, EmployeeId = 2 },
+                new Hire { HireId = 3, HireDate = DateTime.Now.AddDays(-5), Status = "Đã được thuê", JobId = 2, EmployerId = 2, EmployeeId = 1 }
             );
 
             modelBuilder.Entity<Invoice>().HasData(
@@ -135,9 +135,9 @@ namespace FindJobsApplication.Models
             );
 
             modelBuilder.Entity<Review>().HasData(
-                new Review { ReviewId = 1, Rating = 5, Comment = "Great job!", EmployeeId = 1 },
-                new Review { ReviewId = 2, Rating = 4, Comment = "Good performance.", EmployeeId = 2 },
-                new Review { ReviewId = 3, Rating = 5, Comment = "Excellent work!", EmployeeId = 1 }
+                new Review { ReviewId = 1, Rating = 5, Comment = "Công việc rất tốt!", EmployeeId = 1 },
+                new Review { ReviewId = 2, Rating = 4, Comment = "Hiệu suất tốt.", EmployeeId = 2 },
+                new Review { ReviewId = 3, Rating = 5, Comment = "Công việc tuyệt vời!", EmployeeId = 1 }
             );
         }
     }

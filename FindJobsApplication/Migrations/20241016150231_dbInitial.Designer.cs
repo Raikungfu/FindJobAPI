@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobsApplication.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241007133528_dbInitial")]
+    [Migration("20241016150231_dbInitial")]
     partial class dbInitial
     {
         /// <inheritdoc />
@@ -33,6 +33,12 @@ namespace FindJobsApplication.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdminId"));
 
+                    b.Property<string>("Avt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cover")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -49,6 +55,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             AdminId = 1,
+                            Avt = "",
+                            Cover = "",
                             Name = "John Doe",
                             UserId = 1
                         });
@@ -90,7 +98,7 @@ namespace FindJobsApplication.Migrations
                             CertificationId = 2,
                             Description = "Chứng chỉ quản lý dự án.",
                             Name = "Quản lý dự án được chứng nhận",
-                            Subject = "Quản lý dự án"
+                            Subject = "Người quản lý dự án"
                         });
                 });
 
@@ -105,10 +113,19 @@ namespace FindJobsApplication.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Avt")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cover")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cv")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -169,142 +186,34 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             EmployeeId = 1,
-                            Address = "123 Đường Nguyễn Huệ",
-                            City = "Thành phố Hồ Chí Minh",
-                            Country = "Việt Nam",
-                            Description = "Lập trình viên có kỹ năng.",
-                            FirstName = "Nguyễn",
-                            LastName = "Văn A",
-                            Phone = "0123456789",
-                            PostalCode = "700000",
-                            Region = "Miền Nam",
+                            Address = "123 Street",
+                            Avt = "",
+                            City = "City",
+                            Country = "Country",
+                            Cover = "",
+                            Description = "Skilled developer.",
+                            FirstName = "Jane",
+                            LastName = "Doe",
+                            Phone = "1234567890",
+                            PostalCode = "12345",
+                            Region = "Region",
                             UserId = 3
                         },
                         new
                         {
                             EmployeeId = 2,
-                            Address = "456 Đường Diên Hồng",
-                            City = "Hà Nội",
-                            Country = "Việt Nam",
-                            Description = "Nhà thiết kế có kinh nghiệm.",
-                            FirstName = "Trần",
-                            LastName = "Bảo B",
+                            Address = "456 Avenue",
+                            Avt = "",
+                            City = "City",
+                            Country = "Country",
+                            Cover = "",
+                            Description = "Experienced designer.",
+                            FirstName = "Tom",
+                            LastName = "Smith",
                             Phone = "0987654321",
-                            PostalCode = "100000",
-                            Region = "Miền Bắc",
+                            PostalCode = "67890",
+                            Region = "Region",
                             UserId = 5
-                        },
-                        new
-                        {
-                            EmployeeId = 3,
-                            Address = "789 Đường Lê Lợi",
-                            City = "Đà Nẵng",
-                            Country = "Việt Nam",
-                            Description = "Chuyên viên marketing.",
-                            FirstName = "Phạm",
-                            LastName = "Công C",
-                            Phone = "0901234567",
-                            PostalCode = "550000",
-                            Region = "Miền Trung",
-                            UserId = 7
-                        },
-                        new
-                        {
-                            EmployeeId = 4,
-                            Address = "1011 Đường Hai Bà Trưng",
-                            City = "Cần Thơ",
-                            Country = "Việt Nam",
-                            Description = "Nhân viên chăm sóc khách hàng.",
-                            FirstName = "Lê",
-                            LastName = "Văn D",
-                            Phone = "0912345678",
-                            PostalCode = "900000",
-                            Region = "Miền Tây",
-                            UserId = 9
-                        },
-                        new
-                        {
-                            EmployeeId = 5,
-                            Address = "1212 Đường Trần Phú",
-                            City = "Huế",
-                            Country = "Việt Nam",
-                            Description = "Nhân viên quản lý dự án.",
-                            FirstName = "Hoàng",
-                            LastName = "Thị E",
-                            Phone = "0923456789",
-                            PostalCode = "530000",
-                            Region = "Miền Trung",
-                            UserId = 11
-                        },
-                        new
-                        {
-                            EmployeeId = 6,
-                            Address = "1313 Đường Lý Thường Kiệt",
-                            City = "Nha Trang",
-                            Country = "Việt Nam",
-                            Description = "Nhân viên kiểm thử phần mềm.",
-                            FirstName = "Đặng",
-                            LastName = "Hữu F",
-                            Phone = "0934567890",
-                            PostalCode = "570000",
-                            Region = "Miền Trung",
-                            UserId = 13
-                        },
-                        new
-                        {
-                            EmployeeId = 7,
-                            Address = "1414 Đường Phạm Văn Đồng",
-                            City = "Hải Phòng",
-                            Country = "Việt Nam",
-                            Description = "Nhân viên phát triển kinh doanh.",
-                            FirstName = "Vũ",
-                            LastName = "Minh G",
-                            Phone = "0945678901",
-                            PostalCode = "180000",
-                            Region = "Miền Bắc",
-                            UserId = 15
-                        },
-                        new
-                        {
-                            EmployeeId = 8,
-                            Address = "1515 Đường Nguyễn Trãi",
-                            City = "Biên Hòa",
-                            Country = "Việt Nam",
-                            Description = "Kế toán viên.",
-                            FirstName = "Lý",
-                            LastName = "Thị H",
-                            Phone = "0956789012",
-                            PostalCode = "810000",
-                            Region = "Miền Nam",
-                            UserId = 17
-                        },
-                        new
-                        {
-                            EmployeeId = 9,
-                            Address = "1616 Đường Bạch Đằng",
-                            City = "Vũng Tàu",
-                            Country = "Việt Nam",
-                            Description = "Nhân viên hỗ trợ kỹ thuật.",
-                            FirstName = "Ngô",
-                            LastName = "Văn I",
-                            Phone = "0967890123",
-                            PostalCode = "790000",
-                            Region = "Miền Nam",
-                            UserId = 19
-                        },
-                        new
-                        {
-                            EmployeeId = 10,
-                            Address = "1717 Đường Lê Duẩn",
-                            City = "Thanh Hóa",
-                            Country = "Việt Nam",
-                            Description = "Chuyên viên nhân sự.",
-                            FirstName = "Dương",
-                            LastName = "Văn J",
-                            Phone = "0978901234",
-                            PostalCode = "440000",
-                            Region = "Miền Bắc",
-                            UserId = 21
                         });
                 });
 
@@ -356,6 +265,15 @@ namespace FindJobsApplication.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployerId"));
+
+                    b.Property<string>("Avt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CIBehind")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CIFront")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyBenefits")
                         .HasColumnType("nvarchar(max)");
@@ -411,6 +329,9 @@ namespace FindJobsApplication.Migrations
                     b.Property<string>("CompanyWebsite")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Cover")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -430,66 +351,22 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             EmployerId = 1,
-                            CompanyName = "Công ty TNHH An Phát",
-                            Description = "Một công ty tuyệt vời.",
-                            Name = "Công ty An Phát",
+                            Avt = "",
+                            CompanyName = "Công ty Quản lý Dự án Toàn cầu Ltd.",
+                            Cover = "",
+                            Description = "A great company.",
+                            Name = "Công ty Quản lý Dự án Toàn cầu",
                             UserId = 2
                         },
                         new
                         {
                             EmployerId = 2,
-                            CompanyName = "Công ty TNHH Hoàng Gia",
-                            Description = "Một công ty tuyệt vời khác.",
-                            Name = "Công ty Hoàng Gia",
+                            Avt = "",
+                            CompanyName = "Công ty Sản xuất Thiết bị Điện tử Ltd. ",
+                            Cover = "",
+                            Description = "Another great company.",
+                            Name = "Công ty Sản xuất Thiết bị Điện tử",
                             UserId = 4
-                        },
-                        new
-                        {
-                            EmployerId = 3,
-                            CompanyName = "Công ty Cổ phần TechPro",
-                            Description = "Công ty nổi tiếng về công nghệ.",
-                            Name = "Công ty TechPro",
-                            UserId = 6
-                        },
-                        new
-                        {
-                            EmployerId = 4,
-                            CompanyName = "Công ty TNHH Đại Nam",
-                            Description = "Doanh nghiệp hàng đầu về dịch vụ.",
-                            Name = "Công ty Đại Nam",
-                            UserId = 8
-                        },
-                        new
-                        {
-                            EmployerId = 5,
-                            CompanyName = "Công ty TNHH Minh Tâm",
-                            Description = "Công ty chuyên về sản xuất.",
-                            Name = "Công ty Minh Tâm",
-                            UserId = 10
-                        },
-                        new
-                        {
-                            EmployerId = 6,
-                            CompanyName = "Công ty Cổ phần Việt Thắng",
-                            Description = "Doanh nghiệp tiên phong trong lĩnh vực thương mại.",
-                            Name = "Công ty Việt Thắng",
-                            UserId = 12
-                        },
-                        new
-                        {
-                            EmployerId = 7,
-                            CompanyName = "Công ty TNHH Bình Minh",
-                            Description = "Công ty phát triển mạnh về đầu tư.",
-                            Name = "Công ty Bình Minh",
-                            UserId = 14
-                        },
-                        new
-                        {
-                            EmployerId = 8,
-                            CompanyName = "Công ty Cổ phần Long Hải",
-                            Description = "Nhà cung cấp dịch vụ tài chính hàng đầu.",
-                            Name = "Công ty Long Hải",
-                            UserId = 16
                         });
                 });
 
@@ -538,27 +415,27 @@ namespace FindJobsApplication.Migrations
                             HireId = 1,
                             EmployeeId = 1,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 10, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3743),
+                            HireDate = new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7136),
                             JobId = 1,
-                            Status = "Hired"
+                            Status = "Đã được thuê"
                         },
                         new
                         {
                             HireId = 2,
                             EmployeeId = 2,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 9, 27, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3747),
+                            HireDate = new DateTime(2024, 10, 6, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7139),
                             JobId = 1,
-                            Status = "Hired"
+                            Status = "Đã được thuê"
                         },
                         new
                         {
                             HireId = 3,
                             EmployeeId = 1,
                             EmployerId = 2,
-                            HireDate = new DateTime(2024, 10, 2, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3754),
+                            HireDate = new DateTime(2024, 10, 11, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7143),
                             JobId = 2,
-                            Status = "Hired"
+                            Status = "Đã được thuê"
                         });
                 });
 
@@ -591,14 +468,14 @@ namespace FindJobsApplication.Migrations
                             InvoiceId = 1,
                             Amount = 150m,
                             EmployerId = 1,
-                            IssueDate = new DateTime(2024, 10, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3779)
+                            IssueDate = new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7171)
                         },
                         new
                         {
                             InvoiceId = 2,
                             Amount = 200m,
                             EmployerId = 2,
-                            IssueDate = new DateTime(2024, 10, 2, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3780)
+                            IssueDate = new DateTime(2024, 10, 11, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7173)
                         });
                 });
 
@@ -622,6 +499,12 @@ namespace FindJobsApplication.Migrations
                     b.Property<int>("EmployerId")
                         .HasColumnType("int");
 
+                    b.Property<int>("JobCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobType")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(18,2)");
 
@@ -636,6 +519,8 @@ namespace FindJobsApplication.Migrations
 
                     b.HasIndex("EmployerId");
 
+                    b.HasIndex("JobCategoryId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Jobs");
@@ -644,32 +529,84 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 1,
-                            DateFrom = new DateTime(2024, 10, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3660),
-                            DateTo = new DateTime(2024, 11, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3677),
-                            Description = "Phát triển phần mềm.",
+                            DateFrom = new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7057),
+                            DateTo = new DateTime(2024, 11, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7069),
+                            Description = "Phát triển ứng dụng.",
                             EmployerId = 1,
+                            JobCategoryId = 1,
+                            JobType = 0,
                             Salary = 60000m,
                             Title = "Lập trình viên phần mềm"
                         },
                         new
                         {
                             JobId = 2,
-                            DateFrom = new DateTime(2024, 10, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3684),
-                            DateTo = new DateTime(2024, 12, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3685),
-                            Description = "Tạo 1 website đẹp",
+                            DateFrom = new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7079),
+                            DateTo = new DateTime(2024, 12, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7080),
+                            Description = "Tạo các trang web đẹp.",
                             EmployerId = 1,
+                            JobCategoryId = 1,
+                            JobType = 0,
                             Salary = 50000m,
-                            Title = "Thiết kế web"
+                            Title = "Nhà thiết kế web"
                         },
                         new
                         {
                             JobId = 3,
-                            DateFrom = new DateTime(2024, 10, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3687),
-                            DateTo = new DateTime(2025, 1, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3687),
-                            Description = "Nâng cao trải nghiệm người dùng",
+                            DateFrom = new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7082),
+                            DateTo = new DateTime(2025, 1, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7082),
+                            Description = "Nâng cao trải nghiệm người dùng.",
                             EmployerId = 2,
+                            JobCategoryId = 1,
+                            JobType = 1,
                             Salary = 55000m,
-                            Title = "Thiết kế UX/UI "
+                            Title = "Nhà thiết kế UX/UI"
+                        });
+                });
+
+            modelBuilder.Entity("FindJobsApplication.Models.JobCategory", b =>
+                {
+                    b.Property<int>("JobCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobCategoryId"));
+
+                    b.Property<string>("Cover")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobCategoryDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobCategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("JobCategoryId");
+
+                    b.ToTable("JobCategory");
+
+                    b.HasData(
+                        new
+                        {
+                            JobCategoryId = 1,
+                            Image = "https://blog.planview.com/wp-content/uploads/2020/01/Top-6-Software-Development-Methodologies.jpg",
+                            JobCategoryName = "Phát triển phần mềm"
+                        },
+                        new
+                        {
+                            JobCategoryId = 2,
+                            Image = "https://miro.medium.com/v2/resize:fit:1400/1*fHrAZJ1_L0Ff9dvVexL5_A.png",
+                            JobCategoryName = "Thiết Kế Web"
+                        },
+                        new
+                        {
+                            JobCategoryId = 3,
+                            Image = "https://www.applify.com.sg/blog/wp-content/uploads/2023/09/Key-Differences-Between-UX-Designer-vs.-UI-Designer.png",
+                            JobCategoryName = "Thiết kế UX/UI"
                         });
                 });
 
@@ -685,6 +622,9 @@ namespace FindJobsApplication.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
@@ -705,9 +645,9 @@ namespace FindJobsApplication.Migrations
                         {
                             JobServiceId = 1,
                             AdminId = 1,
-                            Description = "Đăng tin tuyển dụng.",
+                            Description = "Đăng Tuyển Dụng.",
                             Price = 100m,
-                            ServiceName = "Đăng Tuyển Dụng"
+                            ServiceName = "Đăng tin tuyển dụng"
                         },
                         new
                         {
@@ -716,38 +656,6 @@ namespace FindJobsApplication.Migrations
                             Description = "Làm nổi bật tin tuyển dụng của bạn.",
                             Price = 150m,
                             ServiceName = "Nổi Bật Tuyển Dụng"
-                        },
-                        new
-                        {
-                            JobServiceId = 3,
-                            AdminId = 1,
-                            Description = "Tạo bài tuyển dụng chi tiết.",
-                            Price = 200m,
-                            ServiceName = "Chi Tiết Tuyển Dụng"
-                        },
-                        new
-                        {
-                            JobServiceId = 4,
-                            AdminId = 1,
-                            Description = "Quảng cáo tin tuyển dụng trên trang chủ.",
-                            Price = 300m,
-                            ServiceName = "Quảng Cáo Trang Chủ"
-                        },
-                        new
-                        {
-                            JobServiceId = 5,
-                            AdminId = 1,
-                            Description = "Gửi email thông báo việc làm.",
-                            Price = 250m,
-                            ServiceName = "Thông Báo Việc Làm Qua Email"
-                        },
-                        new
-                        {
-                            JobServiceId = 6,
-                            AdminId = 1,
-                            Description = "Tìm kiếm ứng viên qua cơ sở dữ liệu.",
-                            Price = 400m,
-                            ServiceName = "Tìm Kiếm Ứng Viên"
                         });
                 });
 
@@ -997,11 +905,19 @@ namespace FindJobsApplication.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FindJobsApplication.Models.JobCategory", "JobCategory")
+                        .WithMany("Jobs")
+                        .HasForeignKey("JobCategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("FindJobsApplication.Models.User", null)
                         .WithMany("Jobs")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Employer");
+
+                    b.Navigation("JobCategory");
                 });
 
             modelBuilder.Entity("FindJobsApplication.Models.JobService", b =>
@@ -1065,6 +981,11 @@ namespace FindJobsApplication.Migrations
                     b.Navigation("Invoices");
 
                     b.Navigation("PostedJobs");
+                });
+
+            modelBuilder.Entity("FindJobsApplication.Models.JobCategory", b =>
+                {
+                    b.Navigation("Jobs");
                 });
 
             modelBuilder.Entity("FindJobsApplication.Models.User", b =>

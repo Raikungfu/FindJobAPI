@@ -29,13 +29,31 @@ namespace FindJobsApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobCategory",
+                columns: table => new
+                {
+                    JobCategoryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    JobCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JobCategoryDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobCategory", x => x.JobCategoryId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Admins",
                 columns: table => new
                 {
                     AdminId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Avt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,6 +68,7 @@ namespace FindJobsApplication.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ServiceName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     AdminId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -112,6 +131,9 @@ namespace FindJobsApplication.Migrations
                     Interest = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SocialMedia = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Avt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cv = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -151,6 +173,10 @@ namespace FindJobsApplication.Migrations
                     CompanyBenefits = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyProjects = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyServices = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Avt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CIFront = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CIBehind = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -249,7 +275,9 @@ namespace FindJobsApplication.Migrations
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    JobType = table.Column<int>(type: "int", nullable: false),
                     EmployerId = table.Column<int>(type: "int", nullable: false),
+                    JobCategoryId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -261,6 +289,11 @@ namespace FindJobsApplication.Migrations
                         principalTable: "Employers",
                         principalColumn: "EmployerId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Jobs_JobCategory_JobCategoryId",
+                        column: x => x.JobCategoryId,
+                        principalTable: "JobCategory",
+                        principalColumn: "JobCategoryId");
                     table.ForeignKey(
                         name: "FK_Jobs_Users_UserId",
                         column: x => x.UserId,
@@ -312,8 +345,18 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "CertificationId", "Description", "Name", "Subject" },
                 values: new object[,]
                 {
-                    { 1, "Certification for software development.", "Certified Developer", "Software Engineer" },
-                    { 2, "Certification for project management.", "Certified Project Manager", "Project Manager" }
+                    { 1, "Chứng chỉ phát triển phần mềm.", "Lập trình viên được chứng nhận", "Kỹ sư phần mềm" },
+                    { 2, "Chứng chỉ quản lý dự án.", "Quản lý dự án được chứng nhận", "Người quản lý dự án" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "JobCategory",
+                columns: new[] { "JobCategoryId", "Cover", "Image", "JobCategoryDescription", "JobCategoryName" },
+                values: new object[,]
+                {
+                    { 1, null, "https://blog.planview.com/wp-content/uploads/2020/01/Top-6-Software-Development-Methodologies.jpg", null, "Phát triển phần mềm" },
+                    { 2, null, "https://miro.medium.com/v2/resize:fit:1400/1*fHrAZJ1_L0Ff9dvVexL5_A.png", null, "Thiết Kế Web" },
+                    { 3, null, "https://www.applify.com.sg/blog/wp-content/uploads/2023/09/Key-Differences-Between-UX-Designer-vs.-UI-Designer.png", null, "Thiết kế UX/UI" }
                 });
 
             migrationBuilder.InsertData(
@@ -330,25 +373,25 @@ namespace FindJobsApplication.Migrations
 
             migrationBuilder.InsertData(
                 table: "Admins",
-                columns: new[] { "AdminId", "Name", "UserId" },
-                values: new object[] { 1, "John Doe", 1 });
+                columns: new[] { "AdminId", "Avt", "Cover", "Name", "UserId" },
+                values: new object[] { 1, "", "", "John Doe", 1 });
 
             migrationBuilder.InsertData(
                 table: "Employees",
-                columns: new[] { "EmployeeId", "Address", "City", "Country", "Description", "Education", "Experience", "FirstName", "Image", "Interest", "Language", "LastName", "Phone", "PostalCode", "Region", "Resume", "Skills", "SocialMedia", "Status", "UserId" },
+                columns: new[] { "EmployeeId", "Address", "Avt", "City", "Country", "Cover", "Cv", "Description", "Education", "Experience", "FirstName", "Image", "Interest", "Language", "LastName", "Phone", "PostalCode", "Region", "Resume", "Skills", "SocialMedia", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "123 Street", "City", "Country", "Skilled developer.", null, null, "Jane", null, null, null, "Doe", "1234567890", "12345", "Region", null, null, null, null, 3 },
-                    { 2, "456 Avenue", "City", "Country", "Experienced designer.", null, null, "Tom", null, null, null, "Smith", "0987654321", "67890", "Region", null, null, null, null, 5 }
+                    { 1, "123 Street", "", "City", "Country", "", null, "Skilled developer.", null, null, "Jane", null, null, null, "Doe", "1234567890", "12345", "Region", null, null, null, null, 3 },
+                    { 2, "456 Avenue", "", "City", "Country", "", null, "Experienced designer.", null, null, "Tom", null, null, null, "Smith", "0987654321", "67890", "Region", null, null, null, null, 5 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Employers",
-                columns: new[] { "EmployerId", "CompanyBenefits", "CompanyContact", "CompanyDescription", "CompanyEmail", "CompanyFounded", "CompanyIndustry", "CompanyLocation", "CompanyLogo", "CompanyMission", "CompanyName", "CompanyPhone", "CompanyProjects", "CompanyServices", "CompanySize", "CompanyType", "CompanyValues", "CompanyVision", "CompanyWebsite", "Description", "Name", "UserId" },
+                columns: new[] { "EmployerId", "Avt", "CIBehind", "CIFront", "CompanyBenefits", "CompanyContact", "CompanyDescription", "CompanyEmail", "CompanyFounded", "CompanyIndustry", "CompanyLocation", "CompanyLogo", "CompanyMission", "CompanyName", "CompanyPhone", "CompanyProjects", "CompanyServices", "CompanySize", "CompanyType", "CompanyValues", "CompanyVision", "CompanyWebsite", "Cover", "Description", "Name", "UserId" },
                 values: new object[,]
                 {
-                    { 1, null, null, null, null, null, null, null, null, null, "Company A Ltd.", null, null, null, null, null, null, null, null, "A great company.", "Company A", 2 },
-                    { 2, null, null, null, null, null, null, null, null, null, "Company B Ltd.", null, null, null, null, null, null, null, null, "Another great company.", "Company B", 4 }
+                    { 1, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Quản lý Dự án Toàn cầu Ltd.", null, null, null, null, null, null, null, null, "", "A great company.", "Công ty Quản lý Dự án Toàn cầu", 2 },
+                    { 2, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Sản xuất Thiết bị Điện tử Ltd. ", null, null, null, null, null, null, null, null, "", "Another great company.", "Công ty Sản xuất Thiết bị Điện tử", 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -366,27 +409,27 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "InvoiceId", "Amount", "EmployerId", "IssueDate" },
                 values: new object[,]
                 {
-                    { 1, 150m, 1, new DateTime(2024, 10, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3779) },
-                    { 2, 200m, 2, new DateTime(2024, 10, 2, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3780) }
+                    { 1, 150m, 1, new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7171) },
+                    { 2, 200m, 2, new DateTime(2024, 10, 11, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7173) }
                 });
 
             migrationBuilder.InsertData(
                 table: "JobServices",
-                columns: new[] { "JobServiceId", "AdminId", "Description", "Price", "ServiceName" },
+                columns: new[] { "JobServiceId", "AdminId", "Description", "Image", "Price", "ServiceName" },
                 values: new object[,]
                 {
-                    { 1, 1, "Đăng tin tuyển dụng.", 100m, "Đăng Tuyển Dụng" },
-                    { 2, 1, "Làm nổi bật tin tuyển dụng của bạn.", 150m, "Nổi Bật Tuyển Dụng" }
+                    { 1, 1, "Đăng Tuyển Dụng.", null, 100m, "Đăng tin tuyển dụng" },
+                    { 2, 1, "Làm nổi bật tin tuyển dụng của bạn.", null, 150m, "Nổi Bật Tuyển Dụng" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Jobs",
-                columns: new[] { "JobId", "DateFrom", "DateTo", "Description", "EmployerId", "Salary", "Title", "UserId" },
+                columns: new[] { "JobId", "DateFrom", "DateTo", "Description", "EmployerId", "JobCategoryId", "JobType", "Salary", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 10, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3660), new DateTime(2024, 11, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3677), "Develop applications.", 1, 60000m, "Software Developer", null },
-                    { 2, new DateTime(2024, 10, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3684), new DateTime(2024, 12, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3685), "Create beautiful websites.", 1, 50000m, "Web Designer", null },
-                    { 3, new DateTime(2024, 10, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3687), new DateTime(2025, 1, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3687), "Enhance user experience.", 2, 55000m, "UX/UI Designer", null }
+                    { 1, new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7057), new DateTime(2024, 11, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7069), "Phát triển ứng dụng.", 1, 1, 0, 60000m, "Lập trình viên phần mềm", null },
+                    { 2, new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7079), new DateTime(2024, 12, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7080), "Tạo các trang web đẹp.", 1, 1, 0, 50000m, "Nhà thiết kế web", null },
+                    { 3, new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7082), new DateTime(2025, 1, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7082), "Nâng cao trải nghiệm người dùng.", 2, 1, 1, 55000m, "Nhà thiết kế UX/UI", null }
                 });
 
             migrationBuilder.InsertData(
@@ -404,9 +447,9 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "HireId", "EmployeeId", "EmployerId", "HireDate", "JobId", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, new DateTime(2024, 10, 7, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3743), 1, "Hired", null },
-                    { 2, 2, 1, new DateTime(2024, 9, 27, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3747), 1, "Hired", null },
-                    { 3, 1, 2, new DateTime(2024, 10, 2, 20, 35, 28, 474, DateTimeKind.Local).AddTicks(3754), 2, "Hired", null }
+                    { 1, 1, 1, new DateTime(2024, 10, 16, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7136), 1, "Đã được thuê", null },
+                    { 2, 2, 1, new DateTime(2024, 10, 6, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7139), 1, "Đã được thuê", null },
+                    { 3, 1, 2, new DateTime(2024, 10, 11, 22, 2, 30, 587, DateTimeKind.Local).AddTicks(7143), 2, "Đã được thuê", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -458,6 +501,11 @@ namespace FindJobsApplication.Migrations
                 name: "IX_Jobs_EmployerId",
                 table: "Jobs",
                 column: "EmployerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Jobs_JobCategoryId",
+                table: "Jobs",
+                column: "JobCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Jobs_UserId",
@@ -526,6 +574,9 @@ namespace FindJobsApplication.Migrations
 
             migrationBuilder.DropTable(
                 name: "Employers");
+
+            migrationBuilder.DropTable(
+                name: "JobCategory");
 
             migrationBuilder.DropTable(
                 name: "Users");

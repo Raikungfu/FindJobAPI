@@ -1,6 +1,7 @@
 ﻿using FindJobsApplication.Models;
 using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Service;
+using FindJobsApplication.Service.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +18,13 @@ namespace FindJobsApplication.Controllers
     {
         private readonly ApplicationContext _context;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
-        public AuthController(ApplicationContext context, IConfiguration configuration)
+        public AuthController(ApplicationContext context, IConfiguration configuration, IEmailService emailService)
         {
             _context = context;
             _configuration = configuration;
+            _emailService = emailService;
         }
         
         // Register
@@ -74,11 +77,12 @@ namespace FindJobsApplication.Controllers
                     };
                     _context.Employees.Add(employee);
                     await _context.SaveChangesAsync();
-
                     break;
                 default:
                     return BadRequest(new { Message = "Role of user not correct!" });
             }
+
+            _emailService.SendRegisterMail(user.Email, model.FirstName + model.LastName, user.Username, user.PasswordHash);
 
             return Ok(new { Message = "Registration successful." });
         }
