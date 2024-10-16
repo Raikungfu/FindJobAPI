@@ -5,6 +5,7 @@
         IUserRepository User { get; }
         IJobRepository Job { get; }
         IJobCategoryRepository JobCategory { get; }
+        IEmployerRepository Employer { get; }
         void Save();
     }
 }

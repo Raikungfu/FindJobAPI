@@ -57,6 +57,58 @@ namespace FindJobsApplication.Controllers
             return Ok(jobs);
         }
 
+        [HttpPost]
+        public IActionResult CreateJob([FromBody] Job job)
+        {
+            try
+            {
+                if (job == null || job.Title.IsNullOrEmpty())
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var claimValue = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int userId))
+                {
+                    return Unauthorized("User not logged in. Please log in to continue.");
+                }
+
+                var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
+                if (claimRole != UserType.Employer.ToString())
+                {
+                    return Unauthorized("You are not authorized to create job.");
+                }
+
+                var employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.UserId == userId);
+
+                if (employer == null)
+                {
+                    ModelState.AddModelError("", "Employer does not exist!");
+                    return BadRequest(ModelState);
+                }
+
+                _unitOfWork.Job.Add(job);
+                _unitOfWork.Save();
+
+                return CreatedAtRoute("GetJob", new { jobId = job.JobId }, job);
+            }
+            catch(Exception e)
+            {
+                return StatusCode(500, "Internal server error: " + e.Message);
+            }
+        }
+
+        [HttpGet("{jobId}", Name = "GetJob")]
+        public IActionResult GetJob(int jobId)
+        {
+            var job = _unitOfWork.Job.GetFirstOrDefault(j => j.JobId == jobId, includeProperties: "Employer,JobCategory");
+            if (job == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(job);
+        }
 
         [HttpGet("job-categories")]
         public IActionResult JobCategories(int pageNumber = 0, int pageSize = 6)
