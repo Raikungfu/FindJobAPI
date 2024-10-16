@@ -28,7 +28,7 @@ namespace FindJobsApplication.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterViewModels model)
         {
-            if (await _context.Users.AnyAsync(u => u.Username == model.Username || u.Email == u.Email))
+            if (await _context.Users.AnyAsync(u => u.Username == model.Username || u.Email == model.Email))
                 return BadRequest(new { Message = "Username/Email is already taken." });
 
             //         var hashedPassword = PasswordHelper.HashPassword(model.Password);
