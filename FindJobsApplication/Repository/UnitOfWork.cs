@@ -11,6 +11,7 @@ namespace FindJobsApplication.Repository
         {
             _db = db;
             User = new UserRepository(_db);
+            Employer = new EmployerRepository(_db);
             Job = new JobRepository(_db);
             JobCategory = new JobCategoryRepository(_db);
         }
@@ -18,6 +19,7 @@ namespace FindJobsApplication.Repository
         public IUserRepository User { get; private set; }
         public IJobRepository Job { get; private set; }
         public IJobCategoryRepository JobCategory { get; private set; }
+        public IEmployerRepository Employer { get; private set; }
 
         public void Dispose()
         {
