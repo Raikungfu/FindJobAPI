@@ -56,9 +56,7 @@ namespace FindJobsApplication.Controllers
                 x.Employer.CompanyLogo,
                 x.Employer.CompanyName,
                 x.Employer.CompanyIndustry,
-                Location = JobLocationDictionary.Locations.ContainsKey(x.Location.Value)
-                    ? JobLocationDictionary.Locations[x.Location.Value]
-                    : x.Employer.CompanyLocation
+                Location = x.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(x.Location.Value) ? JobLocationDictionary.Locations[x.Location.Value] : x.Employer.CompanyLocation
             }).ToList();
             return Ok(jobs);
         }
