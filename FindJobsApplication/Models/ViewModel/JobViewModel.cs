@@ -21,5 +21,7 @@ namespace FindJobsApplication.Models.ViewModel
         public JobType JobType { get; set; }
 
         public int JobCategoryId { get; set; }
+
+        public JobLocation? Location { get; set; }
     }
 }

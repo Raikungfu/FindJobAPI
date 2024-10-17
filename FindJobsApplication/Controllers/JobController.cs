@@ -55,8 +55,10 @@ namespace FindJobsApplication.Controllers
                 x.Description,
                 x.Employer.CompanyLogo,
                 x.Employer.CompanyName,
-                x.Employer.CompanyLocation,
-                x.Employer.CompanyIndustry
+                x.Employer.CompanyIndustry,
+                Location = JobLocationDictionary.Locations.ContainsKey(x.Location.Value)
+                    ? JobLocationDictionary.Locations[x.Location.Value]
+                    : x.Employer.CompanyLocation
             }).ToList();
             return Ok(jobs);
         }
@@ -114,7 +116,20 @@ namespace FindJobsApplication.Controllers
                 return NotFound();
             }
 
-            return Ok(job);
+            return Ok(new {
+                job.JobId,
+                job.Title,
+                job.JobCategory,
+                job.JobType,
+                job.Salary,
+                job.DateFrom,
+                job.DateTo,
+                job.Description,
+                job.Employer,
+                Location = JobLocationDictionary.Locations.ContainsKey(job.Location.Value)
+                    ? JobLocationDictionary.Locations[job.Location.Value]
+                    : job.Employer.CompanyLocation
+            });
         }
 
         [HttpGet("job-categories")]
