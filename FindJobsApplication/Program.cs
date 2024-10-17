@@ -3,6 +3,7 @@ using FindJobsApplication.Repository.IRepository;
 using FindJobsApplication.Repository;
 using FindJobsApplication.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -10,12 +11,16 @@ using System.Security.Claims;
 using System.Text.Json.Serialization;
 using FindJobsApplication.Service.IService;
 using FindJobsApplication.Mapper;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddOData(options =>
+{
+    options.Select().Expand().Filter().OrderBy().Count();
+});
 
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
@@ -104,6 +109,13 @@ app.UseCors("AllowSpecificOrigin");
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+    RequestPath = "/Images"
+});
 
 app.UseHttpsRedirection();
 

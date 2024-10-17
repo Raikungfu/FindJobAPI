@@ -6,6 +6,8 @@
         IJobRepository Job { get; }
         IJobCategoryRepository JobCategory { get; }
         IEmployerRepository Employer { get; }
+        IEmployeeRepository Employee { get; }
+        IAdminRepository Admin { get; }
         void Save();
     }
 }

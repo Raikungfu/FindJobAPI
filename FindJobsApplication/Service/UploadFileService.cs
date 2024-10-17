@@ -10,13 +10,15 @@ namespace FindJobsApplication.Service
         {
             _webHostEnvironment = webHostEnvironment;
         }
+
         public string uploadImage(IFormFile url, string path)
         {
             string imageString = null;
 
             if (url != null)
             {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, path);
+                // string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, path);
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), path);
                 imageString = Guid.NewGuid().ToString() + "_" + url.FileName;
                 string filePath = Path.Combine(uploadsFolder, imageString);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -35,7 +37,8 @@ namespace FindJobsApplication.Service
             {
                 foreach (IFormFile file in listFile)
                 {
-                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, path);
+                    // string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, path);
+                    string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), path);
                     imageString = Guid.NewGuid().ToString() + "_" + file.FileName;
                     string filePath = Path.Combine(uploadsFolder, imageString);
                     using (var fileStream = new FileStream(filePath, FileMode.Create))

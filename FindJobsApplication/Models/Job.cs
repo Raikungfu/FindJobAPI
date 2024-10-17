@@ -15,6 +15,8 @@ namespace FindJobsApplication.Models
 
         public decimal Salary { get; set; }
 
+        public decimal? Amount { get; set; }
+
         public DateTime DateFrom { get; set; }
 
         public DateTime DateTo { get; set; }
@@ -26,6 +28,8 @@ namespace FindJobsApplication.Models
         public int JobCategoryId { get; set; }
 
         public JobLocation? Location { get; set; }
+
+        public bool? IsClosed { get; set; } = false;
 
         [ForeignKey("JobCategoryId")]
         public JobCategory JobCategory { get; set; }

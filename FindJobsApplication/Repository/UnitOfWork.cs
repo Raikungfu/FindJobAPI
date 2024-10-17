@@ -14,12 +14,16 @@ namespace FindJobsApplication.Repository
             Employer = new EmployerRepository(_db);
             Job = new JobRepository(_db);
             JobCategory = new JobCategoryRepository(_db);
+            Employee = new EmployeeRepository(_db);
+            Admin = new AdminRepository(_db);
         }
 
         public IUserRepository User { get; private set; }
         public IJobRepository Job { get; private set; }
         public IJobCategoryRepository JobCategory { get; private set; }
         public IEmployerRepository Employer { get; private set; }
+        public IEmployeeRepository Employee { get; private set; }
+        public IAdminRepository Admin { get; private set; }
 
         public void Dispose()
         {
