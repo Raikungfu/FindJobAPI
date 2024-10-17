@@ -9,7 +9,7 @@ namespace FindJobsApplication.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int HireId { get; set; }
 
-        public DateTime HireDate { get; set; }
+        public DateTime HireDate { get; set; } = System.DateTime.Now;
 
         public string Status { get; set; }
 

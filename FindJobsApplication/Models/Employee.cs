@@ -67,5 +67,7 @@ namespace FindJobsApplication.Models
 
         public ICollection<Hire> Hires { get; set; }
 
+        public ICollection<JobApply> JobApplies { get; set; }
+
     }
 }

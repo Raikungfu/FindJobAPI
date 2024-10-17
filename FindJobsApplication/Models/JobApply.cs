@@ -9,7 +9,7 @@ namespace FindJobsApplication.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int JobApplyId { get; set; }
 
-        public DateTime HireDate { get; set; }
+        public DateTime ApplyDate { get; set; } = System.DateTime.Now;
 
         public string? CV { get; set; }
 
@@ -22,6 +22,10 @@ namespace FindJobsApplication.Models
         public int EmployerId { get; set; }
 
         public int EmployeeId { get; set; }
+
+        public bool? IsAccept { get; set; } = false;
+
+        public bool? IsRefuse { get; set; } = false;
 
         [ForeignKey("JobId")]
         public Job Job { get; set; }

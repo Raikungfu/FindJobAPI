@@ -12,6 +12,8 @@ namespace FindJobsApplication.Models.ViewModel
 
         public string? Description { get; set; }
 
+        public decimal? Amount { get; set; }
+
         public decimal Salary { get; set; }
 
         public DateTime DateFrom { get; set; }

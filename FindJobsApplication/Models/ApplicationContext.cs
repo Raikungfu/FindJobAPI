@@ -19,6 +19,7 @@ namespace FindJobsApplication.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Certification> Certifications { get; set; }
         public DbSet<EmployeeCertification> EmployeeCertifications { get; set; }
+        public DbSet<JobApply> JobApplies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -61,6 +62,19 @@ namespace FindJobsApplication.Models
                 .WithMany(c => c.EmployeeCertifications)
                 .HasForeignKey(ec => ec.CertificationId);
 
+
+            modelBuilder.Entity<JobApply>()
+                .HasOne(h => h.Employee)
+                .WithMany(e => e.JobApplies)
+                .HasForeignKey(h => h.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<JobApply>()
+                .HasOne(h => h.Employer)
+                .WithMany(e => e.JobApplies)
+                .HasForeignKey(h => h.EmployerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<Hire>()
                 .HasOne(h => h.Employee)
                 .WithMany(e => e.Hires)
@@ -83,7 +97,18 @@ namespace FindJobsApplication.Models
                 new User { UserId = 7, Username = "employee3", PasswordHash = "employee123", Email = "employee3@example.com", Phone = "0122222222", UserType = UserType.Employee },
                 new User { UserId = 8, Username = "employer4", PasswordHash = "employer123", Email = "employer4@example.com", Phone = "0988888888", UserType = UserType.Employer },
                 new User { UserId = 9, Username = "employee4", PasswordHash = "employee123", Email = "employee4@example.com", Phone = "0133333333", UserType = UserType.Employee },
-                new User { UserId = 10, Username = "employer5", PasswordHash = "employer123", Email = "employer5@example.com", Phone = "0977777777", UserType = UserType.Employer }
+                new User { UserId = 10, Username = "employer5", PasswordHash = "employer123", Email = "employer5@example.com", Phone = "0977777777", UserType = UserType.Employer },
+                new User { UserId = 11, Username = "employee5", PasswordHash = "employee123", Email = "employee5@example.com", Phone = "0133333333", UserType = UserType.Employee },
+                new User { UserId = 12, Username = "employer6", PasswordHash = "employer123", Email = "employer6@example.com", Phone = "0977777777", UserType = UserType.Employer },
+                new User { UserId = 13, Username = "employee6", PasswordHash = "employee123", Email = "employee6@example.com", Phone = "0133333333", UserType = UserType.Employee },
+                new User { UserId = 14, Username = "employer7", PasswordHash = "employer123", Email = "employer7@example.com", Phone = "0977777777", UserType = UserType.Employer },
+                new User { UserId = 15, Username = "employee7", PasswordHash = "employee123", Email = "employee7@example.com", Phone = "0133333333", UserType = UserType.Employee },
+                new User { UserId = 16, Username = "employer8", PasswordHash = "employer123", Email = "employer8@example.com", Phone = "0977777777", UserType = UserType.Employer },
+                new User { UserId = 17, Username = "employee8", PasswordHash = "employee123", Email = "employee8@example.com", Phone = "0133333333", UserType = UserType.Employee },
+                new User { UserId = 18, Username = "employer9", PasswordHash = "employer123", Email = "employer9@example.com", Phone = "0977777777", UserType = UserType.Employer },
+                new User { UserId = 19, Username = "employee9", PasswordHash = "employee123", Email = "employee9@example.com", Phone = "0133333333", UserType = UserType.Employee },
+                new User { UserId = 20, Username = "employer10", PasswordHash = "employer123", Email = "employer10@example.com", Phone = "0977777777", UserType = UserType.Employer },
+                new User { UserId = 21, Username = "employee10", PasswordHash = "employee123", Email = "employee10@example.com", Phone = "0133333333", UserType = UserType.Employee }
             );
 
             modelBuilder.Entity<Admin>().HasData(
