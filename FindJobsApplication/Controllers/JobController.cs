@@ -117,14 +117,14 @@ namespace FindJobsApplication.Controllers
             return Ok(new {
                 job.JobId,
                 job.Title,
-                job.JobCategory,
+                job.JobCategory.JobCategoryName,
                 job.JobType,
                 job.Salary,
                 job.DateFrom,
                 job.DateTo,
                 job.Description,
-                job.Employer,
-                Location = JobLocationDictionary.Locations.ContainsKey(job.Location.Value)
+                job.Employer.Name,
+                Location = job.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(job.Location.Value)
                     ? JobLocationDictionary.Locations[job.Location.Value]
                     : job.Employer.CompanyLocation
             });
