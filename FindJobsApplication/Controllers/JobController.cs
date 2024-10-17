@@ -123,7 +123,9 @@ namespace FindJobsApplication.Controllers
                 job.DateFrom,
                 job.DateTo,
                 job.Description,
-                job.Employer.Name,
+                EmployerName = job.Employer.Name,
+                job.Employer.CompanyName,
+                EmployerDescription = job.Employer.Description,
                 Location = job.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(job.Location.Value)
                     ? JobLocationDictionary.Locations[job.Location.Value]
                     : job.Employer.CompanyLocation
