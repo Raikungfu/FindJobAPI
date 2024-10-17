@@ -99,7 +99,7 @@ namespace FindJobsApplication.Controllers
 
                 return CreatedAtRoute("GetJob", new { jobId = newJob.JobId }, newJob);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return StatusCode(500, "Internal server error: " + e.Message);
             }
@@ -114,7 +114,8 @@ namespace FindJobsApplication.Controllers
                 return NotFound();
             }
 
-            return Ok(new {
+            return Ok(new
+            {
                 job.JobId,
                 job.Title,
                 job.JobCategory.JobCategoryName,
@@ -137,6 +138,13 @@ namespace FindJobsApplication.Controllers
         {
             var jobCategories = _unitOfWork.JobCategory.GetAll().ToList();
             return Ok(jobCategories);
+        }
+
+        [HttpGet("count-jobs")]
+        public IActionResult CountJobs()
+        {
+            var count = _unitOfWork.Job.GetAll().Count();
+            return Ok(count);
         }
     }
 }
