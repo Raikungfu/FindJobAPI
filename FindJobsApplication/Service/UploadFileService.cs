@@ -1,4 +1,6 @@
-﻿namespace FindJobsApplication.Service
+﻿using FindJobsApplication.Service.IService;
+
+namespace FindJobsApplication.Service
 {
     public class UploadFileService : IUploadFileService
     {

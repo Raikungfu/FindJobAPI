@@ -1,4 +1,6 @@
-﻿using FindJobsApplication.Models;
+﻿using AutoMapper;
+using FindJobsApplication.Models;
+using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Repository;
 using FindJobsApplication.Repository.IRepository;
 using FindJobsApplication.Service;
@@ -18,11 +20,13 @@ namespace FindJobsApplication.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public JobController(IUnitOfWork unitOfWork, IConfiguration configuration)
+        public JobController(IUnitOfWork unitOfWork, IConfiguration configuration, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         [HttpGet("outstanding-job")]
@@ -58,7 +62,7 @@ namespace FindJobsApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateJob([FromBody] Job job)
+        public IActionResult CreateJob([FromBody] JobViewModel job)
         {
             try
             {
@@ -87,10 +91,13 @@ namespace FindJobsApplication.Controllers
                     return BadRequest(ModelState);
                 }
 
-                _unitOfWork.Job.Add(job);
+                var newJob = _mapper.Map<Job>(job);
+                newJob.EmployerId = employer.EmployerId;
+
+                _unitOfWork.Job.Add(newJob);
                 _unitOfWork.Save();
 
-                return CreatedAtRoute("GetJob", new { jobId = job.JobId }, job);
+                return CreatedAtRoute("GetJob", new { jobId = newJob.JobId }, newJob);
             }
             catch(Exception e)
             {
@@ -113,7 +120,6 @@ namespace FindJobsApplication.Controllers
         [HttpGet("job-categories")]
         public IActionResult JobCategories(int pageNumber = 0, int pageSize = 6)
         {
-
             var jobCategories = _unitOfWork.JobCategory.GetAll().ToList();
             return Ok(jobCategories);
         }

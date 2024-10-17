@@ -9,6 +9,7 @@ using System;
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 using FindJobsApplication.Service.IService;
+using FindJobsApplication.Mapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(FindJobsMapper));
 
 var environment = builder.Environment.EnvironmentName;
 
