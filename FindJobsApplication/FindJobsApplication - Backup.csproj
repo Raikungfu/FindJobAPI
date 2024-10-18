@@ -27,15 +27,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Images\*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Key\privateKey.pem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Key\publicKey.pem">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Images\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
