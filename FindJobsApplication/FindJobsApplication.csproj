@@ -36,8 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\Images\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Update="Images\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
