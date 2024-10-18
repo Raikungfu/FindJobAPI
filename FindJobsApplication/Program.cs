@@ -3,7 +3,7 @@ using FindJobsApplication.Repository.IRepository;
 using FindJobsApplication.Repository;
 using FindJobsApplication.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.OData;
+// using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -17,11 +17,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddOData(options =>
+builder.Services.AddControllers();
+   /* .AddOData(options =>
 {
     options.Select().Expand().Filter().OrderBy().Count();
-});
-
+});*/
+    
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
