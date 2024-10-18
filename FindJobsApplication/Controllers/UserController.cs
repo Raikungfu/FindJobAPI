@@ -13,7 +13,7 @@ namespace FindJobsApplication.Controllers
     [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ODataController
+    public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
