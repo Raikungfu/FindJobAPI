@@ -127,7 +127,7 @@ namespace FindJobsApplication.Controllers
             });
         }
 
-        [HttpGet("{employerId}", Name = "get-job-employer")]
+        [HttpGet("get-job-employer/{employerId}")]
         public IActionResult GetJobEmployer(int employerId)
         {
             Job job = new Job();

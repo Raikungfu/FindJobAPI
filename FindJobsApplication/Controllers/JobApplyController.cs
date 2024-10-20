@@ -157,7 +157,7 @@ namespace FindJobsApplication.Controllers
             });
         }
 
-        [HttpGet("{jobId}", Name = "job-apply-detail-by-job")]
+        [HttpGet("job-apply-detail-by-job/{jobId}", Name = "job-apply-detail-by-job")]
         public IActionResult JobApplyDetailByJob(int jobId)
         {
             var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
@@ -183,13 +183,6 @@ namespace FindJobsApplication.Controllers
                 x.Employee.LastName,
                 x.Employee.FirstName,
                 x.Employee.Phone,
-                x.Employee.Address,
-                x.Employee.City,
-                x.Employee.Country,
-                x.Employee.Image,
-                x.Employee.CIFront,
-                x.Employee.CIBehind,
-                x.Employee.Description,
                 x.Employee.Skills,
                 x.Employee.Experience,
                 x.Employee.Education,
