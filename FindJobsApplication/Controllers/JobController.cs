@@ -72,28 +72,20 @@ namespace FindJobsApplication.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var claimValue = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int userId))
-                {
-                    return Unauthorized("User not logged in. Please log in to continue.");
-                }
-
                 var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
                 if (claimRole != UserType.Employer.ToString())
                 {
                     return Unauthorized("You are not authorized to create job.");
                 }
 
-                var employer = _unitOfWork.Employer.GetFirstOrDefault(u => u.UserId == userId);
-
-                if (employer == null)
+                var claimValue = User.FindFirst("Id")?.Value;
+                if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int employerId))
                 {
-                    ModelState.AddModelError("", "Employer does not exist!");
-                    return BadRequest(ModelState);
+                    return Unauthorized("User not logged in. Please log in to continue.");
                 }
 
                 var newJob = _mapper.Map<Job>(job);
-                newJob.EmployerId = employer.EmployerId;
+                newJob.EmployerId = employerId;
 
                 _unitOfWork.Job.Add(newJob);
                 _unitOfWork.Save();
@@ -148,12 +140,12 @@ namespace FindJobsApplication.Controllers
                 var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
                 if (claimRole == UserType.Employer.ToString())
                 {
-                    var claimValue = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                    if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int userId))
+                    var claimValue = User.FindFirst("Id")?.Value;
+                    if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int empId))
                     {
                         return Unauthorized("User not logged in. Please log in to continue.");
                     }
-                    job = _unitOfWork.Job.GetFirstOrDefault(j => j.EmployerId == userId, includeProperties: "Employer,JobCategory");
+                    job = _unitOfWork.Job.GetFirstOrDefault(j => j.EmployerId == empId, includeProperties: "Employer,JobCategory");
                 }
             }
             if (job == null)

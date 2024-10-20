@@ -110,24 +110,27 @@ namespace FindJobsApplication.Controllers
 
                             u.Username,
                             u.UserId,
-                            u.UserType
+                            u.UserType,
+                            Id = u.UserType == UserType.Admin ? admin.AdminId
+                               : u.UserType == UserType.Employee ? employee.EmployeeId
+                               : employer.EmployerId
                         }).FirstOrDefault();
 
             //  if (user == null || !PasswordHelper.VerifyPassword(model.Password, user.Password)) 
             if (user == null)
                 return Unauthorized(new { Message = "Invalid credentials." });
 
-            var token = GenerateJwtToken(user.UserId, user.Username, user.UserType);
+            var token = GenerateJwtToken(user.UserId, user.Username, user.UserType, user.Id);
 
             return Ok(new { Token = token, Message = "Login successful!", User = user });
         }
 
-        private string GenerateJwtToken(int UserId, string Username, UserType UserType)
+        private string GenerateJwtToken(int UserId, string Username, UserType UserType, int Id)
         {
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, UserId.ToString()),
-                new Claim("Id", UserId.ToString()),
+                new Claim("Id", Id.ToString()),
                 new Claim(ClaimTypes.Name, Username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Role, UserType.ToString())

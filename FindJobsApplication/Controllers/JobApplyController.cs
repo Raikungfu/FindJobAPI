@@ -41,7 +41,7 @@ namespace FindJobsApplication.Controllers
                 return Unauthorized("User not logged in as Employee. Please log in as Employee to continue.");
             }
             JobApply jobApply = _mapper.Map<JobApply>(jobApplyVm);
-            jobApply.EmployeeId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            jobApply.EmployeeId = int.Parse(User.FindFirst("Id")?.Value);
             if(jobApplyVm.CV != null)
             {
                 jobApply.CV = _uploadFileService.uploadImage(jobApplyVm.CV, "Image");
@@ -66,7 +66,7 @@ namespace FindJobsApplication.Controllers
             {
                 return Unauthorized("User not logged in as Employee. Please log in as Employee to continue.");
             }
-            int employeeId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            int employeeId = int.Parse(User.FindFirst("Id")?.Value);
             var jobApply = _unitOfWork.JobApply.GetAll(x => x.EmployeeId == employeeId, null, "Job").Select(x => new
             {
                 x.Job.Title,
@@ -93,7 +93,7 @@ namespace FindJobsApplication.Controllers
             {
                 return Unauthorized("User not logged in as Employee. Please log in as Employee to continue.");
             }
-            int employeeId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            int employeeId = int.Parse(User.FindFirst("Id")?.Value);
             var jobApply = _unitOfWork.JobApply.GetFirstOrDefault(x => x.JobApplyId == jobApplyId && x.EmployeeId == employeeId);
             if(jobApply == null)
             {
@@ -102,6 +102,59 @@ namespace FindJobsApplication.Controllers
             _unitOfWork.JobApply.Remove(jobApply);
             _unitOfWork.Save();
             return Ok();
+        }
+
+        [HttpGet("{jobApplyId}")]
+        public IActionResult JobApplyDetail(int jobApplyId)
+        {
+            var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
+            if (claimRole.IsNullOrEmpty() || claimRole != UserType.Employee.ToString())
+            {
+                return Unauthorized("User not logged in as Employee. Please log in as Employee to continue.");
+            }
+
+            var employeeId = int.Parse(User.FindFirst("Id")?.Value);
+
+            var jobApply = _unitOfWork.JobApply.GetFirstOrDefault(x => x.JobApplyId == jobApplyId && x.EmployeeId == employeeId, "Job,Employee");
+            if(jobApply == null)
+            {
+                return NotFound();
+            }
+            return Ok(new
+            {
+                jobApply.JobApplyId,
+                jobApply.ApplyDate,
+                jobApply.CV,
+                jobApply.Message,
+                jobApply.Status,
+                jobApply.JobId,
+                jobApply.EmployeeId,
+                jobApply.IsAccept,
+                jobApply.IsRefuse,
+                jobApply.Job.Title,
+                jobApply.Job.JobCategory.JobCategoryName,
+                jobApply.Job.JobType,
+                jobApply.Job.Salary,
+                jobApply.Job.Amount,
+                jobApply.Job.DateFrom,
+                jobApply.Job.DateTo,
+                jobApply.Job.Description,
+                jobApply.Employee.LastName,
+                jobApply.Employee.FirstName,
+                jobApply.Employee.Phone,
+                jobApply.Employee.Address,
+                jobApply.Employee.City,
+                jobApply.Employee.Country,
+                jobApply.Employee.Image,
+                jobApply.Employee.CIFront,
+                jobApply.Employee.CIBehind,
+                jobApply.Employee.Skills,
+                jobApply.Employee.Experience,
+                jobApply.Employee.Education,
+                jobApply.Employee.Language,
+                jobApply.Employee.Avt,
+                jobApply.Employee.Cover
+            });
         }
 
         [HttpGet("{jobId}", Name = "job-apply-detail-by-job")]
@@ -113,7 +166,7 @@ namespace FindJobsApplication.Controllers
                 return Unauthorized("User not logged in as Employer. Please log in as Employer to continue.");
             }
 
-            int employerId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            int employerId = int.Parse(User.FindFirst("Id")?.Value);
 
             Job job = _unitOfWork.Job.GetFirstOrDefault(x => x.JobId == jobId);
             if(job == null || job.EmployerId != employerId)

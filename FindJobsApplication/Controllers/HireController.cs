@@ -28,27 +28,20 @@ namespace FindJobsApplication.Controllers
         [HttpPost("hire-employee")]
         public IActionResult HireEmployee([FromBody]HireViewModel hireVm)
         {
-            var claimValue = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int userId))
-            {
-                return Unauthorized("User not logged in. Please log in to continue.");
-            }
-
             var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
             if (string.IsNullOrEmpty(claimRole) || claimRole != UserType.Employer.ToString())
             {
                 return Unauthorized("User not logged in as Employer. Please log in as Employer to continue.");
             }
 
-            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == userId);
-
-            if (employer == null) {
-                ModelState.AddModelError("", "Employer does not exist!");
-                return BadRequest(ModelState);
+            if(int.TryParse(User.FindFirstValue("Id"), out int employerId))
+            {
+                return Unauthorized("Employer does not exist!");
             }
+
             Hire hire = _mapper.Map<Hire>(hireVm);
 
-            hire.EmployerId = employer.EmployerId;
+            hire.EmployerId = employerId;
 
             _unitOfWork.Hire.Add(hire);
             _unitOfWork.Save();
@@ -69,20 +62,12 @@ namespace FindJobsApplication.Controllers
                 return Unauthorized("User not logged in as Employer. Please log in as Employer to continue.");
             }
 
-            var claimId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int userId))
+            if (int.TryParse(User.FindFirstValue("Id"), out int employerId))
             {
-                return Unauthorized("User not logged in. Please log in to continue.");
+                return Unauthorized("Employer does not exist!");
             }
 
-            Employer employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == userId);
-            if (employer == null)
-            {
-                ModelState.AddModelError("", "Employer does not exist!");
-                return BadRequest(ModelState);
-            }
-
-            var hire = _unitOfWork.Hire.GetAll(x => x.JobId == jobId && x.EmployerId == employer.EmployerId);
+            var hire = _unitOfWork.Hire.GetAll(x => x.JobId == jobId && x.EmployerId == employerId);
             if (hire == null)
             {
                 return NotFound();
