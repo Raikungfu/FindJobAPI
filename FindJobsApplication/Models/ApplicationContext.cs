@@ -69,12 +69,6 @@ namespace FindJobsApplication.Models
                 .HasForeignKey(h => h.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<JobApply>()
-                .HasOne(h => h.Employer)
-                .WithMany(e => e.JobApplies)
-                .HasForeignKey(h => h.EmployerId)
-                .OnDelete(DeleteBehavior.NoAction);
-
             modelBuilder.Entity<Hire>()
                 .HasOne(h => h.Employee)
                 .WithMany(e => e.Hires)
@@ -86,6 +80,12 @@ namespace FindJobsApplication.Models
                 .WithMany(e => e.Hires)
                 .HasForeignKey(h => h.EmployerId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Hire>()
+                .HasOne(h => h.JobApply)
+                .WithMany()
+                .HasForeignKey(h => h.JobApplyId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, Username = "admin", PasswordHash = "admin123", Email = "admin@example.com", Phone = "0123456789", UserType = UserType.Admin },
@@ -192,11 +192,17 @@ namespace FindJobsApplication.Models
                 new JobService { JobServiceId = 1, ServiceName = "Đăng tin tuyển dụng", Description = "Đăng Tuyển Dụng.", Price = 100, AdminId = 1 },
                 new JobService { JobServiceId = 2, ServiceName = "Nổi Bật Tuyển Dụng", Description = "Làm nổi bật tin tuyển dụng của bạn.", Price = 150, AdminId = 1 }
             );
+            modelBuilder.Entity<JobApply>().HasData(
+                new JobApply { JobApplyId = 1, JobId = 1, EmployeeId = 1, ApplyDate = DateTime.Now.AddDays(-15), Status = JobApplyStatus.Pending },
+                new JobApply { JobApplyId = 2, JobId = 1, EmployeeId = 2, ApplyDate = DateTime.Now.AddDays(-12), Status = JobApplyStatus.Pending },
+                new JobApply { JobApplyId = 3, JobId = 2, EmployeeId = 3, ApplyDate = DateTime.Now.AddDays(-12), Status = JobApplyStatus.Pending }
+            );
+
 
             modelBuilder.Entity<Hire>().HasData(
-                new Hire { HireId = 1, HireDate = DateTime.Now, Status = "Đã được thuê", JobId = 1, EmployerId = 1, EmployeeId = 1 },
-                new Hire { HireId = 2, HireDate = DateTime.Now.AddDays(-10), Status = "Đã được thuê", JobId = 1, EmployerId = 1, EmployeeId = 2 },
-                new Hire { HireId = 3, HireDate = DateTime.Now.AddDays(-5), Status = "Đã được thuê", JobId = 2, EmployerId = 2, EmployeeId = 1 }
+                new Hire { HireId = 1, HireDate = DateTime.Now, Status = HireStatus.InProgress, JobId = 1, EmployerId = 1, EmployeeId = 1, JobApplyId = 1 },
+                new Hire { HireId = 2, HireDate = DateTime.Now.AddDays(-10), Status = HireStatus.InProgress, JobId = 1, EmployerId = 1, EmployeeId = 2, JobApplyId = 2 },
+                new Hire { HireId = 3, HireDate = DateTime.Now.AddDays(-5), Status = HireStatus.InProgress, JobId = 2, EmployerId = 2, EmployeeId = 3, JobApplyId = 3 }
             );
 
             modelBuilder.Entity<Invoice>().HasData(

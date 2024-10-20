@@ -16,6 +16,8 @@ namespace FindJobsApplication.Repository
             JobCategory = new JobCategoryRepository(_db);
             Employee = new EmployeeRepository(_db);
             Admin = new AdminRepository(_db);
+            JobApply = new JobApplyRepository(_db);
+            Hire = new HireRepository(_db);
         }
 
         public IUserRepository User { get; private set; }
@@ -24,6 +26,8 @@ namespace FindJobsApplication.Repository
         public IEmployerRepository Employer { get; private set; }
         public IEmployeeRepository Employee { get; private set; }
         public IAdminRepository Admin { get; private set; }
+        public IJobApplyRepository JobApply { get; private set;}
+        public IHireRepository Hire { get; private set; }
 
         public void Dispose()
         {

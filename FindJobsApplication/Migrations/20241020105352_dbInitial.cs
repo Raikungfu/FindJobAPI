@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FindJobsApplication.Migrations
 {
     /// <inheritdoc />
-    public partial class DbInitial : Migration
+    public partial class dbInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -307,45 +307,6 @@ namespace FindJobsApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Hires",
-                columns: table => new
-                {
-                    HireId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    JobId = table.Column<int>(type: "int", nullable: false),
-                    EmployerId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Hires", x => x.HireId);
-                    table.ForeignKey(
-                        name: "FK_Hires_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId");
-                    table.ForeignKey(
-                        name: "FK_Hires_Employers_EmployerId",
-                        column: x => x.EmployerId,
-                        principalTable: "Employers",
-                        principalColumn: "EmployerId");
-                    table.ForeignKey(
-                        name: "FK_Hires_Jobs_JobId",
-                        column: x => x.JobId,
-                        principalTable: "Jobs",
-                        principalColumn: "JobId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Hires_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "JobApplies",
                 columns: table => new
                 {
@@ -354,12 +315,12 @@ namespace FindJobsApplication.Migrations
                     ApplyDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CV = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     JobId = table.Column<int>(type: "int", nullable: false),
-                    EmployerId = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
                     IsAccept = table.Column<bool>(type: "bit", nullable: true),
-                    IsRefuse = table.Column<bool>(type: "bit", nullable: true)
+                    IsRefuse = table.Column<bool>(type: "bit", nullable: true),
+                    EmployerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -380,6 +341,52 @@ namespace FindJobsApplication.Migrations
                         principalTable: "Jobs",
                         principalColumn: "JobId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Hires",
+                columns: table => new
+                {
+                    HireId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    JobId = table.Column<int>(type: "int", nullable: false),
+                    EmployerId = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    JobApplyId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hires", x => x.HireId);
+                    table.ForeignKey(
+                        name: "FK_Hires_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId");
+                    table.ForeignKey(
+                        name: "FK_Hires_Employers_EmployerId",
+                        column: x => x.EmployerId,
+                        principalTable: "Employers",
+                        principalColumn: "EmployerId");
+                    table.ForeignKey(
+                        name: "FK_Hires_JobApplies_JobApplyId",
+                        column: x => x.JobApplyId,
+                        principalTable: "JobApplies",
+                        principalColumn: "JobApplyId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Hires_Jobs_JobId",
+                        column: x => x.JobId,
+                        principalTable: "Jobs",
+                        principalColumn: "JobId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Hires_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.InsertData(
@@ -498,8 +505,8 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "InvoiceId", "Amount", "EmployerId", "IssueDate" },
                 values: new object[,]
                 {
-                    { 1, 150m, 1, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7208) },
-                    { 2, 200m, 2, new DateTime(2024, 10, 12, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7212) }
+                    { 1, 150m, 1, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(9000) },
+                    { 2, 200m, 2, new DateTime(2024, 10, 15, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(9002) }
                 });
 
             migrationBuilder.InsertData(
@@ -516,16 +523,16 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobId", "Amount", "DateFrom", "DateTo", "Description", "EmployerId", "IsClosed", "JobCategoryId", "JobType", "Location", "Salary", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(6982), new DateTime(2024, 11, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7007), "Phát triển ứng dụng.", 1, false, 1, 0, null, 60000m, "Lập trình viên phần mềm", null },
-                    { 2, null, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7021), new DateTime(2024, 12, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7023), "Tạo các trang web đẹp.", 1, false, 1, 0, null, 50000m, "Nhà thiết kế web", null },
-                    { 3, null, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7026), new DateTime(2025, 1, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7027), "Nâng cao trải nghiệm người dùng.", 2, false, 1, 1, null, 55000m, "Nhà thiết kế UX/UI", null },
-                    { 4, null, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7030), new DateTime(2024, 11, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7031), "Bán sản phẩm và tư vấn khách hàng.", 3, false, 4, 1, null, 30000m, "Nhân viên bán hàng", null },
-                    { 5, null, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7034), new DateTime(2024, 12, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7034), "Dạy kèm học sinh cấp 2 và cấp 3.", 4, false, 5, 1, null, 20000m, "Gia sư Toán", null },
-                    { 6, null, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7037), new DateTime(2024, 11, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7038), "Phục vụ khách hàng trong nhà hàng.", 5, false, 6, 1, null, 25000m, "Phục vụ nhà hàng", null },
-                    { 7, null, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7040), new DateTime(2024, 11, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7041), "Nhập dữ liệu vào hệ thống quản lý.", 6, false, 7, 1, null, 22000m, "Nhân viên nhập liệu", null },
-                    { 8, null, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7044), new DateTime(2024, 11, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7045), "Giải đáp thắc mắc và hỗ trợ khách hàng.", 7, false, 8, 1, null, 27000m, "Nhân viên chăm sóc khách hàng", null },
-                    { 9, null, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7047), new DateTime(2024, 12, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7048), "Giao hàng tới các địa chỉ yêu cầu.", 8, false, 9, 1, null, 30000m, "Nhân viên giao hàng", null },
-                    { 10, null, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7051), new DateTime(2024, 12, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7051), "Pha chế đồ uống theo yêu cầu của khách hàng.", 9, false, 10, 1, null, 28000m, "Nhân viên pha chế", null }
+                    { 1, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8842), new DateTime(2024, 11, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8856), "Phát triển ứng dụng.", 1, false, 1, 0, null, 60000m, "Lập trình viên phần mềm", null },
+                    { 2, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8865), new DateTime(2024, 12, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8866), "Tạo các trang web đẹp.", 1, false, 1, 0, null, 50000m, "Nhà thiết kế web", null },
+                    { 3, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8868), new DateTime(2025, 1, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8869), "Nâng cao trải nghiệm người dùng.", 2, false, 1, 1, null, 55000m, "Nhà thiết kế UX/UI", null },
+                    { 4, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8871), new DateTime(2024, 11, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8871), "Bán sản phẩm và tư vấn khách hàng.", 3, false, 4, 1, null, 30000m, "Nhân viên bán hàng", null },
+                    { 5, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8873), new DateTime(2024, 12, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8874), "Dạy kèm học sinh cấp 2 và cấp 3.", 4, false, 5, 1, null, 20000m, "Gia sư Toán", null },
+                    { 6, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8875), new DateTime(2024, 11, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8876), "Phục vụ khách hàng trong nhà hàng.", 5, false, 6, 1, null, 25000m, "Phục vụ nhà hàng", null },
+                    { 7, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8877), new DateTime(2024, 11, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8878), "Nhập dữ liệu vào hệ thống quản lý.", 6, false, 7, 1, null, 22000m, "Nhân viên nhập liệu", null },
+                    { 8, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8880), new DateTime(2024, 11, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8880), "Giải đáp thắc mắc và hỗ trợ khách hàng.", 7, false, 8, 1, null, 27000m, "Nhân viên chăm sóc khách hàng", null },
+                    { 9, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8882), new DateTime(2024, 12, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8882), "Giao hàng tới các địa chỉ yêu cầu.", 8, false, 9, 1, null, 30000m, "Nhân viên giao hàng", null },
+                    { 10, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8884), new DateTime(2024, 12, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8884), "Pha chế đồ uống theo yêu cầu của khách hàng.", 9, false, 10, 1, null, 28000m, "Nhân viên pha chế", null }
                 });
 
             migrationBuilder.InsertData(
@@ -539,13 +546,23 @@ namespace FindJobsApplication.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Hires",
-                columns: new[] { "HireId", "EmployeeId", "EmployerId", "HireDate", "JobId", "Status", "UserId" },
+                table: "JobApplies",
+                columns: new[] { "JobApplyId", "ApplyDate", "CV", "EmployeeId", "EmployerId", "IsAccept", "IsRefuse", "JobId", "Message", "Status" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, new DateTime(2024, 10, 17, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7143), 1, "Đã được thuê", null },
-                    { 2, 2, 1, new DateTime(2024, 10, 7, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7150), 1, "Đã được thuê", null },
-                    { 3, 1, 2, new DateTime(2024, 10, 12, 19, 39, 18, 49, DateTimeKind.Local).AddTicks(7158), 2, "Đã được thuê", null }
+                    { 1, new DateTime(2024, 10, 5, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8942), null, 1, null, false, false, 1, null, 0 },
+                    { 2, new DateTime(2024, 10, 8, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8947), null, 2, null, false, false, 1, null, 0 },
+                    { 3, new DateTime(2024, 10, 8, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8949), null, 3, null, false, false, 2, null, 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Hires",
+                columns: new[] { "HireId", "EmployeeId", "EmployerId", "HireDate", "JobApplyId", "JobId", "Status", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8968), 1, 1, 0, null },
+                    { 2, 2, 1, new DateTime(2024, 10, 10, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8973), 2, 1, 0, null },
+                    { 3, 3, 2, new DateTime(2024, 10, 15, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8975), 3, 2, 0, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -577,6 +594,11 @@ namespace FindJobsApplication.Migrations
                 name: "IX_Hires_EmployerId",
                 table: "Hires",
                 column: "EmployerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hires_JobApplyId",
+                table: "Hires",
+                column: "JobApplyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Hires_JobId",
@@ -669,9 +691,6 @@ namespace FindJobsApplication.Migrations
                 name: "Invoices");
 
             migrationBuilder.DropTable(
-                name: "JobApplies");
-
-            migrationBuilder.DropTable(
                 name: "JobServices");
 
             migrationBuilder.DropTable(
@@ -681,10 +700,13 @@ namespace FindJobsApplication.Migrations
                 name: "Certifications");
 
             migrationBuilder.DropTable(
-                name: "Jobs");
+                name: "JobApplies");
 
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Jobs");
 
             migrationBuilder.DropTable(
                 name: "Employers");

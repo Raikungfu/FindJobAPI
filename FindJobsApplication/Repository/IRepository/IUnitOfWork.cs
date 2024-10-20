@@ -7,7 +7,9 @@
         IJobCategoryRepository JobCategory { get; }
         IEmployerRepository Employer { get; }
         IEmployeeRepository Employee { get; }
+        IJobApplyRepository JobApply { get; }
         IAdminRepository Admin { get; }
+        IHireRepository Hire { get; }
         void Save();
     }
 }

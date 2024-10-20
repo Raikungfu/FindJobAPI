@@ -135,6 +135,52 @@ namespace FindJobsApplication.Controllers
             });
         }
 
+        [HttpGet("{employerId}", Name = "get-job-employer")]
+        public IActionResult GetJobEmployer(int employerId)
+        {
+            Job job = new Job();
+            if (employerId != null)
+            {
+                job = _unitOfWork.Job.GetFirstOrDefault(j => j.EmployerId == employerId, includeProperties: "Employer,JobCategory");
+            }
+            else
+            {
+                var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
+                if (claimRole == UserType.Employer.ToString())
+                {
+                    var claimValue = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                    if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int userId))
+                    {
+                        return Unauthorized("User not logged in. Please log in to continue.");
+                    }
+                    job = _unitOfWork.Job.GetFirstOrDefault(j => j.EmployerId == userId, includeProperties: "Employer,JobCategory");
+                }
+            }
+            if (job == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new
+            {
+                job.JobId,
+                job.Title,
+                job.JobCategory.JobCategoryName,
+                job.JobType,
+                job.Salary,
+                job.Amount,
+                job.DateFrom,
+                job.DateTo,
+                job.Description,
+                EmployerName = job.Employer.Name,
+                job.Employer.CompanyName,
+                EmployerDescription = job.Employer.Description,
+                Location = job.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(job.Location.Value)
+                    ? JobLocationDictionary.Locations[job.Location.Value]
+                    : job.Employer.CompanyLocation
+            });
+        }
+
         [HttpGet("job-categories")]
         public IActionResult JobCategories(int pageNumber = 0, int pageSize = 6)
         {

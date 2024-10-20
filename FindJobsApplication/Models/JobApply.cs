@@ -3,6 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FindJobsApplication.Models
 {
+    public enum JobApplyStatus
+    {
+        Pending,
+        Accepted,
+        Rejected,
+        Canceled
+    }
+
     public class JobApply
     {
         [Key]
@@ -15,11 +23,9 @@ namespace FindJobsApplication.Models
 
         public string? Message { get; set; }
 
-        public string Status { get; set; }
+        public JobApplyStatus Status { get; set; }
 
         public int JobId { get; set; }
-
-        public int EmployerId { get; set; }
 
         public int EmployeeId { get; set; }
 
@@ -29,9 +35,6 @@ namespace FindJobsApplication.Models
 
         [ForeignKey("JobId")]
         public Job Job { get; set; }
-
-        [ForeignKey("EmployerId")]
-        public Employer Employer { get; set; }
 
         [ForeignKey("EmployeeId")]
         public Employee Employee { get; set; }

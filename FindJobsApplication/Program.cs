@@ -117,6 +117,13 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/Images"
 });
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "CVs")),
+    RequestPath = "/CVs"
+});
+
 app.UseHttpsRedirection();
 
 app.UseRouting();
