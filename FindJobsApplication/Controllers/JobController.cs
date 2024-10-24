@@ -7,7 +7,9 @@ using FindJobsApplication.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Collections;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 
@@ -130,10 +132,29 @@ namespace FindJobsApplication.Controllers
         [HttpGet("get-job-employer")]
         public IActionResult GetJobEmployer([FromQuery] int? employerId)
         {
-            Job job = new Job();
             if (employerId != null)
             {
-                job = _unitOfWork.Job.GetFirstOrDefault(j => j.EmployerId == employerId, includeProperties: "Employer,JobCategory");
+                var job = _unitOfWork.Job.GetAll(j => j.EmployerId == employerId, null, "Employer,JobCategory").Select(job => new
+                {
+                    job.JobId,
+                    job.Title,
+                    job.JobCategory.JobCategoryName,
+                    job.JobType,
+                    job.Salary,
+                    job.Amount,
+                    job.DateFrom,
+                    job.DateTo,
+                    job.Description,
+                    EmployerName = job.Employer.Name,
+                    job.Employer.CompanyName,
+                    EmployerDescription = job.Employer.Description,
+                    Location = job.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(job.Location.Value)
+                    ? JobLocationDictionary.Locations[job.Location.Value]
+                    : job.Employer.CompanyLocation
+                }).ToList();
+
+                if (job == null) return NotFound();
+                else return Ok(job);
             }
             else
             {
@@ -145,32 +166,14 @@ namespace FindJobsApplication.Controllers
                     {
                         return Unauthorized("User not logged in. Please log in to continue.");
                     }
-                    job = _unitOfWork.Job.GetFirstOrDefault(j => j.EmployerId == empId, includeProperties: "Employer,JobCategory");
+                    var job = _unitOfWork.Job.GetAll(j => j.EmployerId == empId, null, "Employer,JobCategory").ToList();
+
+                    if (job == null) return NotFound();
+                    else return Ok(job);
                 }
             }
-            if (job == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(new
-            {
-                job.JobId,
-                job.Title,
-                job.JobCategory.JobCategoryName,
-                job.JobType,
-                job.Salary,
-                job.Amount,
-                job.DateFrom,
-                job.DateTo,
-                job.Description,
-                EmployerName = job.Employer.Name,
-                job.Employer.CompanyName,
-                EmployerDescription = job.Employer.Description,
-                Location = job.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(job.Location.Value)
-                    ? JobLocationDictionary.Locations[job.Location.Value]
-                    : job.Employer.CompanyLocation
-            });
+            return NotFound();
         }
 
         [HttpGet("job-categories")]
@@ -185,6 +188,35 @@ namespace FindJobsApplication.Controllers
         {
             var count = _unitOfWork.Job.GetAll().Count();
             return Ok(count);
+        }
+
+        [HttpPut]
+        public IActionResult PutJob([FromBody] JobViewModel job)
+        {
+            var claimRole = User.FindFirstValue(ClaimTypes.Role);
+            if (claimRole == null || (claimRole != UserType.Employer.ToString()))
+            {
+                return Unauthorized("User not loggin in such an Employer. Please log in to continue.");
+            }
+
+            var jobUpdate = _mapper.Map<Job>(job);
+            _unitOfWork.Job.Update(jobUpdate);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteJob(int jobId) {
+            var claimRole = User.FindFirstValue(ClaimTypes.Role);
+            if (claimRole == null || (claimRole != UserType.Employer.ToString() && claimRole != UserType.Admin.ToString()))
+            {
+                return Unauthorized("User not loggin in such an Employer. Please log in to continue.");
+            }
+
+            _unitOfWork.Job.Remove(jobId);
+            _unitOfWork.Save();
+
+            return Ok();
         }
     }
 }

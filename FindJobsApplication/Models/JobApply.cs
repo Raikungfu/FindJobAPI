@@ -23,6 +23,12 @@ namespace FindJobsApplication.Models
 
         public string? Message { get; set; }
 
+        public decimal? JobSalary { get; set; }
+
+        public string? JobTitle { get; set; }
+
+        public string? JobDescription { get; set; }
+
         public JobApplyStatus Status { get; set; } = JobApplyStatus.Pending;
 
         public int JobId { get; set; }

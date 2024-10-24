@@ -315,6 +315,9 @@ namespace FindJobsApplication.Migrations
                     ApplyDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CV = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JobSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JobDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     JobId = table.Column<int>(type: "int", nullable: false),
                     EmployeeId = table.Column<int>(type: "int", nullable: false),
@@ -505,8 +508,8 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "InvoiceId", "Amount", "EmployerId", "IssueDate" },
                 values: new object[,]
                 {
-                    { 1, 150m, 1, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(9000) },
-                    { 2, 200m, 2, new DateTime(2024, 10, 15, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(9002) }
+                    { 1, 150m, 1, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7487) },
+                    { 2, 200m, 2, new DateTime(2024, 10, 19, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7489) }
                 });
 
             migrationBuilder.InsertData(
@@ -523,16 +526,16 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobId", "Amount", "DateFrom", "DateTo", "Description", "EmployerId", "IsClosed", "JobCategoryId", "JobType", "Location", "Salary", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8842), new DateTime(2024, 11, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8856), "Phát triển ứng dụng.", 1, false, 1, 0, null, 60000m, "Lập trình viên phần mềm", null },
-                    { 2, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8865), new DateTime(2024, 12, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8866), "Tạo các trang web đẹp.", 1, false, 1, 0, null, 50000m, "Nhà thiết kế web", null },
-                    { 3, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8868), new DateTime(2025, 1, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8869), "Nâng cao trải nghiệm người dùng.", 2, false, 1, 1, null, 55000m, "Nhà thiết kế UX/UI", null },
-                    { 4, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8871), new DateTime(2024, 11, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8871), "Bán sản phẩm và tư vấn khách hàng.", 3, false, 4, 1, null, 30000m, "Nhân viên bán hàng", null },
-                    { 5, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8873), new DateTime(2024, 12, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8874), "Dạy kèm học sinh cấp 2 và cấp 3.", 4, false, 5, 1, null, 20000m, "Gia sư Toán", null },
-                    { 6, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8875), new DateTime(2024, 11, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8876), "Phục vụ khách hàng trong nhà hàng.", 5, false, 6, 1, null, 25000m, "Phục vụ nhà hàng", null },
-                    { 7, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8877), new DateTime(2024, 11, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8878), "Nhập dữ liệu vào hệ thống quản lý.", 6, false, 7, 1, null, 22000m, "Nhân viên nhập liệu", null },
-                    { 8, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8880), new DateTime(2024, 11, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8880), "Giải đáp thắc mắc và hỗ trợ khách hàng.", 7, false, 8, 1, null, 27000m, "Nhân viên chăm sóc khách hàng", null },
-                    { 9, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8882), new DateTime(2024, 12, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8882), "Giao hàng tới các địa chỉ yêu cầu.", 8, false, 9, 1, null, 30000m, "Nhân viên giao hàng", null },
-                    { 10, null, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8884), new DateTime(2024, 12, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8884), "Pha chế đồ uống theo yêu cầu của khách hàng.", 9, false, 10, 1, null, 28000m, "Nhân viên pha chế", null }
+                    { 1, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7193), new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7209), "Phát triển ứng dụng.", 1, false, 1, 0, null, 60000m, "Lập trình viên phần mềm", null },
+                    { 2, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7224), new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7225), "Tạo các trang web đẹp.", 1, false, 1, 0, null, 50000m, "Nhà thiết kế web", null },
+                    { 3, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7229), new DateTime(2025, 1, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7230), "Nâng cao trải nghiệm người dùng.", 2, false, 1, 1, null, 55000m, "Nhà thiết kế UX/UI", null },
+                    { 4, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7233), new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7234), "Bán sản phẩm và tư vấn khách hàng.", 3, false, 4, 1, null, 30000m, "Nhân viên bán hàng", null },
+                    { 5, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7236), new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7237), "Dạy kèm học sinh cấp 2 và cấp 3.", 4, false, 5, 1, null, 20000m, "Gia sư Toán", null },
+                    { 6, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7240), new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7240), "Phục vụ khách hàng trong nhà hàng.", 5, false, 6, 1, null, 25000m, "Phục vụ nhà hàng", null },
+                    { 7, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7243), new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7244), "Nhập dữ liệu vào hệ thống quản lý.", 6, false, 7, 1, null, 22000m, "Nhân viên nhập liệu", null },
+                    { 8, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7246), new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7247), "Giải đáp thắc mắc và hỗ trợ khách hàng.", 7, false, 8, 1, null, 27000m, "Nhân viên chăm sóc khách hàng", null },
+                    { 9, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7250), new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7250), "Giao hàng tới các địa chỉ yêu cầu.", 8, false, 9, 1, null, 30000m, "Nhân viên giao hàng", null },
+                    { 10, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7253), new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7254), "Pha chế đồ uống theo yêu cầu của khách hàng.", 9, false, 10, 1, null, 28000m, "Nhân viên pha chế", null }
                 });
 
             migrationBuilder.InsertData(
@@ -547,12 +550,12 @@ namespace FindJobsApplication.Migrations
 
             migrationBuilder.InsertData(
                 table: "JobApplies",
-                columns: new[] { "JobApplyId", "ApplyDate", "CV", "EmployeeId", "EmployerId", "IsAccept", "IsRefuse", "JobId", "Message", "Status" },
+                columns: new[] { "JobApplyId", "ApplyDate", "CV", "EmployeeId", "EmployerId", "IsAccept", "IsRefuse", "JobDescription", "JobId", "JobSalary", "JobTitle", "Message", "Status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 10, 5, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8942), null, 1, null, false, false, 1, null, 0 },
-                    { 2, new DateTime(2024, 10, 8, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8947), null, 2, null, false, false, 1, null, 0 },
-                    { 3, new DateTime(2024, 10, 8, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8949), null, 3, null, false, false, 2, null, 0 }
+                    { 1, new DateTime(2024, 10, 9, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7388), null, 1, null, false, false, null, 1, null, null, null, 0 },
+                    { 2, new DateTime(2024, 10, 12, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7395), null, 2, null, false, false, null, 1, null, null, null, 0 },
+                    { 3, new DateTime(2024, 10, 12, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7398), null, 3, null, false, false, null, 2, null, null, null, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -560,9 +563,9 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "HireId", "EmployeeId", "EmployerId", "HireDate", "JobApplyId", "JobId", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, new DateTime(2024, 10, 20, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8968), 1, 1, 0, null },
-                    { 2, 2, 1, new DateTime(2024, 10, 10, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8973), 2, 1, 0, null },
-                    { 3, 3, 2, new DateTime(2024, 10, 15, 17, 53, 52, 519, DateTimeKind.Local).AddTicks(8975), 3, 2, 0, null }
+                    { 1, 1, 1, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7433), 1, 1, 0, null },
+                    { 2, 2, 1, new DateTime(2024, 10, 14, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7440), 2, 1, 0, null },
+                    { 3, 3, 2, new DateTime(2024, 10, 19, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7443), 3, 2, 0, null }
                 });
 
             migrationBuilder.CreateIndex(

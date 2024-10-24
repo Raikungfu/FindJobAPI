@@ -90,10 +90,10 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminPolicy", policy =>
         policy.RequireClaim(ClaimTypes.Role, "Admin"));
-    options.AddPolicy("SellerPolicy", policy =>
-        policy.RequireClaim(ClaimTypes.Role, "Seller"));
-    options.AddPolicy("CustomerPolicy", policy =>
-            policy.RequireClaim(ClaimTypes.Role, "Customer"));
+    options.AddPolicy("EmployeePolicy", policy =>
+        policy.RequireClaim(ClaimTypes.Role, "Employee"));
+    options.AddPolicy("EmployerPolicy", policy =>
+            policy.RequireClaim(ClaimTypes.Role, "Employer"));
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

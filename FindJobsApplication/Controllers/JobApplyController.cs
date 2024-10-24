@@ -42,7 +42,15 @@ namespace FindJobsApplication.Controllers
                 return Unauthorized("User not logged in as Employee. Please log in as Employee to continue.");
             }
 
+            var job = _unitOfWork.Job.GetFirstOrDefault(x => x.JobId == jobApplyVm.JobId);
+            if (job == null) {
+                return BadRequest("Job mot found!");
+            }
+
             JobApply jobApply = _mapper.Map<JobApply>(jobApplyVm);
+            jobApply.JobSalary = job.Salary;
+            jobApply.JobDescription = job.Description;
+            jobApply.JobTitle = job.Title;
 
             if (jobApplyVm.CV != null)
             {
@@ -70,18 +78,24 @@ namespace FindJobsApplication.Controllers
             {
                 x.JobApplyId,
                 x.ApplyDate,
-                x.Job.Title,
-                x.Job.JobCategory.JobCategoryName,
-                x.Job.JobType,
-                x.Job.Salary,
-                x.Job.Amount,
-                x.Job.DateFrom,
-                x.Job.DateTo,
-                x.Job.Description,
-                x.Job.Employer.CompanyLogo,
-                x.Job.Employer.CompanyName,
-                x.Job.Employer.CompanyIndustry,
-                Location = x.Job.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(x.Job.Location.Value) ? JobLocationDictionary.Locations[x.Job.Location.Value] : x.Job.Employer.CompanyLocation
+                x.JobDescription,
+                x.JobSalary,
+                x.JobTitle,
+                JobDetail = x.Job != null ? new
+                {
+                    x.Job.JobCategory.JobCategoryName,
+                    x.Job.JobType,
+                    x.Job.Amount,
+                    x.Job.DateFrom,
+                    x.Job.DateTo,
+                    Location = x.Job.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(x.Job.Location.Value) ? JobLocationDictionary.Locations[x.Job.Location.Value] : x.Job.Employer.CompanyLocation
+                } : null,
+                Employee = x.Employee != null ? new
+                {
+                    x.Job.Employer.CompanyLogo,
+                    x.Job.Employer.CompanyName,
+                    x.Job.Employer.CompanyIndustry
+                } : null,
             }).ToList();
             return Ok(jobApply);
         }
@@ -109,7 +123,7 @@ namespace FindJobsApplication.Controllers
         public IActionResult JobApplyDetail(int jobApplyId)
         {
             var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
-            if (claimRole.IsNullOrEmpty() || claimRole != UserType.Employee.ToString())
+            if (claimRole.IsNullOrEmpty() || claimRole != UserType.Employee.ToString() || claimRole != UserType.Employer.ToString())
             {
                 return Unauthorized("User not logged in as Employee. Please log in as Employee to continue.");
             }
@@ -132,29 +146,35 @@ namespace FindJobsApplication.Controllers
                 jobApply.EmployeeId,
                 jobApply.IsAccept,
                 jobApply.IsRefuse,
-                jobApply.Job.Title,
-                jobApply.Job.JobCategory.JobCategoryName,
-                jobApply.Job.JobType,
-                jobApply.Job.Salary,
-                jobApply.Job.Amount,
-                jobApply.Job.DateFrom,
-                jobApply.Job.DateTo,
-                jobApply.Job.Description,
-                jobApply.Employee.LastName,
-                jobApply.Employee.FirstName,
-                jobApply.Employee.Phone,
-                jobApply.Employee.Address,
-                jobApply.Employee.City,
-                jobApply.Employee.Country,
-                jobApply.Employee.Image,
-                jobApply.Employee.CIFront,
-                jobApply.Employee.CIBehind,
-                jobApply.Employee.Skills,
-                jobApply.Employee.Experience,
-                jobApply.Employee.Education,
-                jobApply.Employee.Language,
-                jobApply.Employee.Avt,
-                jobApply.Employee.Cover
+                jobApply.JobDescription,
+                jobApply.JobSalary,
+                jobApply.JobTitle,
+                JobDetail = jobApply.Job != null ? new
+                {
+                    jobApply.Job.JobCategory.JobCategoryName,
+                    jobApply.Job.JobType,
+                    jobApply.Job.Amount,
+                    jobApply.Job.DateFrom,
+                    jobApply.Job.DateTo,
+                } : null,
+                Employee = jobApply.Employee != null ? new
+                {
+                    jobApply.Employee.LastName,
+                    jobApply.Employee.FirstName,
+                    jobApply.Employee.Phone,
+                    jobApply.Employee.Address,
+                    jobApply.Employee.City,
+                    jobApply.Employee.Country,
+                    jobApply.Employee.Image,
+                    jobApply.Employee.CIFront,
+                    jobApply.Employee.CIBehind,
+                    jobApply.Employee.Skills,
+                    jobApply.Employee.Experience,
+                    jobApply.Employee.Education,
+                    jobApply.Employee.Language,
+                    jobApply.Employee.Avt,
+                    jobApply.Employee.Cover
+                } : null
             });
         }
 
