@@ -36,26 +36,25 @@ namespace FindJobsApplication.Controllers
         public IActionResult ApplyJob([FromBody]JobApplyViewModel jobApplyVm)
         {
             var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
-            if(claimRole.IsNullOrEmpty() || claimRole != UserType.Employee.ToString())
+            var claimId = User.FindFirst("Id")?.Value;
+            if (claimRole.IsNullOrEmpty() || claimRole != UserType.Employee.ToString() || claimId == null || !int.TryParse(claimId, out int employeeId))
             {
                 return Unauthorized("User not logged in as Employee. Please log in as Employee to continue.");
             }
+
             JobApply jobApply = _mapper.Map<JobApply>(jobApplyVm);
-            jobApply.EmployeeId = int.Parse(User.FindFirst("Id")?.Value);
-            if(jobApplyVm.CV != null)
+
+            if (jobApplyVm.CV != null)
             {
                 jobApply.CV = _uploadFileService.uploadImage(jobApplyVm.CV, "Image");
             }
-            else
-            {
-                Employee employee = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == jobApply.EmployeeId);
-                jobApply.CV = employee.Cv;
-            }
+
+            jobApply.EmployeeId = employeeId;
 
             _unitOfWork.JobApply.Add(jobApply);
             _unitOfWork.Save();
 
-            return Ok();
+            return Ok(jobApply);
         }
 
         [HttpGet("my-applied-job")]
@@ -67,8 +66,10 @@ namespace FindJobsApplication.Controllers
                 return Unauthorized("User not logged in as Employee. Please log in as Employee to continue.");
             }
             int employeeId = int.Parse(User.FindFirst("Id")?.Value);
-            var jobApply = _unitOfWork.JobApply.GetAll(x => x.EmployeeId == employeeId, null, "Job").Select(x => new
+            var jobApply = _unitOfWork.JobApply.GetAll(x => x.EmployeeId == employeeId, null, "Job,Job.JobCategory,Job.Employer").Select(x => new
             {
+                x.JobApplyId,
+                x.ApplyDate,
                 x.Job.Title,
                 x.Job.JobCategory.JobCategoryName,
                 x.Job.JobType,
