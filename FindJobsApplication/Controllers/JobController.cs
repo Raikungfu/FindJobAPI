@@ -132,48 +132,46 @@ namespace FindJobsApplication.Controllers
         [HttpGet("get-job-employer")]
         public IActionResult GetJobEmployer([FromQuery] int? employerId)
         {
-            if (employerId != null)
-            {
-                var job = _unitOfWork.Job.GetAll(j => j.EmployerId == employerId, null, "Employer,JobCategory").Select(job => new
-                {
-                    job.JobId,
-                    job.Title,
-                    job.JobCategory.JobCategoryName,
-                    job.JobType,
-                    job.Salary,
-                    job.Amount,
-                    job.DateFrom,
-                    job.DateTo,
-                    job.Description,
-                    EmployerName = job.Employer.Name,
-                    job.Employer.CompanyName,
-                    EmployerDescription = job.Employer.Description,
-                    Location = job.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(job.Location.Value)
-                    ? JobLocationDictionary.Locations[job.Location.Value]
-                    : job.Employer.CompanyLocation
-                }).ToList();
+            int? empId = employerId;
 
-                if (job == null) return NotFound();
-                else return Ok(job);
-            }
-            else
+            if (empId == null)
             {
                 var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
                 if (claimRole == UserType.Employer.ToString())
                 {
                     var claimValue = User.FindFirst("Id")?.Value;
-                    if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int empId))
+                    if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int parsedEmpId))
                     {
                         return Unauthorized("User not logged in. Please log in to continue.");
                     }
-                    var job = _unitOfWork.Job.GetAll(j => j.EmployerId == empId, null, "Employer,JobCategory").ToList();
-
-                    if (job == null) return NotFound();
-                    else return Ok(job);
+                    empId = parsedEmpId;
+                }
+                else
+                {
+                    return NotFound();
                 }
             }
 
-            return NotFound();
+            var jobs = _unitOfWork.Job.GetAll(j => j.EmployerId == empId, null, "Employer,JobCategory").Select(job => new
+            {
+                job.JobId,
+                job.Title,
+                job.JobCategory.JobCategoryName,
+                job.JobType,
+                job.Salary,
+                job.Amount,
+                job.DateFrom,
+                job.DateTo,
+                job.Description,
+                EmployerName = job.Employer.Name,
+                job.Employer.CompanyName,
+                EmployerDescription = job.Employer.Description,
+                Location = job.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(job.Location.Value)
+                    ? JobLocationDictionary.Locations[job.Location.Value]
+                    : job.Employer.CompanyLocation
+            }).ToList();
+
+            return jobs.Any() ? Ok(jobs) : NotFound();
         }
 
         [HttpGet("job-categories")]
