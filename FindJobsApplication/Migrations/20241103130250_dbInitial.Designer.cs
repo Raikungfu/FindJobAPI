@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobsApplication.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241024070124_dbInitial")]
+    [Migration("20241103130250_dbInitial")]
     partial class dbInitial
     {
         /// <inheritdoc />
@@ -689,7 +689,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 1,
                             EmployeeId = 1,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7433),
+                            HireDate = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9950),
                             JobApplyId = 1,
                             JobId = 1,
                             Status = 0
@@ -699,7 +699,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 2,
                             EmployeeId = 2,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 10, 14, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7440),
+                            HireDate = new DateTime(2024, 10, 24, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9953),
                             JobApplyId = 2,
                             JobId = 1,
                             Status = 0
@@ -709,7 +709,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 3,
                             EmployeeId = 3,
                             EmployerId = 2,
-                            HireDate = new DateTime(2024, 10, 19, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7443),
+                            HireDate = new DateTime(2024, 10, 29, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9955),
                             JobApplyId = 3,
                             JobId = 2,
                             Status = 0
@@ -745,14 +745,14 @@ namespace FindJobsApplication.Migrations
                             InvoiceId = 1,
                             Amount = 150m,
                             EmployerId = 1,
-                            IssueDate = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7487)
+                            IssueDate = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9986)
                         },
                         new
                         {
                             InvoiceId = 2,
                             Amount = 200m,
                             EmployerId = 2,
-                            IssueDate = new DateTime(2024, 10, 19, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7489)
+                            IssueDate = new DateTime(2024, 10, 29, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9988)
                         });
                 });
 
@@ -815,8 +815,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 1,
-                            DateFrom = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7193),
-                            DateTo = new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7209),
+                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9780),
+                            DateTo = new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9793),
                             Description = "Phát triển ứng dụng.",
                             EmployerId = 1,
                             IsClosed = false,
@@ -828,8 +828,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 2,
-                            DateFrom = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7224),
-                            DateTo = new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7225),
+                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9802),
+                            DateTo = new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9803),
                             Description = "Tạo các trang web đẹp.",
                             EmployerId = 1,
                             IsClosed = false,
@@ -841,8 +841,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 3,
-                            DateFrom = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7229),
-                            DateTo = new DateTime(2025, 1, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7230),
+                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9805),
+                            DateTo = new DateTime(2025, 2, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9806),
                             Description = "Nâng cao trải nghiệm người dùng.",
                             EmployerId = 2,
                             IsClosed = false,
@@ -854,8 +854,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 4,
-                            DateFrom = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7233),
-                            DateTo = new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7234),
+                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9807),
+                            DateTo = new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9808),
                             Description = "Bán sản phẩm và tư vấn khách hàng.",
                             EmployerId = 3,
                             IsClosed = false,
@@ -867,8 +867,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 5,
-                            DateFrom = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7236),
-                            DateTo = new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7237),
+                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9810),
+                            DateTo = new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9810),
                             Description = "Dạy kèm học sinh cấp 2 và cấp 3.",
                             EmployerId = 4,
                             IsClosed = false,
@@ -880,8 +880,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 6,
-                            DateFrom = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7240),
-                            DateTo = new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7240),
+                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9812),
+                            DateTo = new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9812),
                             Description = "Phục vụ khách hàng trong nhà hàng.",
                             EmployerId = 5,
                             IsClosed = false,
@@ -893,8 +893,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 7,
-                            DateFrom = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7243),
-                            DateTo = new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7244),
+                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9814),
+                            DateTo = new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9814),
                             Description = "Nhập dữ liệu vào hệ thống quản lý.",
                             EmployerId = 6,
                             IsClosed = false,
@@ -906,8 +906,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 8,
-                            DateFrom = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7246),
-                            DateTo = new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7247),
+                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9816),
+                            DateTo = new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9817),
                             Description = "Giải đáp thắc mắc và hỗ trợ khách hàng.",
                             EmployerId = 7,
                             IsClosed = false,
@@ -919,8 +919,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 9,
-                            DateFrom = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7250),
-                            DateTo = new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7250),
+                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9818),
+                            DateTo = new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9819),
                             Description = "Giao hàng tới các địa chỉ yêu cầu.",
                             EmployerId = 8,
                             IsClosed = false,
@@ -932,8 +932,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 10,
-                            DateFrom = new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7253),
-                            DateTo = new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7254),
+                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9821),
+                            DateTo = new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9821),
                             Description = "Pha chế đồ uống theo yêu cầu của khách hàng.",
                             EmployerId = 9,
                             IsClosed = false,
@@ -1002,7 +1002,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 1,
-                            ApplyDate = new DateTime(2024, 10, 9, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7388),
+                            ApplyDate = new DateTime(2024, 10, 19, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9917),
                             EmployeeId = 1,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1012,7 +1012,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 2,
-                            ApplyDate = new DateTime(2024, 10, 12, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7395),
+                            ApplyDate = new DateTime(2024, 10, 22, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9924),
                             EmployeeId = 2,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1022,7 +1022,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 3,
-                            ApplyDate = new DateTime(2024, 10, 12, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7398),
+                            ApplyDate = new DateTime(2024, 10, 22, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9926),
                             EmployeeId = 3,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1133,6 +1133,9 @@ namespace FindJobsApplication.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double?>("Duration")
+                        .HasColumnType("float");
+
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
@@ -1142,6 +1145,9 @@ namespace FindJobsApplication.Migrations
                     b.Property<string>("ServiceName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("jobServiceType")
+                        .HasColumnType("int");
 
                     b.HasKey("JobServiceId");
 
@@ -1156,7 +1162,8 @@ namespace FindJobsApplication.Migrations
                             AdminId = 1,
                             Description = "Đăng Tuyển Dụng.",
                             Price = 100m,
-                            ServiceName = "Đăng tin tuyển dụng"
+                            ServiceName = "Đăng tin tuyển dụng",
+                            jobServiceType = 8
                         },
                         new
                         {
@@ -1164,8 +1171,59 @@ namespace FindJobsApplication.Migrations
                             AdminId = 1,
                             Description = "Làm nổi bật tin tuyển dụng của bạn.",
                             Price = 150m,
-                            ServiceName = "Nổi Bật Tuyển Dụng"
+                            ServiceName = "Nổi Bật Tuyển Dụng",
+                            jobServiceType = 8
                         });
+                });
+
+            modelBuilder.Entity("FindJobsApplication.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+
+                    b.Property<DateTime?>("DateFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateTo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("JobServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentRef")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("JobServiceId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("FindJobsApplication.Models.Review", b =>
@@ -1631,6 +1689,21 @@ namespace FindJobsApplication.Migrations
                     b.Navigation("Admin");
                 });
 
+            modelBuilder.Entity("FindJobsApplication.Models.Order", b =>
+                {
+                    b.HasOne("FindJobsApplication.Models.JobService", "JobService")
+                        .WithMany("Orders")
+                        .HasForeignKey("JobServiceId");
+
+                    b.HasOne("FindJobsApplication.Models.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("JobService");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("FindJobsApplication.Models.Review", b =>
                 {
                     b.HasOne("FindJobsApplication.Models.Employee", "Employee")
@@ -1692,11 +1765,18 @@ namespace FindJobsApplication.Migrations
                     b.Navigation("Jobs");
                 });
 
+            modelBuilder.Entity("FindJobsApplication.Models.JobService", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("FindJobsApplication.Models.User", b =>
                 {
                     b.Navigation("Hires");
 
                     b.Navigation("Jobs");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("Reviews");
                 });

@@ -196,7 +196,7 @@ namespace FindJobsApplication.Controllers
                 _unitOfWork.Order.Update(order);
                 _unitOfWork.Save();
 
-                return Ok(new { message = "Cập nhật đơn hàng thành công." });
+                return Redirect("https://find-job-react.onrender.com");
             }
             catch (Exception e)
             {

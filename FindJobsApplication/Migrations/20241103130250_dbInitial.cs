@@ -70,7 +70,9 @@ namespace FindJobsApplication.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    AdminId = table.Column<int>(type: "int", nullable: false)
+                    Duration = table.Column<double>(type: "float", nullable: true),
+                    AdminId = table.Column<int>(type: "int", nullable: false),
+                    jobServiceType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -190,6 +192,39 @@ namespace FindJobsApplication.Migrations
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DateFrom = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DateTo = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    JobServiceId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    OrderStatus = table.Column<int>(type: "int", nullable: false),
+                    PaymentMethod = table.Column<int>(type: "int", nullable: true),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PaymentRef = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaymentStatus = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.ForeignKey(
+                        name: "FK_Orders_JobServices_JobServiceId",
+                        column: x => x.JobServiceId,
+                        principalTable: "JobServices",
+                        principalColumn: "JobServiceId");
+                    table.ForeignKey(
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -508,17 +543,17 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "InvoiceId", "Amount", "EmployerId", "IssueDate" },
                 values: new object[,]
                 {
-                    { 1, 150m, 1, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7487) },
-                    { 2, 200m, 2, new DateTime(2024, 10, 19, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7489) }
+                    { 1, 150m, 1, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9986) },
+                    { 2, 200m, 2, new DateTime(2024, 10, 29, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9988) }
                 });
 
             migrationBuilder.InsertData(
                 table: "JobServices",
-                columns: new[] { "JobServiceId", "AdminId", "Description", "Image", "Price", "ServiceName" },
+                columns: new[] { "JobServiceId", "AdminId", "Description", "Duration", "Image", "Price", "ServiceName", "jobServiceType" },
                 values: new object[,]
                 {
-                    { 1, 1, "Đăng Tuyển Dụng.", null, 100m, "Đăng tin tuyển dụng" },
-                    { 2, 1, "Làm nổi bật tin tuyển dụng của bạn.", null, 150m, "Nổi Bật Tuyển Dụng" }
+                    { 1, 1, "Đăng Tuyển Dụng.", null, null, 100m, "Đăng tin tuyển dụng", 8 },
+                    { 2, 1, "Làm nổi bật tin tuyển dụng của bạn.", null, null, 150m, "Nổi Bật Tuyển Dụng", 8 }
                 });
 
             migrationBuilder.InsertData(
@@ -526,16 +561,16 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobId", "Amount", "DateFrom", "DateTo", "Description", "EmployerId", "IsClosed", "JobCategoryId", "JobType", "Location", "Salary", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7193), new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7209), "Phát triển ứng dụng.", 1, false, 1, 0, null, 60000m, "Lập trình viên phần mềm", null },
-                    { 2, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7224), new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7225), "Tạo các trang web đẹp.", 1, false, 1, 0, null, 50000m, "Nhà thiết kế web", null },
-                    { 3, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7229), new DateTime(2025, 1, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7230), "Nâng cao trải nghiệm người dùng.", 2, false, 1, 1, null, 55000m, "Nhà thiết kế UX/UI", null },
-                    { 4, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7233), new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7234), "Bán sản phẩm và tư vấn khách hàng.", 3, false, 4, 1, null, 30000m, "Nhân viên bán hàng", null },
-                    { 5, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7236), new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7237), "Dạy kèm học sinh cấp 2 và cấp 3.", 4, false, 5, 1, null, 20000m, "Gia sư Toán", null },
-                    { 6, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7240), new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7240), "Phục vụ khách hàng trong nhà hàng.", 5, false, 6, 1, null, 25000m, "Phục vụ nhà hàng", null },
-                    { 7, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7243), new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7244), "Nhập dữ liệu vào hệ thống quản lý.", 6, false, 7, 1, null, 22000m, "Nhân viên nhập liệu", null },
-                    { 8, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7246), new DateTime(2024, 11, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7247), "Giải đáp thắc mắc và hỗ trợ khách hàng.", 7, false, 8, 1, null, 27000m, "Nhân viên chăm sóc khách hàng", null },
-                    { 9, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7250), new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7250), "Giao hàng tới các địa chỉ yêu cầu.", 8, false, 9, 1, null, 30000m, "Nhân viên giao hàng", null },
-                    { 10, null, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7253), new DateTime(2024, 12, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7254), "Pha chế đồ uống theo yêu cầu của khách hàng.", 9, false, 10, 1, null, 28000m, "Nhân viên pha chế", null }
+                    { 1, null, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9780), new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9793), "Phát triển ứng dụng.", 1, false, 1, 0, null, 60000m, "Lập trình viên phần mềm", null },
+                    { 2, null, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9802), new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9803), "Tạo các trang web đẹp.", 1, false, 1, 0, null, 50000m, "Nhà thiết kế web", null },
+                    { 3, null, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9805), new DateTime(2025, 2, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9806), "Nâng cao trải nghiệm người dùng.", 2, false, 1, 1, null, 55000m, "Nhà thiết kế UX/UI", null },
+                    { 4, null, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9807), new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9808), "Bán sản phẩm và tư vấn khách hàng.", 3, false, 4, 1, null, 30000m, "Nhân viên bán hàng", null },
+                    { 5, null, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9810), new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9810), "Dạy kèm học sinh cấp 2 và cấp 3.", 4, false, 5, 1, null, 20000m, "Gia sư Toán", null },
+                    { 6, null, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9812), new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9812), "Phục vụ khách hàng trong nhà hàng.", 5, false, 6, 1, null, 25000m, "Phục vụ nhà hàng", null },
+                    { 7, null, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9814), new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9814), "Nhập dữ liệu vào hệ thống quản lý.", 6, false, 7, 1, null, 22000m, "Nhân viên nhập liệu", null },
+                    { 8, null, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9816), new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9817), "Giải đáp thắc mắc và hỗ trợ khách hàng.", 7, false, 8, 1, null, 27000m, "Nhân viên chăm sóc khách hàng", null },
+                    { 9, null, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9818), new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9819), "Giao hàng tới các địa chỉ yêu cầu.", 8, false, 9, 1, null, 30000m, "Nhân viên giao hàng", null },
+                    { 10, null, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9821), new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9821), "Pha chế đồ uống theo yêu cầu của khách hàng.", 9, false, 10, 1, null, 28000m, "Nhân viên pha chế", null }
                 });
 
             migrationBuilder.InsertData(
@@ -553,9 +588,9 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobApplyId", "ApplyDate", "CV", "EmployeeId", "EmployerId", "IsAccept", "IsRefuse", "JobDescription", "JobId", "JobSalary", "JobTitle", "Message", "Status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 10, 9, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7388), null, 1, null, false, false, null, 1, null, null, null, 0 },
-                    { 2, new DateTime(2024, 10, 12, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7395), null, 2, null, false, false, null, 1, null, null, null, 0 },
-                    { 3, new DateTime(2024, 10, 12, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7398), null, 3, null, false, false, null, 2, null, null, null, 0 }
+                    { 1, new DateTime(2024, 10, 19, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9917), null, 1, null, false, false, null, 1, null, null, null, 0 },
+                    { 2, new DateTime(2024, 10, 22, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9924), null, 2, null, false, false, null, 1, null, null, null, 0 },
+                    { 3, new DateTime(2024, 10, 22, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9926), null, 3, null, false, false, null, 2, null, null, null, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -563,9 +598,9 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "HireId", "EmployeeId", "EmployerId", "HireDate", "JobApplyId", "JobId", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, new DateTime(2024, 10, 24, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7433), 1, 1, 0, null },
-                    { 2, 2, 1, new DateTime(2024, 10, 14, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7440), 2, 1, 0, null },
-                    { 3, 3, 2, new DateTime(2024, 10, 19, 14, 1, 23, 923, DateTimeKind.Local).AddTicks(7443), 3, 2, 0, null }
+                    { 1, 1, 1, new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9950), 1, 1, 0, null },
+                    { 2, 2, 1, new DateTime(2024, 10, 24, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9953), 2, 1, 0, null },
+                    { 3, 3, 2, new DateTime(2024, 10, 29, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9955), 3, 2, 0, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -654,6 +689,16 @@ namespace FindJobsApplication.Migrations
                 column: "AdminId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_JobServiceId",
+                table: "Orders",
+                column: "JobServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reviews_EmployeeId",
                 table: "Reviews",
                 column: "EmployeeId");
@@ -694,7 +739,7 @@ namespace FindJobsApplication.Migrations
                 name: "Invoices");
 
             migrationBuilder.DropTable(
-                name: "JobServices");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
@@ -704,6 +749,9 @@ namespace FindJobsApplication.Migrations
 
             migrationBuilder.DropTable(
                 name: "JobApplies");
+
+            migrationBuilder.DropTable(
+                name: "JobServices");
 
             migrationBuilder.DropTable(
                 name: "Employees");

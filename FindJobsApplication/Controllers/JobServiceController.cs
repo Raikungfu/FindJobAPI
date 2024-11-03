@@ -27,6 +27,7 @@ namespace FindJobsApplication.Controllers
         }
 
         // GET: api/<JobServiceController>
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Get()
         {
@@ -34,6 +35,7 @@ namespace FindJobsApplication.Controllers
         }
 
         // GET api/<JobServiceController>/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
