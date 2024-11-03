@@ -544,8 +544,8 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "InvoiceId", "Amount", "EmployerId", "IssueDate" },
                 values: new object[,]
                 {
-                    { 1, 150m, 1, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9606) },
-                    { 2, 200m, 2, new DateTime(2024, 10, 29, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9610) }
+                    { 1, 150m, 1, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5378) },
+                    { 2, 200m, 2, new DateTime(2024, 10, 29, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5382) }
                 });
 
             migrationBuilder.InsertData(
@@ -553,8 +553,22 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobServiceId", "AdminId", "Description", "Duration", "Image", "Price", "ServiceName", "jobServiceType" },
                 values: new object[,]
                 {
-                    { 1, 1, "Đăng Tuyển Dụng.", null, null, 100m, "Đăng tin tuyển dụng", 8 },
-                    { 2, 1, "Làm nổi bật tin tuyển dụng của bạn.", null, null, 150m, "Nổi Bật Tuyển Dụng", 8 }
+                    { 1, 1, "Cơ hội để bạn đưa tin tuyển dụng của mình đến với hàng triệu ứng viên. Gói này cho phép bạn đăng một tin tuyển dụng duy nhất, thu hút sự chú ý của những ứng viên tiềm năng ngay lập tức.", 1.0, null, 9000m, "Đăng tin tuyển dụng 1 lần", 4 },
+                    { 2, 1, "Tối ưu hóa cơ hội tuyển dụng của bạn với gói 5 lần. Đăng tin tuyển dụng liên tiếp để tiếp cận nhiều ứng viên hơn và tăng khả năng tìm thấy ứng viên phù hợp.", 5.0, null, 39000m, "Đăng tin tuyển dụng 5 lần", 4 },
+                    { 3, 1, "Với gói 10 lần, bạn có thể thoải mái đăng tin tuyển dụng của mình mà không lo lắng về chi phí. Đây là lựa chọn hoàn hảo cho các doanh nghiệp có nhu cầu tuyển dụng thường xuyên.", 10.0, null, 69000m, "Đăng tin tuyển dụng 10 lần", 4 },
+                    { 4, 1, "Mở rộng khả năng tiếp cận ứng viên của bạn với gói đăng tin 20 lần. Gói này không chỉ tiết kiệm mà còn cho phép bạn duy trì sự hiện diện liên tục trên nền tảng tuyển dụng.", 20.0, null, 109000m, "Đăng tin tuyển dụng 20 lần", 4 },
+                    { 5, 1, "Gói 100 lần là giải pháp tối ưu cho các doanh nghiệp lớn với nhu cầu tuyển dụng liên tục. Đăng tin không giới hạn giúp bạn dễ dàng thu hút ứng viên hàng đầu.", 100.0, null, 399000m, "Đăng tin tuyển dụng 100 lần", 4 },
+                    { 6, 1, "Đăng tin tuyển dụng mỗi ngày trong 30 ngày, đảm bảo rằng tin tuyển dụng của bạn luôn tươi mới và thu hút. Lựa chọn lý tưởng cho những ai muốn duy trì sự chú ý của ứng viên.", 30.0, null, 100000m, "Đăng tin tuyển dụng theo ngày", 4 },
+                    { 7, 1, "Gói đăng tin theo tháng giúp bạn dễ dàng quản lý quá trình tuyển dụng của mình. Đăng tin hàng tháng để thu hút ứng viên liên tục và mở rộng mạng lưới của bạn.", 30.0, null, 250000m, "Đăng tin tuyển dụng theo tháng", 4 },
+                    { 8, 1, "Chọn gói đăng tin theo năm để đảm bảo sự hiện diện lâu dài của bạn trong thị trường tuyển dụng. Đây là lựa chọn tốt nhất cho các doanh nghiệp có nhu cầu tuyển dụng ổn định trong thời gian dài.", 365.0, null, 1000000m, "Đăng tin tuyển dụng theo năm", 4 },
+                    { 9, 1, "Đưa tin tuyển dụng của bạn lên hàng đầu với gói nổi bật một lần. Đảm bảo rằng tin của bạn thu hút mọi ánh nhìn từ ứng viên ngay từ lần đầu tiên.", 1.0, null, 15000m, "Nổi Bật Tuyển Dụng 1 lần", 4 },
+                    { 10, 1, "Đăng tin nổi bật trong 5 lần liên tiếp. Một cách hoàn hảo để đảm bảo rằng thông báo tuyển dụng của bạn luôn được chú ý và tiếp cận với nhiều ứng viên hơn.", 5.0, null, 69000m, "Nổi Bật Tuyển Dụng 5 lần", 4 },
+                    { 11, 1, "Với gói 10 lần, bạn không chỉ nổi bật mà còn có thể thu hút nhiều ứng viên hơn thông qua những tin tuyển dụng chất lượng cao và được ưu tiên hiển thị.", 10.0, null, 129000m, "Nổi Bật Tuyển Dụng 10 lần", 4 },
+                    { 12, 1, "Gói nổi bật 20 lần sẽ mang lại cho bạn lợi thế cạnh tranh. Tăng cường khả năng thu hút ứng viên phù hợp với gói dịch vụ này.", 20.0, null, 199000m, "Nổi Bật Tuyển Dụng 20 lần", 4 },
+                    { 13, 1, "Gói nổi bật 100 lần là sự lựa chọn tuyệt vời cho các công ty lớn. Với số lượng đăng tin dồi dào, bạn sẽ có nhiều cơ hội tiếp cận các ứng viên chất lượng.", 100.0, null, 499000m, "Nổi Bật Tuyển Dụng 100 lần", 4 },
+                    { 14, 1, "Đảm bảo tin tuyển dụng của bạn luôn nổi bật hàng ngày trong 30 ngày, thu hút sự chú ý liên tục từ các ứng viên tiềm năng.", 30.0, null, 150000m, "Nổi Bật Tuyển Dụng theo ngày", 4 },
+                    { 15, 1, "Gói nổi bật theo tháng giúp bạn duy trì sự hiện diện nổi bật trong suốt thời gian dài, đảm bảo rằng tin tuyển dụng của bạn luôn ở vị trí dễ thấy.", 30.0, null, 300000m, "Nổi Bật Tuyển Dụng theo tháng", 4 },
+                    { 16, 1, "Chọn gói nổi bật theo năm để tối đa hóa khả năng tiếp cận ứng viên và giữ cho tin tuyển dụng của bạn luôn nổi bật trong suốt thời gian dài.", 365.0, null, 1200000m, "Nổi Bật Tuyển Dụng theo năm", 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -562,16 +576,16 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobId", "Amount", "DateFrom", "DateTo", "Description", "EmployerId", "IsClosed", "JobCategoryId", "JobType", "Location", "Salary", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9260), new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9282), "Phát triển ứng dụng.", 1, false, 1, 0, null, 60000m, "Lập trình viên phần mềm", null },
-                    { 2, null, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9370), new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9371), "Tạo các trang web đẹp.", 1, false, 1, 0, null, 50000m, "Nhà thiết kế web", null },
-                    { 3, null, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9375), new DateTime(2025, 2, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9376), "Nâng cao trải nghiệm người dùng.", 2, false, 1, 1, null, 55000m, "Nhà thiết kế UX/UI", null },
-                    { 4, null, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9379), new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9380), "Bán sản phẩm và tư vấn khách hàng.", 3, false, 4, 1, null, 30000m, "Nhân viên bán hàng", null },
-                    { 5, null, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9383), new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9384), "Dạy kèm học sinh cấp 2 và cấp 3.", 4, false, 5, 1, null, 20000m, "Gia sư Toán", null },
-                    { 6, null, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9387), new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9387), "Phục vụ khách hàng trong nhà hàng.", 5, false, 6, 1, null, 25000m, "Phục vụ nhà hàng", null },
-                    { 7, null, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9390), new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9391), "Nhập dữ liệu vào hệ thống quản lý.", 6, false, 7, 1, null, 22000m, "Nhân viên nhập liệu", null },
-                    { 8, null, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9393), new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9394), "Giải đáp thắc mắc và hỗ trợ khách hàng.", 7, false, 8, 1, null, 27000m, "Nhân viên chăm sóc khách hàng", null },
-                    { 9, null, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9397), new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9398), "Giao hàng tới các địa chỉ yêu cầu.", 8, false, 9, 1, null, 30000m, "Nhân viên giao hàng", null },
-                    { 10, null, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9400), new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9401), "Pha chế đồ uống theo yêu cầu của khách hàng.", 9, false, 10, 1, null, 28000m, "Nhân viên pha chế", null }
+                    { 1, 10m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5060), new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5075), "Phát triển ứng dụng.", 1, false, 1, 0, 15, 60000m, "Lập trình viên phần mềm", null },
+                    { 2, 3m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5087), new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5088), "Tạo các trang web đẹp.", 1, false, 1, 0, 15, 50000m, "Nhà thiết kế web", null },
+                    { 3, 15m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5093), new DateTime(2025, 2, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5093), "Nâng cao trải nghiệm người dùng.", 2, false, 1, 1, 0, 55000m, "Nhà thiết kế UX/UI", null },
+                    { 4, 5m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5098), new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5098), "Bán sản phẩm và tư vấn khách hàng.", 3, false, 4, 1, 2, 30000m, "Nhân viên bán hàng", null },
+                    { 5, 10m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5102), new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5103), "Dạy kèm học sinh cấp 2 và cấp 3.", 4, false, 5, 1, 1, 20000m, "Gia sư Toán", null },
+                    { 6, 8m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5106), new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5107), "Phục vụ khách hàng trong nhà hàng.", 5, false, 6, 1, 2, 25000m, "Phục vụ nhà hàng", null },
+                    { 7, 20m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5111), new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5112), "Nhập dữ liệu vào hệ thống quản lý.", 6, false, 7, 1, 1, 22000m, "Nhân viên nhập liệu", null },
+                    { 8, 6m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5116), new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5117), "Giải đáp thắc mắc và hỗ trợ khách hàng.", 7, false, 8, 1, 26, 27000m, "Nhân viên chăm sóc khách hàng", null },
+                    { 9, 2m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5120), new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5121), "Giao hàng tới các địa chỉ yêu cầu.", 8, false, 9, 1, 3, 30000m, "Nhân viên giao hàng", null },
+                    { 10, 10m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5124), new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5125), "Pha chế đồ uống theo yêu cầu của khách hàng.", 9, false, 10, 1, 0, 28000m, "Nhân viên pha chế", null }
                 });
 
             migrationBuilder.InsertData(
@@ -589,9 +603,9 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobApplyId", "ApplyDate", "CV", "EmployeeId", "EmployerId", "IsAccept", "IsRefuse", "JobDescription", "JobId", "JobSalary", "JobTitle", "Message", "Status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 10, 19, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9503), null, 1, null, false, false, null, 1, null, null, null, 0 },
-                    { 2, new DateTime(2024, 10, 22, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9512), null, 2, null, false, false, null, 1, null, null, null, 0 },
-                    { 3, new DateTime(2024, 10, 22, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9515), null, 3, null, false, false, null, 2, null, null, null, 0 }
+                    { 1, new DateTime(2024, 10, 19, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5274), null, 1, null, false, false, null, 1, null, null, null, 0 },
+                    { 2, new DateTime(2024, 10, 22, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5282), null, 2, null, false, false, null, 1, null, null, null, 0 },
+                    { 3, new DateTime(2024, 10, 22, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5285), null, 3, null, false, false, null, 2, null, null, null, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -599,9 +613,9 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "HireId", "EmployeeId", "EmployerId", "HireDate", "JobApplyId", "JobId", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9552), 1, 1, 0, null },
-                    { 2, 2, 1, new DateTime(2024, 10, 24, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9558), 2, 1, 0, null },
-                    { 3, 3, 2, new DateTime(2024, 10, 29, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9561), 3, 2, 0, null }
+                    { 1, 1, 1, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5324), 1, 1, 0, null },
+                    { 2, 2, 1, new DateTime(2024, 10, 24, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5330), 2, 1, 0, null },
+                    { 3, 3, 2, new DateTime(2024, 10, 29, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5333), 3, 2, 0, null }
                 });
 
             migrationBuilder.CreateIndex(

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobsApplication.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241103155513_dbInitial")]
+    [Migration("20241103162632_dbInitial")]
     partial class dbInitial
     {
         /// <inheritdoc />
@@ -689,7 +689,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 1,
                             EmployeeId = 1,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9552),
+                            HireDate = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5324),
                             JobApplyId = 1,
                             JobId = 1,
                             Status = 0
@@ -699,7 +699,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 2,
                             EmployeeId = 2,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 10, 24, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9558),
+                            HireDate = new DateTime(2024, 10, 24, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5330),
                             JobApplyId = 2,
                             JobId = 1,
                             Status = 0
@@ -709,7 +709,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 3,
                             EmployeeId = 3,
                             EmployerId = 2,
-                            HireDate = new DateTime(2024, 10, 29, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9561),
+                            HireDate = new DateTime(2024, 10, 29, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5333),
                             JobApplyId = 3,
                             JobId = 2,
                             Status = 0
@@ -745,14 +745,14 @@ namespace FindJobsApplication.Migrations
                             InvoiceId = 1,
                             Amount = 150m,
                             EmployerId = 1,
-                            IssueDate = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9606)
+                            IssueDate = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5378)
                         },
                         new
                         {
                             InvoiceId = 2,
                             Amount = 200m,
                             EmployerId = 2,
-                            IssueDate = new DateTime(2024, 10, 29, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9610)
+                            IssueDate = new DateTime(2024, 10, 29, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5382)
                         });
                 });
 
@@ -815,130 +815,150 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 1,
-                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9260),
-                            DateTo = new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9282),
+                            Amount = 10m,
+                            DateFrom = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5060),
+                            DateTo = new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5075),
                             Description = "Phát triển ứng dụng.",
                             EmployerId = 1,
                             IsClosed = false,
                             JobCategoryId = 1,
                             JobType = 0,
+                            Location = 15,
                             Salary = 60000m,
                             Title = "Lập trình viên phần mềm"
                         },
                         new
                         {
                             JobId = 2,
-                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9370),
-                            DateTo = new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9371),
+                            Amount = 3m,
+                            DateFrom = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5087),
+                            DateTo = new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5088),
                             Description = "Tạo các trang web đẹp.",
                             EmployerId = 1,
                             IsClosed = false,
                             JobCategoryId = 1,
                             JobType = 0,
+                            Location = 15,
                             Salary = 50000m,
                             Title = "Nhà thiết kế web"
                         },
                         new
                         {
                             JobId = 3,
-                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9375),
-                            DateTo = new DateTime(2025, 2, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9376),
+                            Amount = 15m,
+                            DateFrom = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5093),
+                            DateTo = new DateTime(2025, 2, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5093),
                             Description = "Nâng cao trải nghiệm người dùng.",
                             EmployerId = 2,
                             IsClosed = false,
                             JobCategoryId = 1,
                             JobType = 1,
+                            Location = 0,
                             Salary = 55000m,
                             Title = "Nhà thiết kế UX/UI"
                         },
                         new
                         {
                             JobId = 4,
-                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9379),
-                            DateTo = new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9380),
+                            Amount = 5m,
+                            DateFrom = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5098),
+                            DateTo = new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5098),
                             Description = "Bán sản phẩm và tư vấn khách hàng.",
                             EmployerId = 3,
                             IsClosed = false,
                             JobCategoryId = 4,
                             JobType = 1,
+                            Location = 2,
                             Salary = 30000m,
                             Title = "Nhân viên bán hàng"
                         },
                         new
                         {
                             JobId = 5,
-                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9383),
-                            DateTo = new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9384),
+                            Amount = 10m,
+                            DateFrom = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5102),
+                            DateTo = new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5103),
                             Description = "Dạy kèm học sinh cấp 2 và cấp 3.",
                             EmployerId = 4,
                             IsClosed = false,
                             JobCategoryId = 5,
                             JobType = 1,
+                            Location = 1,
                             Salary = 20000m,
                             Title = "Gia sư Toán"
                         },
                         new
                         {
                             JobId = 6,
-                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9387),
-                            DateTo = new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9387),
+                            Amount = 8m,
+                            DateFrom = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5106),
+                            DateTo = new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5107),
                             Description = "Phục vụ khách hàng trong nhà hàng.",
                             EmployerId = 5,
                             IsClosed = false,
                             JobCategoryId = 6,
                             JobType = 1,
+                            Location = 2,
                             Salary = 25000m,
                             Title = "Phục vụ nhà hàng"
                         },
                         new
                         {
                             JobId = 7,
-                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9390),
-                            DateTo = new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9391),
+                            Amount = 20m,
+                            DateFrom = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5111),
+                            DateTo = new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5112),
                             Description = "Nhập dữ liệu vào hệ thống quản lý.",
                             EmployerId = 6,
                             IsClosed = false,
                             JobCategoryId = 7,
                             JobType = 1,
+                            Location = 1,
                             Salary = 22000m,
                             Title = "Nhân viên nhập liệu"
                         },
                         new
                         {
                             JobId = 8,
-                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9393),
-                            DateTo = new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9394),
+                            Amount = 6m,
+                            DateFrom = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5116),
+                            DateTo = new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5117),
                             Description = "Giải đáp thắc mắc và hỗ trợ khách hàng.",
                             EmployerId = 7,
                             IsClosed = false,
                             JobCategoryId = 8,
                             JobType = 1,
+                            Location = 26,
                             Salary = 27000m,
                             Title = "Nhân viên chăm sóc khách hàng"
                         },
                         new
                         {
                             JobId = 9,
-                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9397),
-                            DateTo = new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9398),
+                            Amount = 2m,
+                            DateFrom = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5120),
+                            DateTo = new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5121),
                             Description = "Giao hàng tới các địa chỉ yêu cầu.",
                             EmployerId = 8,
                             IsClosed = false,
                             JobCategoryId = 9,
                             JobType = 1,
+                            Location = 3,
                             Salary = 30000m,
                             Title = "Nhân viên giao hàng"
                         },
                         new
                         {
                             JobId = 10,
-                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9400),
-                            DateTo = new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9401),
+                            Amount = 10m,
+                            DateFrom = new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5124),
+                            DateTo = new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5125),
                             Description = "Pha chế đồ uống theo yêu cầu của khách hàng.",
                             EmployerId = 9,
                             IsClosed = false,
                             JobCategoryId = 10,
                             JobType = 1,
+                            Location = 0,
                             Salary = 28000m,
                             Title = "Nhân viên pha chế"
                         });
@@ -1002,7 +1022,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 1,
-                            ApplyDate = new DateTime(2024, 10, 19, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9503),
+                            ApplyDate = new DateTime(2024, 10, 19, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5274),
                             EmployeeId = 1,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1012,7 +1032,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 2,
-                            ApplyDate = new DateTime(2024, 10, 22, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9512),
+                            ApplyDate = new DateTime(2024, 10, 22, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5282),
                             EmployeeId = 2,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1022,7 +1042,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 3,
-                            ApplyDate = new DateTime(2024, 10, 22, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9515),
+                            ApplyDate = new DateTime(2024, 10, 22, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5285),
                             EmployeeId = 3,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1160,19 +1180,161 @@ namespace FindJobsApplication.Migrations
                         {
                             JobServiceId = 1,
                             AdminId = 1,
-                            Description = "Đăng Tuyển Dụng.",
-                            Price = 100m,
-                            ServiceName = "Đăng tin tuyển dụng",
-                            jobServiceType = 8
+                            Description = "Cơ hội để bạn đưa tin tuyển dụng của mình đến với hàng triệu ứng viên. Gói này cho phép bạn đăng một tin tuyển dụng duy nhất, thu hút sự chú ý của những ứng viên tiềm năng ngay lập tức.",
+                            Duration = 1.0,
+                            Price = 9000m,
+                            ServiceName = "Đăng tin tuyển dụng 1 lần",
+                            jobServiceType = 4
                         },
                         new
                         {
                             JobServiceId = 2,
                             AdminId = 1,
-                            Description = "Làm nổi bật tin tuyển dụng của bạn.",
-                            Price = 150m,
-                            ServiceName = "Nổi Bật Tuyển Dụng",
-                            jobServiceType = 8
+                            Description = "Tối ưu hóa cơ hội tuyển dụng của bạn với gói 5 lần. Đăng tin tuyển dụng liên tiếp để tiếp cận nhiều ứng viên hơn và tăng khả năng tìm thấy ứng viên phù hợp.",
+                            Duration = 5.0,
+                            Price = 39000m,
+                            ServiceName = "Đăng tin tuyển dụng 5 lần",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 3,
+                            AdminId = 1,
+                            Description = "Với gói 10 lần, bạn có thể thoải mái đăng tin tuyển dụng của mình mà không lo lắng về chi phí. Đây là lựa chọn hoàn hảo cho các doanh nghiệp có nhu cầu tuyển dụng thường xuyên.",
+                            Duration = 10.0,
+                            Price = 69000m,
+                            ServiceName = "Đăng tin tuyển dụng 10 lần",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 4,
+                            AdminId = 1,
+                            Description = "Mở rộng khả năng tiếp cận ứng viên của bạn với gói đăng tin 20 lần. Gói này không chỉ tiết kiệm mà còn cho phép bạn duy trì sự hiện diện liên tục trên nền tảng tuyển dụng.",
+                            Duration = 20.0,
+                            Price = 109000m,
+                            ServiceName = "Đăng tin tuyển dụng 20 lần",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 5,
+                            AdminId = 1,
+                            Description = "Gói 100 lần là giải pháp tối ưu cho các doanh nghiệp lớn với nhu cầu tuyển dụng liên tục. Đăng tin không giới hạn giúp bạn dễ dàng thu hút ứng viên hàng đầu.",
+                            Duration = 100.0,
+                            Price = 399000m,
+                            ServiceName = "Đăng tin tuyển dụng 100 lần",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 6,
+                            AdminId = 1,
+                            Description = "Đăng tin tuyển dụng mỗi ngày trong 30 ngày, đảm bảo rằng tin tuyển dụng của bạn luôn tươi mới và thu hút. Lựa chọn lý tưởng cho những ai muốn duy trì sự chú ý của ứng viên.",
+                            Duration = 30.0,
+                            Price = 100000m,
+                            ServiceName = "Đăng tin tuyển dụng theo ngày",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 7,
+                            AdminId = 1,
+                            Description = "Gói đăng tin theo tháng giúp bạn dễ dàng quản lý quá trình tuyển dụng của mình. Đăng tin hàng tháng để thu hút ứng viên liên tục và mở rộng mạng lưới của bạn.",
+                            Duration = 30.0,
+                            Price = 250000m,
+                            ServiceName = "Đăng tin tuyển dụng theo tháng",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 8,
+                            AdminId = 1,
+                            Description = "Chọn gói đăng tin theo năm để đảm bảo sự hiện diện lâu dài của bạn trong thị trường tuyển dụng. Đây là lựa chọn tốt nhất cho các doanh nghiệp có nhu cầu tuyển dụng ổn định trong thời gian dài.",
+                            Duration = 365.0,
+                            Price = 1000000m,
+                            ServiceName = "Đăng tin tuyển dụng theo năm",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 9,
+                            AdminId = 1,
+                            Description = "Đưa tin tuyển dụng của bạn lên hàng đầu với gói nổi bật một lần. Đảm bảo rằng tin của bạn thu hút mọi ánh nhìn từ ứng viên ngay từ lần đầu tiên.",
+                            Duration = 1.0,
+                            Price = 15000m,
+                            ServiceName = "Nổi Bật Tuyển Dụng 1 lần",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 10,
+                            AdminId = 1,
+                            Description = "Đăng tin nổi bật trong 5 lần liên tiếp. Một cách hoàn hảo để đảm bảo rằng thông báo tuyển dụng của bạn luôn được chú ý và tiếp cận với nhiều ứng viên hơn.",
+                            Duration = 5.0,
+                            Price = 69000m,
+                            ServiceName = "Nổi Bật Tuyển Dụng 5 lần",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 11,
+                            AdminId = 1,
+                            Description = "Với gói 10 lần, bạn không chỉ nổi bật mà còn có thể thu hút nhiều ứng viên hơn thông qua những tin tuyển dụng chất lượng cao và được ưu tiên hiển thị.",
+                            Duration = 10.0,
+                            Price = 129000m,
+                            ServiceName = "Nổi Bật Tuyển Dụng 10 lần",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 12,
+                            AdminId = 1,
+                            Description = "Gói nổi bật 20 lần sẽ mang lại cho bạn lợi thế cạnh tranh. Tăng cường khả năng thu hút ứng viên phù hợp với gói dịch vụ này.",
+                            Duration = 20.0,
+                            Price = 199000m,
+                            ServiceName = "Nổi Bật Tuyển Dụng 20 lần",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 13,
+                            AdminId = 1,
+                            Description = "Gói nổi bật 100 lần là sự lựa chọn tuyệt vời cho các công ty lớn. Với số lượng đăng tin dồi dào, bạn sẽ có nhiều cơ hội tiếp cận các ứng viên chất lượng.",
+                            Duration = 100.0,
+                            Price = 499000m,
+                            ServiceName = "Nổi Bật Tuyển Dụng 100 lần",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 14,
+                            AdminId = 1,
+                            Description = "Đảm bảo tin tuyển dụng của bạn luôn nổi bật hàng ngày trong 30 ngày, thu hút sự chú ý liên tục từ các ứng viên tiềm năng.",
+                            Duration = 30.0,
+                            Price = 150000m,
+                            ServiceName = "Nổi Bật Tuyển Dụng theo ngày",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 15,
+                            AdminId = 1,
+                            Description = "Gói nổi bật theo tháng giúp bạn duy trì sự hiện diện nổi bật trong suốt thời gian dài, đảm bảo rằng tin tuyển dụng của bạn luôn ở vị trí dễ thấy.",
+                            Duration = 30.0,
+                            Price = 300000m,
+                            ServiceName = "Nổi Bật Tuyển Dụng theo tháng",
+                            jobServiceType = 4
+                        },
+                        new
+                        {
+                            JobServiceId = 16,
+                            AdminId = 1,
+                            Description = "Chọn gói nổi bật theo năm để tối đa hóa khả năng tiếp cận ứng viên và giữ cho tin tuyển dụng của bạn luôn nổi bật trong suốt thời gian dài.",
+                            Duration = 365.0,
+                            Price = 1200000m,
+                            ServiceName = "Nổi Bật Tuyển Dụng theo năm",
+                            jobServiceType = 4
                         });
                 });
 
