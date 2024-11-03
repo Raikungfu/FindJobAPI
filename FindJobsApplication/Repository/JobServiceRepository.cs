@@ -1,6 +1,7 @@
 ﻿using FindJobsApplication.Models;
 using FindJobsApplication.Repository.IRepository;
 using FindJobsApplication.Repository;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FindJobsApplication.Repository
 {
@@ -20,7 +21,10 @@ namespace FindJobsApplication.Repository
             {
                 objFromDb.ServiceName = jobService.ServiceName;
                 objFromDb.Description = jobService.Description;
-                objFromDb.Image = jobService.Image;
+                if (!jobService.Image.IsNullOrEmpty())
+                {
+                    objFromDb.Image = jobService.Image;
+                }
                 objFromDb.Price = jobService.Price;
                 objFromDb.AdminId = jobService.AdminId;
 

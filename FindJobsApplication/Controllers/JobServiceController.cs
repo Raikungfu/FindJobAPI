@@ -2,6 +2,7 @@
 using FindJobsApplication.Models;
 using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Repository.IRepository;
+using FindJobsApplication.Service.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -16,11 +17,13 @@ namespace FindJobsApplication.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUploadFileService _uploadFileService;
 
-        public JobServiceController(IUnitOfWork unitOfWork, IMapper mapper)
+        public JobServiceController(IUnitOfWork unitOfWork, IMapper mapper, IUploadFileService uploadFileService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _uploadFileService = uploadFileService;
         }
 
         // GET: api/<JobServiceController>
@@ -44,6 +47,7 @@ namespace FindJobsApplication.Controllers
         {
             try
             {
+                ModelState.Remove("Image");
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
@@ -56,6 +60,12 @@ namespace FindJobsApplication.Controllers
                 }
 
                 JobService newJobServie = _mapper.Map<JobService>(jobService);
+
+                if (jobService.Image != null)
+                {
+                    newJobServie.Image = _uploadFileService.uploadImage(jobService.Image, "Images");
+                }
+
                 newJobServie.AdminId = adminId;
                 _unitOfWork.JobService.Add(newJobServie);
                 _unitOfWork.Save();
@@ -75,7 +85,8 @@ namespace FindJobsApplication.Controllers
         {
             try
             {
-                if(!ModelState.IsValid)
+                ModelState.Remove("Image");
+                if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
@@ -87,6 +98,12 @@ namespace FindJobsApplication.Controllers
                 }
 
                 JobService updateJobService = _mapper.Map<JobService>(jobService);
+
+                if (jobService.Image != null)
+                {
+                    updateJobService.Image = _uploadFileService.uploadImage(jobService.Image, "Images");
+                }
+
                 _unitOfWork.JobService.Update(updateJobService);
                 _unitOfWork.Save();
 
