@@ -72,12 +72,6 @@ namespace FindJobsApplication.Controllers
                 newOrder.Description = "Pay for " + jobService.ServiceName;
                 newOrder.Price = jobService.Price;
 
-                if (jobService.Duration.HasValue)
-                {
-                    newOrder.DateFrom = DateTime.Now;
-                    newOrder.DateTo = DateTime.Now.AddDays(jobService.Duration ?? 0.0);
-                }
-
                 newOrder.UserId = userId;
 
                 _unitOfWork.Order.Add(newOrder);
@@ -88,17 +82,33 @@ namespace FindJobsApplication.Controllers
             return Unauthorized(new { message = "User not logged in. Please log in to continue." });
         }
 
-
         [HttpPost("payment-vnpay")]
         public IActionResult createPaymentVNPayLink([FromBody] OrderPaymentViewModel orderPayment)
         {
             try
             {
-
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
+
+                Order order = _unitOfWork.Order.GetFirstOrDefault(x => x.OrderId.ToString() == orderPayment.OrderId);
+                if (order == null)
+                {
+                    return BadRequest(new { message = "Order not found!" });
+                }
+
+                if (DateTime.Now.AddDays(1) > order.OrderDate)
+                {
+                    return BadRequest(new { message = "Order has expired!" });
+                }
+
+                var jobService = _unitOfWork.JobService.GetFirstOrDefault(x => x.JobServiceId == order.JobServiceId);
+                if (jobService == null)
+                {
+                    return BadRequest(new { message = "Job Service not found!" });
+                }
+
                 string vnp_ReturnUrl = _configuration["VnPay:PaymentBackReturnUrl"];
                 string vnp_Url = _configuration["VnPay:BaseURL"];
                 string vnp_TmnCode = _configuration["VnPay:TmnCode"];
@@ -109,13 +119,13 @@ namespace FindJobsApplication.Controllers
                 vnpay.AddRequestData("vnp_Version", "2.1.0");
                 vnpay.AddRequestData("vnp_Command", "pay");
                 vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
-                vnpay.AddRequestData("vnp_Amount", ((double)orderPayment.TotalPrice * 100).ToString());
+                vnpay.AddRequestData("vnp_Amount", ((double)order.Price * 100).ToString());
 
-                if (orderPayment.paymentMethod == "DomesticCard")
+                if (orderPayment.PaymentMethod == "DomesticCard")
                 {
                     vnpay.AddRequestData("vnp_BankCode", "VNBANK");
                 }
-                else if (orderPayment.paymentMethod == "InternationalCard")
+                else if (orderPayment.PaymentMethod == "InternationalCard")
                 {
                     vnpay.AddRequestData("vnp_BankCode", "INTCARD");
                 }
@@ -124,10 +134,10 @@ namespace FindJobsApplication.Controllers
                 vnpay.AddRequestData("vnp_CurrCode", "VND");
                 vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress(HttpContext));
                 vnpay.AddRequestData("vnp_Locale", "vn");
-                vnpay.AddRequestData("vnp_OrderInfo", "Thanh toan don hang: " + orderPayment.orderId);
+                vnpay.AddRequestData("vnp_OrderInfo", "Don hang: " + orderPayment.OrderId + ". Thanh toan dich vu " + jobService.ServiceName + " tai Jobby");
                 vnpay.AddRequestData("vnp_OrderType", "other");
                 vnpay.AddRequestData("vnp_ReturnUrl", vnp_ReturnUrl);
-                vnpay.AddRequestData("vnp_TxnRef", orderPayment.orderId);
+                vnpay.AddRequestData("vnp_TxnRef", orderPayment.OrderId);
 
                 string paymentUrl = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
                 return Ok(new { paymentUrl });
@@ -186,6 +196,14 @@ namespace FindJobsApplication.Controllers
                 if (order.Price != amount)
                 {
                     return BadRequest("Số tiền không khớp.");
+                }
+
+                var jobService = _unitOfWork.JobService.GetFirstOrDefault(x => x.JobServiceId == order.JobServiceId);
+
+                if (jobService.Duration.HasValue)
+                {
+                    order.DateFrom = DateTime.Now;
+                    order.DateTo = DateTime.Now.AddDays(jobService.Duration ?? 0.0);
                 }
 
                 order.OrderStatus = vnp_ResponseCode == "00" ? OrderStatus.Accepted : OrderStatus.Rejected;

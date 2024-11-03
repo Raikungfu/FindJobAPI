@@ -36,6 +36,8 @@ namespace FindJobsApplication.Models
 
         public decimal Price { get; set; }
 
+        public DateTime? OrderDate { get; set; } = DateTime.Now;
+
         public DateTime? DateFrom { get; set; }
 
         public DateTime? DateTo { get; set; }

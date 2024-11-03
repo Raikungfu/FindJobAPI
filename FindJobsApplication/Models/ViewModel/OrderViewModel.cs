@@ -7,8 +7,7 @@
 
     public class OrderPaymentViewModel
     {
-        public decimal TotalPrice { get; set; }
-        public string? paymentMethod { get; set; }
-        public string orderId { get; set; }
+        public string? PaymentMethod { get; set; }
+        public string OrderId { get; set; }
     }
 }

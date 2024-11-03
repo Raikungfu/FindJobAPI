@@ -686,7 +686,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 1,
                             EmployeeId = 1,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9950),
+                            HireDate = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9552),
                             JobApplyId = 1,
                             JobId = 1,
                             Status = 0
@@ -696,7 +696,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 2,
                             EmployeeId = 2,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 10, 24, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9953),
+                            HireDate = new DateTime(2024, 10, 24, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9558),
                             JobApplyId = 2,
                             JobId = 1,
                             Status = 0
@@ -706,7 +706,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 3,
                             EmployeeId = 3,
                             EmployerId = 2,
-                            HireDate = new DateTime(2024, 10, 29, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9955),
+                            HireDate = new DateTime(2024, 10, 29, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9561),
                             JobApplyId = 3,
                             JobId = 2,
                             Status = 0
@@ -742,14 +742,14 @@ namespace FindJobsApplication.Migrations
                             InvoiceId = 1,
                             Amount = 150m,
                             EmployerId = 1,
-                            IssueDate = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9986)
+                            IssueDate = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9606)
                         },
                         new
                         {
                             InvoiceId = 2,
                             Amount = 200m,
                             EmployerId = 2,
-                            IssueDate = new DateTime(2024, 10, 29, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9988)
+                            IssueDate = new DateTime(2024, 10, 29, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9610)
                         });
                 });
 
@@ -812,8 +812,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 1,
-                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9780),
-                            DateTo = new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9793),
+                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9260),
+                            DateTo = new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9282),
                             Description = "Phát triển ứng dụng.",
                             EmployerId = 1,
                             IsClosed = false,
@@ -825,8 +825,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 2,
-                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9802),
-                            DateTo = new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9803),
+                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9370),
+                            DateTo = new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9371),
                             Description = "Tạo các trang web đẹp.",
                             EmployerId = 1,
                             IsClosed = false,
@@ -838,8 +838,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 3,
-                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9805),
-                            DateTo = new DateTime(2025, 2, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9806),
+                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9375),
+                            DateTo = new DateTime(2025, 2, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9376),
                             Description = "Nâng cao trải nghiệm người dùng.",
                             EmployerId = 2,
                             IsClosed = false,
@@ -851,8 +851,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 4,
-                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9807),
-                            DateTo = new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9808),
+                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9379),
+                            DateTo = new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9380),
                             Description = "Bán sản phẩm và tư vấn khách hàng.",
                             EmployerId = 3,
                             IsClosed = false,
@@ -864,8 +864,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 5,
-                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9810),
-                            DateTo = new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9810),
+                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9383),
+                            DateTo = new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9384),
                             Description = "Dạy kèm học sinh cấp 2 và cấp 3.",
                             EmployerId = 4,
                             IsClosed = false,
@@ -877,8 +877,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 6,
-                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9812),
-                            DateTo = new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9812),
+                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9387),
+                            DateTo = new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9387),
                             Description = "Phục vụ khách hàng trong nhà hàng.",
                             EmployerId = 5,
                             IsClosed = false,
@@ -890,8 +890,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 7,
-                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9814),
-                            DateTo = new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9814),
+                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9390),
+                            DateTo = new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9391),
                             Description = "Nhập dữ liệu vào hệ thống quản lý.",
                             EmployerId = 6,
                             IsClosed = false,
@@ -903,8 +903,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 8,
-                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9816),
-                            DateTo = new DateTime(2024, 12, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9817),
+                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9393),
+                            DateTo = new DateTime(2024, 12, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9394),
                             Description = "Giải đáp thắc mắc và hỗ trợ khách hàng.",
                             EmployerId = 7,
                             IsClosed = false,
@@ -916,8 +916,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 9,
-                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9818),
-                            DateTo = new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9819),
+                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9397),
+                            DateTo = new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9398),
                             Description = "Giao hàng tới các địa chỉ yêu cầu.",
                             EmployerId = 8,
                             IsClosed = false,
@@ -929,8 +929,8 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobId = 10,
-                            DateFrom = new DateTime(2024, 11, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9821),
-                            DateTo = new DateTime(2025, 1, 3, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9821),
+                            DateFrom = new DateTime(2024, 11, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9400),
+                            DateTo = new DateTime(2025, 1, 3, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9401),
                             Description = "Pha chế đồ uống theo yêu cầu của khách hàng.",
                             EmployerId = 9,
                             IsClosed = false,
@@ -999,7 +999,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 1,
-                            ApplyDate = new DateTime(2024, 10, 19, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9917),
+                            ApplyDate = new DateTime(2024, 10, 19, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9503),
                             EmployeeId = 1,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1009,7 +1009,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 2,
-                            ApplyDate = new DateTime(2024, 10, 22, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9924),
+                            ApplyDate = new DateTime(2024, 10, 22, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9512),
                             EmployeeId = 2,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1019,7 +1019,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 3,
-                            ApplyDate = new DateTime(2024, 10, 22, 20, 2, 50, 182, DateTimeKind.Local).AddTicks(9926),
+                            ApplyDate = new DateTime(2024, 10, 22, 22, 55, 12, 742, DateTimeKind.Local).AddTicks(9515),
                             EmployeeId = 3,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1192,6 +1192,9 @@ namespace FindJobsApplication.Migrations
 
                     b.Property<int?>("JobServiceId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("OrderDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
