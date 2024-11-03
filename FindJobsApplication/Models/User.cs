@@ -29,5 +29,6 @@ namespace FindJobsApplication.Models
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Job> Jobs { get; set; }
         public ICollection<Hire> Hires { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace FindJobsApplication.Models
         public DbSet<Certification> Certifications { get; set; }
         public DbSet<EmployeeCertification> EmployeeCertifications { get; set; }
         public DbSet<JobApply> JobApplies { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

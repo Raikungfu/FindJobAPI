@@ -19,6 +19,7 @@ namespace FindJobsApplication.Repository
             JobApply = new JobApplyRepository(_db);
             Hire = new HireRepository(_db);
             JobService = new JobServiceRepository(_db);
+            Order = new OrderRepository(_db);
         }
 
         public IUserRepository User { get; private set; }
@@ -31,6 +32,8 @@ namespace FindJobsApplication.Repository
         public IHireRepository Hire { get; private set; }
 
         public IJobServiceRepository JobService { get; private set; }
+
+        public IOrderRepository Order { get; private set; }
 
         public void Dispose()
         {

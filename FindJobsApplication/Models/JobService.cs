@@ -3,6 +3,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FindJobsApplication.Models
 {
+    public enum JobServiceType
+    {
+        ForHire,
+        ForSale,
+        ForEmployee,
+        ForEmployer,
+        Service,
+        Product,
+        Subscription,
+        Membership,
+        Other
+    }
+
     public class JobService
     {
         [Key]
@@ -17,9 +30,15 @@ namespace FindJobsApplication.Models
 
         public decimal Price { get; set; }
 
+        public double? Duration { get; set; }
+
         public int AdminId { get; set; }
+
+        public JobServiceType jobServiceType { get; set; } = JobServiceType.Other;
 
         [ForeignKey("AdminId")]
         public Admin Admin { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

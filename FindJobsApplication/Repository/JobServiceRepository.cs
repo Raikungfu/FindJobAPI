@@ -26,6 +26,8 @@ namespace FindJobsApplication.Repository
                     objFromDb.Image = jobService.Image;
                 }
                 objFromDb.Price = jobService.Price;
+                objFromDb.Duration = jobService.Duration;
+                objFromDb.jobServiceType = jobService.jobServiceType;
                 objFromDb.AdminId = jobService.AdminId;
 
                 _db.SaveChanges();

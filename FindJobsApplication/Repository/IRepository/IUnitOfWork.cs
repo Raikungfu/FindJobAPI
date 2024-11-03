@@ -11,6 +11,7 @@
         IAdminRepository Admin { get; }
         IJobServiceRepository JobService { get; }
         IHireRepository Hire { get; }
+        IOrderRepository Order { get; }
         void Save();
     }
 }

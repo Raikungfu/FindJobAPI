@@ -13,5 +13,9 @@ namespace FindJobsApplication.Models.ViewModel
         public IFormFile? Image { get; set; }
 
         public decimal Price { get; set; }
+
+        public double? Duration { get; set; }
+
+        public JobServiceType jobServiceType { get; set; } = JobServiceType.Other;
     }
 }
