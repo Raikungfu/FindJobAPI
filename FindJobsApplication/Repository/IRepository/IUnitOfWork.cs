@@ -9,6 +9,7 @@
         IEmployeeRepository Employee { get; }
         IJobApplyRepository JobApply { get; }
         IAdminRepository Admin { get; }
+        IJobServiceRepository JobService { get; }
         IHireRepository Hire { get; }
         void Save();
     }
