@@ -34,15 +34,14 @@ namespace FindJobsApplication.Controllers
                 return Unauthorized("Employer does not exist!");
             }
 
+            var jobApply = new JobApply { JobApplyId = hireVm.JobApplyId, Status = JobApplyStatus.Accepted };
+            _unitOfWork.JobApply.UpdateStatus(jobApply);
+
             Hire hire = _mapper.Map<Hire>(hireVm);
 
             hire.EmployerId = employerId;
 
             _unitOfWork.Hire.Add(hire);
-            _unitOfWork.Save();
-
-            var jobApply = new JobApply { JobApplyId = hire.JobApplyId, Status = JobApplyStatus.Accepted };
-            _unitOfWork.JobApply.UpdateStatus(jobApply);
             _unitOfWork.Save();
 
             return Ok();

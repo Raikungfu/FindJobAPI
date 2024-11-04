@@ -13,6 +13,7 @@ namespace FindJobsApplication.Mapper
             CreateMap<Employee, EmployeeViewModel>().ReverseMap();
             CreateMap<JobService, JobServiceViewModel>().ReverseMap();
             CreateMap<Order, OrderViewModel>().ReverseMap();
+            CreateMap<Hire, HireViewModel>().ReverseMap();
         }
     }
 }
