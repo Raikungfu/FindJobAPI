@@ -97,7 +97,7 @@ namespace FindJobsApplication.Controllers
                     return BadRequest(new { message = "Order not found!" });
                 }
 
-                if (DateTime.Now.AddDays(1) > order.OrderDate)
+                if (DateTime.Now.AddDays(1) < order.OrderDate)
                 {
                     return BadRequest(new { message = "Order has expired!" });
                 }
