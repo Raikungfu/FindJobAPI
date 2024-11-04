@@ -56,7 +56,7 @@ namespace FindJobsApplication.Controllers
                 }
 
                 var claimId = User.FindFirstValue("Id");
-                if (claimId == null || int.TryParse(claimId, out int adminId))
+                if (claimId == null || !int.TryParse(claimId, out int adminId))
                 {
                     return Unauthorized("User not logged in. Please log in to continue.");
                 }
@@ -94,7 +94,7 @@ namespace FindJobsApplication.Controllers
                 }
 
                 var claimId = User.FindFirstValue("Id");
-                if (claimId == null || int.TryParse(claimId, out int adminId))
+                if (claimId == null || !int.TryParse(claimId, out int adminId))
                 {
                     return Unauthorized("User not logged in. Please log in to continue.");
                 }

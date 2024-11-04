@@ -33,7 +33,7 @@ namespace FindJobsApplication.Controllers
         public IActionResult Get()
         {
             var claimId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (claimId != null && int.TryParse(claimId, out int userId))
+            if (claimId != null && !int.TryParse(claimId, out int userId))
             {
                 return Ok(_unitOfWork.Order.GetAll(x => x.UserId == userId, null, "Service"));
             }
@@ -46,7 +46,7 @@ namespace FindJobsApplication.Controllers
         public IActionResult Get(int id)
         {
             var claimId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (claimId != null && int.TryParse(claimId, out int userId))
+            if (claimId != null && !int.TryParse(claimId, out int userId))
             {
                 return Ok(_unitOfWork.Order.GetFirstOrDefault(x => x.UserId == userId && x.OrderId == id, "Service"));
             }
@@ -59,7 +59,7 @@ namespace FindJobsApplication.Controllers
         public IActionResult Post([FromBody] OrderViewModel order)
         {
             var claimId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (claimId != null && int.TryParse(claimId, out int userId))
+            if (claimId != null && !int.TryParse(claimId, out int userId))
             {
                 JobService jobService = _unitOfWork.JobService.GetFirstOrDefault(x => x.JobServiceId == order.JobServiceId);
                 if (jobService == null)
