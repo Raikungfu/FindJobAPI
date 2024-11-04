@@ -6,6 +6,7 @@ using FindJobsApplication.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 
 namespace FindJobsApplication.Controllers
@@ -35,7 +36,25 @@ namespace FindJobsApplication.Controllers
             var claimId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (claimId != null && int.TryParse(claimId, out int userId))
             {
-                return Ok(_unitOfWork.Order.GetAll(x => x.UserId == userId, null, "Service"));
+                return Ok(_unitOfWork.Order.GetAll(x => x.UserId == userId, null, "JobService").Select(order => new
+                {
+                    order.OrderId,
+                    order.Description,
+                    order.Price,
+                    order.OrderDate,
+                    order.DateFrom,
+                    order.DateTo,
+                    JobService = order.JobService != null ? new
+                    {
+                        order.JobService.JobServiceId,
+                        order.JobService.ServiceName
+                    } : null,
+                    order.OrderStatus,
+                    order.PaymentMethod,
+                    order.PaymentDate,
+                    order.PaymentRef,
+                    order.PaymentStatus
+                }).ToList());
             }
             return Unauthorized(new { message = "User not logged in. Please log in to continue." });
         }
@@ -48,7 +67,7 @@ namespace FindJobsApplication.Controllers
             var claimId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (claimId != null && int.TryParse(claimId, out int userId))
             {
-                return Ok(_unitOfWork.Order.GetFirstOrDefault(x => x.UserId == userId && x.OrderId == id, "Service"));
+                return Ok(_unitOfWork.Order.GetFirstOrDefault(x => x.UserId == userId && x.OrderId == id, "JobService"));
             }
             return Unauthorized(new { message = "User not logged in. Please log in to continue." });
         }
