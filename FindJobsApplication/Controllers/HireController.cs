@@ -25,16 +25,11 @@ namespace FindJobsApplication.Controllers
             _uploadFileService = uploadFileService;
         }
 
+        [Authorize(Roles ="Employer")]
         [HttpPost("hire-employee")]
         public IActionResult HireEmployee([FromBody]HireViewModel hireVm)
         {
-            var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
-            if (string.IsNullOrEmpty(claimRole) || claimRole != UserType.Employer.ToString())
-            {
-                return Unauthorized("User not logged in as Employer. Please log in as Employer to continue.");
-            }
-
-            if(int.TryParse(User.FindFirstValue("Id"), out int employerId))
+            if(!int.TryParse(User.FindFirstValue("Id"), out int employerId))
             {
                 return Unauthorized("Employer does not exist!");
             }
@@ -53,16 +48,11 @@ namespace FindJobsApplication.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Employer")]
         [HttpGet("hire/{jobId}")]
         public IActionResult GetAllHireJob(int jobId)
         {
-            var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
-            if (string.IsNullOrEmpty(claimRole) || claimRole != UserType.Employer.ToString())
-            {
-                return Unauthorized("User not logged in as Employer. Please log in as Employer to continue.");
-            }
-
-            if (int.TryParse(User.FindFirstValue("Id"), out int employerId))
+            if (!int.TryParse(User.FindFirstValue("Id"), out int employerId))
             {
                 return Unauthorized("Employer does not exist!");
             }
