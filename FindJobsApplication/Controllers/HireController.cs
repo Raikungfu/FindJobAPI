@@ -35,11 +35,13 @@ namespace FindJobsApplication.Controllers
             }
 
             var jobApply = new JobApply { JobApplyId = hireVm.JobApplyId, Status = JobApplyStatus.Accepted };
-            _unitOfWork.JobApply.UpdateStatus(jobApply);
+            var jobApplyUpdate = _unitOfWork.JobApply.UpdateStatusAsync(jobApply);
 
             Hire hire = _mapper.Map<Hire>(hireVm);
 
             hire.EmployerId = employerId;
+            hire.EmployeeId = jobApply.EmployeeId;
+            hire.JobId = jobApply.JobId;
 
             _unitOfWork.Hire.Add(hire);
             _unitOfWork.Save();

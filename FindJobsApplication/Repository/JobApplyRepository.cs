@@ -1,5 +1,6 @@
 ﻿using FindJobsApplication.Models;
 using FindJobsApplication.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 
 namespace FindJobsApplication.Repository
 {
@@ -31,20 +32,17 @@ namespace FindJobsApplication.Repository
             }
         }
 
-        public void UpdateStatus(JobApply jobApply)
+        public async Task<JobApply> UpdateStatusAsync(JobApply jobApply)
         {
-            var objFromDb = _db.JobApplies.FirstOrDefault(s => s.JobApplyId == jobApply.JobApplyId);
-            if (objFromDb != null)
+            var objFromDb = await _db.JobApplies.SingleOrDefaultAsync(s => s.JobApplyId == jobApply.JobApplyId);
+            if (objFromDb == null)
             {
-                objFromDb.Status = jobApply.Status;
-                _db.SaveChanges();
+                throw new KeyNotFoundException("Không tìm thấy JobApply.");
             }
-            else
-            {
-                throw new KeyNotFoundException("JobApply not found.");
-            }
+
+            objFromDb.Status = jobApply.Status;
+            await _db.SaveChangesAsync();
+            return objFromDb;
         }
-
-
     }
 }

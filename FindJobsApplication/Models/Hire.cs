@@ -19,7 +19,7 @@ namespace FindJobsApplication.Models
 
         public DateTime HireDate { get; set; } = System.DateTime.Now;
 
-        public HireStatus Status { get; set; }
+        public HireStatus Status { get; set; } = HireStatus.InProgress;
 
         public int JobId { get; set; }
 
