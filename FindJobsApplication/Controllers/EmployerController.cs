@@ -109,7 +109,6 @@ namespace FindJobsApplication.Controllers
             return Ok(postedJobs);
         }
 
-        // Thêm Job mới cho Employer
         [HttpPost("post-job")]
         public IActionResult PostJob([FromBody] JobViewModel jobVm)
         {

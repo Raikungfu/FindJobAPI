@@ -32,37 +32,97 @@ namespace FindJobsApplication.Controllers
         }
 
         [HttpGet("outstanding-job")]
-        public IActionResult OutstandingJob(string? search, int pageNumber = 0, int pageSize = 6)
+        public IActionResult OutstandingJob([FromQuery] string search, [FromQuery] Dictionary<string, string> searchParams, int pageNumber = 0, int pageSize = 6)
         {
             Func<IQueryable<Job>, IOrderedQueryable<Job>> orderBy = q => q.OrderByDescending(x => x.JobId);
             Expression<Func<Job, bool>> filter = null;
 
-            if (!search.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(search))
             {
                 search = search.ToLower();
+
                 bool isJobTypeParsed = Enum.TryParse(typeof(JobType), search, true, out var jobTypeParsed);
 
-                filter = job => job.Title.Contains(search) || job.Employer.CompanyLocation.Equals(search) || job.Employer.CompanyIndustry.Equals(search) || (isJobTypeParsed && job.JobType.Equals(jobTypeParsed));
+                filter = job => job.Title.Contains(search) ||
+                                job.Employer.CompanyLocation.Equals(search, StringComparison.OrdinalIgnoreCase) ||
+                                job.Employer.CompanyIndustry.Equals(search, StringComparison.OrdinalIgnoreCase) ||
+                                (isJobTypeParsed && job.JobType.Equals(jobTypeParsed));
             }
 
-            var jobs = _unitOfWork.Job.GetAll(filter, orderBy, "Employer,JobCategory").Skip(pageNumber * pageSize).Take(pageSize).Select(x => new
+            if (searchParams != null && searchParams.Any())
             {
-                x.JobId,
-                x.Title,
-                x.JobCategory.JobCategoryName,
-                x.JobType,
-                x.Salary,
-                x.Amount,
-                x.DateFrom,
-                x.DateTo,
-                x.Description,
-                x.Employer.CompanyLogo,
-                x.Employer.CompanyName,
-                x.Employer.CompanyIndustry,
-                Location = x.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(x.Location.Value) ? JobLocationDictionary.Locations[x.Location.Value] : x.Employer.CompanyLocation
-            }).ToList();
+                if (searchParams.ContainsKey("title") && !string.IsNullOrEmpty(searchParams["title"]))
+                {
+                    var title = searchParams["title"].ToLower();
+                    var titleFilter = Expression.Lambda<Func<Job, bool>>(Expression.Call(
+                                            Expression.Property(Expression.Parameter(typeof(Job), "job"), "Title"),
+                                            typeof(string).GetMethod("Contains", new[] { typeof(string) }),
+                                            Expression.Constant(title, typeof(string))),
+                                            Expression.Parameter(typeof(Job), "job"));
+
+                    filter = filter == null ? titleFilter :
+                        Expression.Lambda<Func<Job, bool>>(
+                            Expression.AndAlso(filter.Body, titleFilter.Body),
+                            filter.Parameters);
+                }
+
+                if (searchParams.ContainsKey("location") && !string.IsNullOrEmpty(searchParams["location"]))
+                {
+                    var location = searchParams["location"].ToLower();
+                    var locationFilter = Expression.Lambda<Func<Job, bool>>(Expression.Call(
+                                              Expression.Property(Expression.Parameter(typeof(Job), "job"), "Employer.CompanyLocation"),
+                                              typeof(string).GetMethod("Contains", new[] { typeof(string) }),
+                                              Expression.Constant(location, typeof(string))),
+                                              Expression.Parameter(typeof(Job), "job"));
+
+                    filter = filter == null ? locationFilter :
+                        Expression.Lambda<Func<Job, bool>>(
+                            Expression.AndAlso(filter.Body, locationFilter.Body),
+                            filter.Parameters);
+                }
+
+                if (searchParams.ContainsKey("category") && !string.IsNullOrEmpty(searchParams["category"]))
+                {
+                    var category = searchParams["category"].ToLower();
+                    var categoryFilter = Expression.Lambda<Func<Job, bool>>(Expression.Call(
+                                                Expression.Property(Expression.Parameter(typeof(Job), "job"), "JobCategory.JobCategoryName"),
+                                                typeof(string).GetMethod("Contains", new[] { typeof(string) }),
+                                                Expression.Constant(category, typeof(string))),
+                                                Expression.Parameter(typeof(Job), "job"));
+
+                    filter = filter == null ? categoryFilter :
+                        Expression.Lambda<Func<Job, bool>>(
+                            Expression.AndAlso(filter.Body, categoryFilter.Body),
+                            filter.Parameters);
+                }
+            }
+
+            var jobs = _unitOfWork.Job.GetAll(filter, orderBy, "Employer,JobCategory")
+                .Skip(pageNumber * pageSize)
+                .Take(pageSize)
+                .Select(x => new
+                {
+                    x.JobId,
+                    x.Title,
+                    x.JobCategory.JobCategoryName,
+                    x.JobType,
+                    x.Salary,
+                    x.Amount,
+                    x.DateFrom,
+                    x.DateTo,
+                    x.Description,
+                    x.Employer.CompanyLogo,
+                    x.Employer.CompanyName,
+                    x.Employer.CompanyIndustry,
+                    Location = x.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(x.Location.Value) ?
+                               JobLocationDictionary.Locations[x.Location.Value] :
+                               x.Employer.CompanyLocation
+                })
+                .ToList();
+
             return Ok(jobs);
         }
+
 
         [HttpPost]
         public IActionResult CreateJob([FromBody] JobViewModel job)
