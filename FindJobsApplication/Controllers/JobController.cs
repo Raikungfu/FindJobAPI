@@ -12,6 +12,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
+using System.Text;
 
 namespace FindJobsApplication.Controllers
 {
@@ -32,68 +34,124 @@ namespace FindJobsApplication.Controllers
         }
 
         [HttpGet("outstanding-job")]
-        public IActionResult OutstandingJob([FromQuery] string search, [FromQuery] Dictionary<string, string> searchParams, int pageNumber = 0, int pageSize = 6)
+        public IActionResult OutstandingJob([FromQuery] Dictionary<string, string>? searchParams = null, int pageNumber = 0, int pageSize = 6)
         {
             Func<IQueryable<Job>, IOrderedQueryable<Job>> orderBy = q => q.OrderByDescending(x => x.JobId);
-            Expression<Func<Job, bool>> filter = null;
+            Expression<Func<Job, bool>> filter = job => true;
+            Expression<Func<Job, bool>> orFilter = job => false;
 
-            if (!string.IsNullOrEmpty(search))
+            if ((searchParams != null && searchParams.Any()))
             {
-                search = search.ToLower();
+                var jobParam = Expression.Parameter(typeof(Job), "job");
 
-                bool isJobTypeParsed = Enum.TryParse(typeof(JobType), search, true, out var jobTypeParsed);
-
-                filter = job => job.Title.Contains(search) ||
-                                job.Employer.CompanyLocation.Equals(search, StringComparison.OrdinalIgnoreCase) ||
-                                job.Employer.CompanyIndustry.Equals(search, StringComparison.OrdinalIgnoreCase) ||
-                                (isJobTypeParsed && job.JobType.Equals(jobTypeParsed));
-            }
-
-            if (searchParams != null && searchParams.Any())
-            {
-                if (searchParams.ContainsKey("title") && !string.IsNullOrEmpty(searchParams["title"]))
+                if (searchParams.TryGetValue("search", out var search) && !string.IsNullOrEmpty(search))
                 {
-                    var title = searchParams["title"].ToLower();
-                    var titleFilter = Expression.Lambda<Func<Job, bool>>(Expression.Call(
-                                            Expression.Property(Expression.Parameter(typeof(Job), "job"), "Title"),
-                                            typeof(string).GetMethod("Contains", new[] { typeof(string) }),
-                                            Expression.Constant(title, typeof(string))),
-                                            Expression.Parameter(typeof(Job), "job"));
+                    search = RemoveDiacritics(search).ToLower();
 
-                    filter = filter == null ? titleFilter :
-                        Expression.Lambda<Func<Job, bool>>(
-                            Expression.AndAlso(filter.Body, titleFilter.Body),
-                            filter.Parameters);
+                    var titleExpression = Expression.Call(
+                        Expression.Property(jobParam, nameof(Job.Title)),
+                        "Contains",
+                        null,
+                        Expression.Constant(search)
+                    );
+
+                    Expression locationExpression = null;
+
+                    foreach (var entry in JobLocationDictionary.Locations)
+                    {
+                        string locVN = RemoveDiacritics(entry.Value).ToLower();
+
+                        if (locVN.Contains(search))
+                        {
+                            var locationEnumValue = entry.Key;
+
+                            var locationProperty = Expression.Property(jobParam, nameof(Job.Location));
+
+                            locationExpression = Expression.AndAlso(
+                                Expression.NotEqual(locationProperty, Expression.Constant(null, typeof(JobLocation?))),
+                                Expression.Equal(locationProperty, Expression.Constant(locationEnumValue, typeof(JobLocation?)))
+                            );
+
+                            break;
+                        }
+                    }
+
+                    var categoryExpression = Expression.Call(
+                        Expression.Property(
+                            Expression.Property(jobParam, nameof(Job.JobCategory)),
+                            nameof(JobCategory.JobCategoryName)
+                        ),
+                        "Contains",
+                        null,
+                        Expression.Constant(search)
+                    );
+
+                    var searchExpression = Expression.Lambda<Func<Job, bool>>(
+                        Expression.OrElse(
+                            titleExpression,
+                            Expression.OrElse(locationExpression, categoryExpression)
+                        ),
+                        jobParam
+                    );
+
+                    filter = searchExpression;
                 }
 
-                if (searchParams.ContainsKey("location") && !string.IsNullOrEmpty(searchParams["location"]))
-                {
-                    var location = searchParams["location"].ToLower();
-                    var locationFilter = Expression.Lambda<Func<Job, bool>>(Expression.Call(
-                                              Expression.Property(Expression.Parameter(typeof(Job), "job"), "Employer.CompanyLocation"),
-                                              typeof(string).GetMethod("Contains", new[] { typeof(string) }),
-                                              Expression.Constant(location, typeof(string))),
-                                              Expression.Parameter(typeof(Job), "job"));
 
-                    filter = filter == null ? locationFilter :
-                        Expression.Lambda<Func<Job, bool>>(
-                            Expression.AndAlso(filter.Body, locationFilter.Body),
-                            filter.Parameters);
+
+                if (searchParams.TryGetValue("title", out var title) && !string.IsNullOrEmpty(title))
+                {
+                    title = RemoveDiacritics(title).ToLower();
+                    var titleExpression = Expression.Lambda<Func<Job, bool>>(
+                        Expression.Call(
+                            Expression.Property(jobParam, nameof(Job.Title)),
+                            "Contains",
+                            null,
+                            Expression.Constant(title)
+                        ), jobParam);
+                    filter = filter.AndAlso(titleExpression);
                 }
 
-                if (searchParams.ContainsKey("category") && !string.IsNullOrEmpty(searchParams["category"]))
+                if (searchParams.TryGetValue("location", out var location) && !string.IsNullOrEmpty(location))
                 {
-                    var category = searchParams["category"].ToLower();
-                    var categoryFilter = Expression.Lambda<Func<Job, bool>>(Expression.Call(
-                                                Expression.Property(Expression.Parameter(typeof(Job), "job"), "JobCategory.JobCategoryName"),
-                                                typeof(string).GetMethod("Contains", new[] { typeof(string) }),
-                                                Expression.Constant(category, typeof(string))),
-                                                Expression.Parameter(typeof(Job), "job"));
+                    location = RemoveDiacritics(location).ToLower();
 
-                    filter = filter == null ? categoryFilter :
-                        Expression.Lambda<Func<Job, bool>>(
-                            Expression.AndAlso(filter.Body, categoryFilter.Body),
-                            filter.Parameters);
+                    foreach (var entry in JobLocationDictionary.Locations)
+                    {
+                        string locVN = RemoveDiacritics(entry.Value).ToLower();
+
+                        if (locVN.Contains(location))
+                        {
+                            var locationEnumValue = entry.Key;
+
+                            var locationExpression = Expression.Lambda<Func<Job, bool>>(
+                                Expression.Equal(
+                                    Expression.Property(jobParam, nameof(Job.Location)),
+                                    Expression.Constant(locationEnumValue, typeof(JobLocation?))
+                                ),
+                                jobParam
+                            );
+
+                            filter = filter == null ? locationExpression : filter.AndAlso(locationExpression);
+                            break;
+                        }
+                    }
+                }
+
+                if (searchParams.TryGetValue("category", out var category) && !string.IsNullOrEmpty(category))
+                {
+                    category = RemoveDiacritics(category).ToLower();
+                    var categoryExpression = Expression.Lambda<Func<Job, bool>>(
+                        Expression.Call(
+                            Expression.Property(
+                                Expression.Property(jobParam, nameof(Job.JobCategory)),
+                                nameof(JobCategory.JobCategoryName)
+                            ),
+                            "Contains",
+                            null,
+                            Expression.Constant(category)
+                        ), jobParam);
+                    filter = filter.AndAlso(categoryExpression);
                 }
             }
 
@@ -114,15 +172,24 @@ namespace FindJobsApplication.Controllers
                     x.Employer.CompanyLogo,
                     x.Employer.CompanyName,
                     x.Employer.CompanyIndustry,
-                    Location = x.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(x.Location.Value) ?
-                               JobLocationDictionary.Locations[x.Location.Value] :
-                               x.Employer.CompanyLocation
+                    Location = x.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(x.Location.Value)
+                                ? JobLocationDictionary.Locations[x.Location.Value]
+                                : x.Employer.CompanyLocation
                 })
                 .ToList();
 
             return Ok(jobs);
         }
 
+        public static string RemoveDiacritics(string text)
+        {
+            string normalizedString = text.Normalize(NormalizationForm.FormD);
+
+            Regex regex = new Regex(@"\p{IsCombiningDiacriticalMarks}+");
+            string withoutDiacritics = regex.Replace(normalizedString, "");
+
+            return withoutDiacritics.Normalize(NormalizationForm.FormC);
+        }
 
         [HttpPost]
         public IActionResult CreateJob([FromBody] JobViewModel job)
@@ -277,4 +344,30 @@ namespace FindJobsApplication.Controllers
             return Ok();
         }
     }
+
+    public static class ExpressionExtensions
+    {
+        public static Expression<Func<T, bool>> AndAlso<T>(this Expression<Func<T, bool>> expr1, Expression<Func<T, bool>> expr2)
+        {
+            var parameter = Expression.Parameter(typeof(T));
+            var visitor = new ReplaceParameterVisitor();
+            visitor.Add(expr1.Parameters[0], parameter);
+            visitor.Add(expr2.Parameters[0], parameter);
+
+            var combined = visitor.Visit(Expression.AndAlso(expr1.Body, expr2.Body));
+            return Expression.Lambda<Func<T, bool>>(combined, parameter);
+        }
+    }
+
+    class ReplaceParameterVisitor : ExpressionVisitor
+    {
+        private readonly Dictionary<Expression, Expression> _map = new();
+
+        public void Add(Expression from, Expression to) => _map[from] = to;
+
+        protected override Expression VisitParameter(ParameterExpression node) =>
+            _map.TryGetValue(node, out var replacement) ? replacement : node;
+    }
+
+
 }
