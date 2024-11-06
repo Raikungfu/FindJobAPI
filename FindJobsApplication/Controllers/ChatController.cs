@@ -1,4 +1,4 @@
-﻿/*using FindJobsApplication.Models;
+﻿using FindJobsApplication.Models;
 using FindJobsApplication.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,23 +20,9 @@ namespace FindJobsApplication.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Chat/Employers
-        [HttpGet("Employers")]
-        public async Task<ActionResult<IEnumerable<User>>> GetEmployers()
-        {
-            var employers = await _unitOfWork.User.GetAll(u => u.UserType == UserType.).ToListAsync();
-
-            if (employers == null || employers.Count == 0)
-            {
-                return NotFound("No employers found.");
-            }
-
-            return Ok(employers);
-        }
-
-        // POST: api/Chat/StartChat
-        [HttpPost("StartChat")]
-        public IActionResult StartChat([FromBody] StartChatRequest request)
+        // GET: api/Chat
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim, out int id))
@@ -50,36 +36,64 @@ namespace FindJobsApplication.Controllers
                 return Unauthorized("User not found.");
             }
 
-            var claimRole = user.Role;
-            if (claimRole != UserType.Employee.ToString())
+            var rooms = await _unitOfWork.Room.GetAllAsync(r => r.UserId1 == id || r.UserId2 == id, null, "Messages,Messages.FromUser");
+
+            var result = rooms.Select(r => new
             {
-                return Unauthorized("You are not authorized to start a chat.");
+                roomId = r.Id,
+                lastMessage = r.Messages.OrderByDescending(m => m.Timestamp).FirstOrDefault()?.Content,
+                lastMessageTimestamp = r.Messages.OrderByDescending(m => m.Timestamp).FirstOrDefault()?.Timestamp,
+                withUser = r.UserId1 == id ? r.User2.Username : r.User1.Username,
+                toUser = r.UserId1 == id ? r.User2.UserId : r.User1.UserId
+            });
+
+            return Ok(result);
+        }
+
+        // POST: api/Chat/StartChat
+        [HttpPost("StartChat")]
+        public async Task<IActionResult> StartChat([FromBody] StartChatRequest request)
+        {
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim, out int id))
+            {
+                return Unauthorized("User not logged in.");
             }
 
-            var room = _unitOfWork.Room.GetFirstOrDefault(r =>
-                (r.EmployeeId == userIdClaim && r.EmployerId == request.EmployerId) ||
-                (r.EmployeeId == request.EmployerId && r.EmployerId == userIdClaim));
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(u => u.UserId == id);
+            if (user == null)
+            {
+                return Unauthorized("User not found.");
+            }
+
+            var room = await _unitOfWork.Room.GetFirstOrDefaultAsync(r =>
+                (r.UserId1 == id && r.UserId2 == request.ToUserId) ||
+                (r.UserId1 == request.ToUserId && r.UserId2 == id));
 
             if (room == null)
             {
+                int userId1 = id < request.ToUserId ? id : request.ToUserId;
+                int userId2 = id < request.ToUserId ? request.ToUserId : id;
+
                 room = new Room
                 {
-                    Name = $"Chat with employer {request.EmployerId}",
-                    EmployeeId = id,
-                    EmployerId = request.EmployerId
+                    Name = $"privite_{userId1}_{userId2}",
+                    UserId1 = userId1,
+                    UserId2 = userId2
                 };
 
                 _unitOfWork.Room.Add(room);
-                _unitOfWork.SaveAsync();
+                await _unitOfWork.SaveAsync();
             }
 
             return Ok(new { roomId = room.Id });
         }
 
+
         [HttpGet("ChatRoom/{roomId}")]
         public IActionResult GetChatRoom(int roomId)
         {
-            var room = _unitOfWork.Room.GetFirstOrDefault(r => r.Id == roomId, include: r => r.Include(x => x.Messages).ThenInclude(m => m.FromUser));
+            var room = _unitOfWork.Room.GetFirstOrDefault(r => r.Id == roomId, "Messages,Messages.FromUser");
 
             if (room == null)
             {
@@ -88,45 +102,6 @@ namespace FindJobsApplication.Controllers
 
             room.Messages = room.Messages.OrderByDescending(m => m.Timestamp).Take(20).ToList();
             return Ok(room);
-        }
-
-        // POST: api/Chat/SendMessage
-        [HttpPost("SendMessage")]
-        public IActionResult SendMessage([FromBody] SendMessageRequest request)
-        {
-            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null || !int.TryParse(userIdClaim, out int id))
-            {
-                return Unauthorized("User not logged in.");
-            }
-
-            var room = _unitOfWork.Room.GetFirstOrDefault(r => r.Id == request.RoomId);
-            if (room == null)
-            {
-                return BadRequest("Room not found.");
-            }
-
-            var message = new Message
-            {
-                Content = request.Content,
-                FromUserId = id,
-                ToRoomId = request.RoomId,
-                Timestamp = DateTime.Now
-            };
-
-            room.Messages.Add(message);
-            _unitOfWork.SaveAsync();
-
-            var messageViewModel = new MessageViewModel
-            {
-                Id = message.MessageId,
-                Content = message.Content,
-                Timestamp = message.Timestamp,
-                FromUserName = User.Identity?.Name ?? "Unknown User",
-                Room = room.Name
-            };
-
-            return Ok(new { success = true, message = "Message sent successfully!", messageData = messageViewModel });
         }
     }
 
@@ -147,7 +122,6 @@ namespace FindJobsApplication.Controllers
 
     public class StartChatRequest
     {
-        public string EmployerId { get; set; }
+        public int ToUserId { get; set; }
     }
 }
-*/

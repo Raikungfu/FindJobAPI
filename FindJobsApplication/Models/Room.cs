@@ -11,15 +11,15 @@ namespace FindJobsApplication.Models
 
         public string Name { get; set; }
 
-        public int EmployerId { get; set; }
+        public int UserId1 { get; set; }
 
-        public int EmployeeId { get; set; }
+        public int UserId2 { get; set; }
 
-        [ForeignKey("EmployerId")]
-        public virtual User Employer { get; set; }
+        [ForeignKey("UserId1")]
+        public virtual User User1 { get; set; }
 
-        [ForeignKey("EmployeeId")]
-        public virtual User Employee { get; set; }
+        [ForeignKey("UserId2")]
+        public virtual User User2 { get; set; }
 
         public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
     }

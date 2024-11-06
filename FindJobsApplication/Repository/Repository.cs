@@ -33,6 +33,11 @@ namespace FindJobsApplication.Repository
             return _dbSet.Find(id);
         }
 
+        public async Task<T> GetAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
         public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null,
                                      Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
                                      string? includeProperties = null)
@@ -80,6 +85,26 @@ namespace FindJobsApplication.Repository
             return query.AsNoTracking().FirstOrDefault();
         }
 
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
+            return await query.AsNoTracking().FirstOrDefaultAsync();
+        }
+
         public void Remove(T entity)
         {
             _dbSet.Remove(entity);
@@ -91,9 +116,53 @@ namespace FindJobsApplication.Repository
             Remove(entity);
         }
 
+        public async Task RemoveAsync(int id)
+        {
+            T entity = await _dbSet.FindAsync(id);
+            Remove(entity);
+        }
+
+
         public void RemoveRange(IEnumerable<T> entities)
         {
             _dbSet.RemoveRange(entities);
+        }
+
+        public async Task AddAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
+        }
+
+        public async Task AddRangeAsync(IEnumerable<T> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null,
+                                                      Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+                                                      string? includeProperties = null)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query).AsNoTracking().ToListAsync();
+            }
+
+            return await query.AsNoTracking().ToListAsync();
         }
     }
 }

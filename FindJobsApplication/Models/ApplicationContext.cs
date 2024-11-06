@@ -91,15 +91,15 @@ namespace FindJobsApplication.Models
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Room>()
-           .HasOne(r => r.Employer)
+           .HasOne(r => r.User1)
            .WithMany()
-           .HasForeignKey(r => r.EmployerId)
+           .HasForeignKey(r => r.UserId1)
            .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Room>()
-                .HasOne(r => r.Employee)
+                .HasOne(r => r.User2)
                 .WithMany()
-                .HasForeignKey(r => r.EmployeeId)
+                .HasForeignKey(r => r.UserId2)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Message>()
