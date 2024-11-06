@@ -35,6 +35,17 @@ namespace FindJobsApplication.Repository
 
         public IOrderRepository Order { get; private set; }
 
+        public async ValueTask DisposeAsync()
+        {
+            await _db.DisposeAsync();
+        }
+
+        public async Task SaveAsync()
+        {
+            await _db.SaveChangesAsync();
+        }
+
+
         public void Dispose()
         {
             _db.Dispose();

@@ -27,7 +27,7 @@ namespace FindJobsApplication.Controllers
 
         [Authorize(Roles ="Employer")]
         [HttpPost("hire-employee")]
-        public IActionResult HireEmployee([FromBody]HireViewModel hireVm)
+        public async Task<IActionResult> HireEmployee([FromBody]HireViewModel hireVm)
         {
             if(!int.TryParse(User.FindFirstValue("Id"), out int employerId))
             {
@@ -35,7 +35,8 @@ namespace FindJobsApplication.Controllers
             }
 
             var jobApply = new JobApply { JobApplyId = hireVm.JobApplyId, Status = JobApplyStatus.Accepted };
-            var jobApplyUpdate = _unitOfWork.JobApply.UpdateStatusAsync(jobApply);
+            await _unitOfWork.JobApply.UpdateStatusAsync(jobApply);
+            await _unitOfWork.SaveAsync();
 
             Hire hire = _mapper.Map<Hire>(hireVm);
 
@@ -44,7 +45,7 @@ namespace FindJobsApplication.Controllers
             hire.JobId = jobApply.JobId;
 
             _unitOfWork.Hire.Add(hire);
-            _unitOfWork.Save();
+            _unitOfWork.SaveAsync();
 
             return Ok();
         }

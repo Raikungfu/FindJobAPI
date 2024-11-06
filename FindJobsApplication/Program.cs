@@ -18,14 +18,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddOData(options =>
-{
-    options.Select().Expand().Filter().OrderBy().Count();
-});
-
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
 
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(FindJobsMapper));
@@ -47,6 +42,10 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddControllers()
+    .AddOData(options =>
+    {
+        options.Select().Expand().Filter().OrderBy().Count();
+    })
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());

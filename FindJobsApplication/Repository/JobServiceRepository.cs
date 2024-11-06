@@ -2,6 +2,7 @@
 using FindJobsApplication.Repository.IRepository;
 using FindJobsApplication.Repository;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 namespace FindJobsApplication.Repository
 {

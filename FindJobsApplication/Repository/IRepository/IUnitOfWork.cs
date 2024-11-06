@@ -13,5 +13,7 @@
         IHireRepository Hire { get; }
         IOrderRepository Order { get; }
         void Save();
+        ValueTask DisposeAsync();
+        Task SaveAsync();
     }
 }

@@ -5,8 +5,6 @@ using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 
 namespace FindJobsApplication.Controllers
@@ -27,7 +25,6 @@ namespace FindJobsApplication.Controllers
             _configuration = configuration;
         }
 
-
         // GET: OrderController
         [Authorize]
         [HttpGet]
@@ -36,7 +33,7 @@ namespace FindJobsApplication.Controllers
             var claimId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (claimId != null && int.TryParse(claimId, out int userId))
             {
-                return Ok(_unitOfWork.Order.GetAll(x => x.UserId == userId, null, "JobService").Select(order => new
+                return Ok(_unitOfWork.Order.GetAll(x => x.UserId == userId, orderBy: query => query.OrderByDescending(job => job.OrderId), "JobService").Select(order => new
                 {
                     order.OrderId,
                     order.Description,
@@ -169,8 +166,9 @@ namespace FindJobsApplication.Controllers
         // PUT api/<OrderController>/5
         [AllowAnonymous]
         [HttpGet("confirm-payment-vnpay")]
-        public IActionResult ConfirmPayment()
+        public async Task<IActionResult> ConfirmPayment()
         {
+            string frontendLink = _configuration["FrontendLink"];
             try
             {
                 var queryParams = Request.Query;
@@ -181,14 +179,16 @@ namespace FindJobsApplication.Controllers
                 {
                     if (!queryParams.ContainsKey(param))
                     {
-                        return BadRequest($"Thiếu tham số: {param}");
+                        string errorMessage = Uri.EscapeDataString($"Thiếu tham số: {param}");
+                        return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
                     }
                 }
 
                 var referer = Request.Headers["Referer"].ToString();
                 if (!referer.StartsWith("https://sandbox.vnpayment.vn") && !referer.StartsWith("https://www.vnpayment.vn"))
                 {
-                    return BadRequest("Yêu cầu không hợp lệ.");
+                    string errorMessage = Uri.EscapeDataString("Yêu cầu không hợp lệ.");
+                    return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
                 }
 
                 Dictionary<string, string> queryDictionary = queryParams.ToDictionary(q => q.Key, q => q.Value.ToString());
@@ -202,19 +202,22 @@ namespace FindJobsApplication.Controllers
 
                 if (!VerifySecureHash(vnp_SecureHash))
                 {
-                    return BadRequest("Secure hash không hợp lệ.");
+                    string errorMessage = Uri.EscapeDataString("Secure hash không hợp lệ.");
+                    return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
                 }
 
                 var order = _unitOfWork.Order.GetFirstOrDefault(o => o.OrderId.ToString() == vnp_TxnRef);
 
                 if (order == null)
                 {
-                    return BadRequest("Đơn hàng không tồn tại.");
+                    string errorMessage = Uri.EscapeDataString("Đơn hàng không tồn tại.");
+                    return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
                 }
 
-                if (order.Price != amount)
+                if (order.Price * 100 != amount)
                 {
-                    return BadRequest("Số tiền không khớp.");
+                    string errorMessage = Uri.EscapeDataString("Số tiền không khớp.");
+                    return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
                 }
 
                 var jobService = _unitOfWork.JobService.GetFirstOrDefault(x => x.JobServiceId == order.JobServiceId);
@@ -233,11 +236,12 @@ namespace FindJobsApplication.Controllers
                 _unitOfWork.Order.Update(order);
                 _unitOfWork.Save();
 
-                return Redirect("https://find-job-react.onrender.com/order-history");
+                return Redirect($"{frontendLink}/payment-success");
             }
             catch (Exception e)
             {
-                return BadRequest(new { message = e.Message });
+                string errorMessage = Uri.EscapeDataString(e.Message);
+                return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
 
             }
         }
