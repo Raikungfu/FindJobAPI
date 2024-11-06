@@ -31,7 +31,7 @@ namespace FindJobsApplication.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_unitOfWork.JobService.GetAll(filter: null, orderBy: query => query.OrderBy(job => job.Price), includeProperty: null).ToList());
+            return Ok(_unitOfWork.JobService.GetAll(filter: null, orderBy: query => query.OrderBy(job => job.Price), null).ToList());
         }
 
         // GET api/<JobServiceController>/5
