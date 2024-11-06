@@ -11,7 +11,7 @@ namespace FindJobsApplication.Models
 
         public string? Content { get; set; }
 
-        public string? Type { get; set; }
+        public string? Type { get; set; } = "text";
 
         public string? File { get; set; }
 
