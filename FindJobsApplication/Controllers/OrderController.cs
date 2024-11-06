@@ -167,6 +167,7 @@ namespace FindJobsApplication.Controllers
         }
 
         // PUT api/<OrderController>/5
+        [AllowAnonymous]
         [HttpGet("confirm-payment-vnpay")]
         public IActionResult ConfirmPayment()
         {
@@ -232,7 +233,7 @@ namespace FindJobsApplication.Controllers
                 _unitOfWork.Order.Update(order);
                 _unitOfWork.Save();
 
-                return Redirect("https://find-job-react.onrender.com");
+                return Redirect("https://find-job-react.onrender.com/order-history");
             }
             catch (Exception e)
             {

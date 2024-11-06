@@ -115,8 +115,6 @@ namespace FindJobsApplication.Library
 
     public class Utils
     {
-
-
         public static String HmacSHA512(string key, String inputData)
         {
             var hash = new StringBuilder();
