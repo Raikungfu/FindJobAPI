@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace FindJobsApplication.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "Employer")]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployerController : ControllerBase
@@ -31,20 +31,20 @@ namespace FindJobsApplication.Controllers
 
         [EnableQuery]
         [HttpGet("{id}")]
-        public IActionResult GeEmployeeDetail(int id)
+        public IActionResult GetEmployerDetail(int id)
         {
-            var employee = _unitOfWork.Employee.Get(id);
-            if (employee == null)
+            var employer = _unitOfWork.Employer.Get(id);
+            if (employer == null)
             {
                 return NotFound();
             }
-            return Ok(employee);
+            return Ok(employer);
         }
 
         [HttpPut("update")]
-        public IActionResult UpdateEmployee([FromBody] EmployeeViewModel employee)
+        public IActionResult UpdateEmployer([FromBody] EmployerViewModel employer)
         {
-            if (employee == null)
+            if (employer == null)
             {
                 return BadRequest();
             }
@@ -56,48 +56,92 @@ namespace FindJobsApplication.Controllers
             }
 
             var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
-            if (claimRole != UserType.Employee.ToString())
+            if (claimRole != UserType.Employer.ToString())
             {
-                return Unauthorized("You are not authorized to create job.");
+                return Unauthorized("You are not authorized to update employer information.");
             }
 
-            var employeeFromDb = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == userId);
-            if (employeeFromDb == null)
+            var employerFromDb = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == userId);
+            if (employerFromDb == null)
             {
                 return NotFound();
             }
 
-            _mapper.Map(employee, employeeFromDb);
+            _mapper.Map(employer, employerFromDb);
 
-            if (employee.Image != null)
+            if (employer.CompanyLogo != null)
             {
-                employeeFromDb.Image = _uploadFileService.uploadImage(employee.Image, "Images");
+                employerFromDb.CompanyLogo = _uploadFileService.uploadImage(employer.CompanyLogo, "Images");
             }
 
-            if (employee.Cv != null)
+            if (employer.Cover != null)
             {
-                employeeFromDb.Cv = _uploadFileService.uploadImage(employee.Cv, "Images");
+                employerFromDb.Cover = _uploadFileService.uploadImage(employer.Cover, "Images");
             }
 
-            if (employee.Cover != null)
+            if (employer.CIFront != null)
             {
-                employeeFromDb.Cover = _uploadFileService.uploadImage(employee.Cover, "Images");
+                employerFromDb.CIFront = _uploadFileService.uploadImage(employer.CIFront, "Images");
             }
 
-            if (employee.CIFront != null)
+            if (employer.CIBehind != null)
             {
-                employeeFromDb.CIFront = _uploadFileService.uploadImage(employee.CIFront, "Images");
+                employerFromDb.CIBehind = _uploadFileService.uploadImage(employer.CIBehind, "Images");
             }
 
-            if (employee.CIBehind != null)
-            {
-                employeeFromDb.CIBehind = _uploadFileService.uploadImage(employee.CIBehind, "Images");
-            }
-
-            _unitOfWork.Employee.Update(employeeFromDb);
+            _unitOfWork.Employer.Update(employerFromDb);
             _unitOfWork.Save();
 
             return NoContent();
+        }
+
+        [EnableQuery]
+        [HttpGet("jobs/{employerId}")]
+        public IActionResult GetEmployerJobs(int employerId)
+        {
+            var employer = _unitOfWork.Employer.Get(employerId);
+            if (employer == null)
+            {
+                return NotFound("Employer not found.");
+            }
+
+            var postedJobs = _unitOfWork.Job.GetAll(x => x.EmployerId == employerId);
+            return Ok(postedJobs);
+        }
+
+        // Thêm Job mới cho Employer
+        [HttpPost("post-job")]
+        public IActionResult PostJob([FromBody] JobViewModel jobVm)
+        {
+            if (jobVm == null)
+            {
+                return BadRequest("Invalid job details.");
+            }
+
+            var claimValue = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int userId))
+            {
+                return Unauthorized("User not logged in. Please log in to continue.");
+            }
+
+            var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
+            if (claimRole != UserType.Employer.ToString())
+            {
+                return Unauthorized("You are not authorized to post a job.");
+            }
+
+            var employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == userId);
+            if (employer == null)
+            {
+                return NotFound("Employer not found.");
+            }
+
+            var job = _mapper.Map<Job>(jobVm);
+            job.EmployerId = employer.EmployerId;
+            _unitOfWork.Job.Add(job);
+            _unitOfWork.Save();
+
+            return CreatedAtAction(nameof(GetEmployerJobs), new { employerId = employer.EmployerId }, job);
         }
     }
 }
