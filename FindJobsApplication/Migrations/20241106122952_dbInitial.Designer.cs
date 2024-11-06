@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobsApplication.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20241106100138_dbInitial")]
+    [Migration("20241106122952_dbInitial")]
     partial class dbInitial
     {
         /// <inheritdoc />
@@ -199,6 +199,15 @@ namespace FindJobsApplication.Migrations
                     b.Property<string>("Experience")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("FeaturePostJobServiceCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("FeaturePostJobServiceFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FeaturePostJobServiceTo")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -216,6 +225,15 @@ namespace FindJobsApplication.Migrations
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PostJobServiceCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("PostJobServiceFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PostJobServiceTo")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
@@ -707,7 +725,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 1,
                             EmployeeId = 1,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7666),
+                            HireDate = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1323),
                             JobApplyId = 1,
                             JobId = 1,
                             Status = 0
@@ -717,7 +735,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 2,
                             EmployeeId = 2,
                             EmployerId = 1,
-                            HireDate = new DateTime(2024, 10, 27, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7670),
+                            HireDate = new DateTime(2024, 10, 27, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1331),
                             JobApplyId = 2,
                             JobId = 1,
                             Status = 0
@@ -727,7 +745,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 3,
                             EmployeeId = 3,
                             EmployerId = 2,
-                            HireDate = new DateTime(2024, 11, 1, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7672),
+                            HireDate = new DateTime(2024, 11, 1, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1334),
                             JobApplyId = 3,
                             JobId = 2,
                             Status = 0
@@ -763,14 +781,14 @@ namespace FindJobsApplication.Migrations
                             InvoiceId = 1,
                             Amount = 150m,
                             EmployerId = 1,
-                            IssueDate = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7698)
+                            IssueDate = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1379)
                         },
                         new
                         {
                             InvoiceId = 2,
                             Amount = 200m,
                             EmployerId = 2,
-                            IssueDate = new DateTime(2024, 11, 1, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7702)
+                            IssueDate = new DateTime(2024, 11, 1, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1383)
                         });
                 });
 
@@ -834,8 +852,8 @@ namespace FindJobsApplication.Migrations
                         {
                             JobId = 1,
                             Amount = 10m,
-                            DateFrom = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7492),
-                            DateTo = new DateTime(2024, 12, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7507),
+                            DateFrom = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(295),
+                            DateTo = new DateTime(2024, 12, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(313),
                             Description = "Phát triển ứng dụng.",
                             EmployerId = 1,
                             IsClosed = false,
@@ -849,8 +867,8 @@ namespace FindJobsApplication.Migrations
                         {
                             JobId = 2,
                             Amount = 3m,
-                            DateFrom = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7516),
-                            DateTo = new DateTime(2025, 1, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7516),
+                            DateFrom = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(334),
+                            DateTo = new DateTime(2025, 1, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(335),
                             Description = "Tạo các trang web đẹp.",
                             EmployerId = 1,
                             IsClosed = false,
@@ -864,8 +882,8 @@ namespace FindJobsApplication.Migrations
                         {
                             JobId = 3,
                             Amount = 15m,
-                            DateFrom = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7519),
-                            DateTo = new DateTime(2025, 2, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7520),
+                            DateFrom = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(341),
+                            DateTo = new DateTime(2025, 2, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(342),
                             Description = "Nâng cao trải nghiệm người dùng.",
                             EmployerId = 2,
                             IsClosed = false,
@@ -879,8 +897,8 @@ namespace FindJobsApplication.Migrations
                         {
                             JobId = 4,
                             Amount = 5m,
-                            DateFrom = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7522),
-                            DateTo = new DateTime(2024, 12, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7523),
+                            DateFrom = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1066),
+                            DateTo = new DateTime(2024, 12, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1067),
                             Description = "Bán sản phẩm và tư vấn khách hàng.",
                             EmployerId = 3,
                             IsClosed = false,
@@ -894,8 +912,8 @@ namespace FindJobsApplication.Migrations
                         {
                             JobId = 5,
                             Amount = 10m,
-                            DateFrom = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7525),
-                            DateTo = new DateTime(2025, 1, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7526),
+                            DateFrom = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1072),
+                            DateTo = new DateTime(2025, 1, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1073),
                             Description = "Dạy kèm học sinh cấp 2 và cấp 3.",
                             EmployerId = 4,
                             IsClosed = false,
@@ -909,8 +927,8 @@ namespace FindJobsApplication.Migrations
                         {
                             JobId = 6,
                             Amount = 8m,
-                            DateFrom = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7528),
-                            DateTo = new DateTime(2024, 12, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7528),
+                            DateFrom = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1077),
+                            DateTo = new DateTime(2024, 12, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1078),
                             Description = "Phục vụ khách hàng trong nhà hàng.",
                             EmployerId = 5,
                             IsClosed = false,
@@ -924,8 +942,8 @@ namespace FindJobsApplication.Migrations
                         {
                             JobId = 7,
                             Amount = 20m,
-                            DateFrom = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7531),
-                            DateTo = new DateTime(2024, 12, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7531),
+                            DateFrom = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1082),
+                            DateTo = new DateTime(2024, 12, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1082),
                             Description = "Nhập dữ liệu vào hệ thống quản lý.",
                             EmployerId = 6,
                             IsClosed = false,
@@ -939,8 +957,8 @@ namespace FindJobsApplication.Migrations
                         {
                             JobId = 8,
                             Amount = 6m,
-                            DateFrom = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7534),
-                            DateTo = new DateTime(2024, 12, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7534),
+                            DateFrom = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1086),
+                            DateTo = new DateTime(2024, 12, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1086),
                             Description = "Giải đáp thắc mắc và hỗ trợ khách hàng.",
                             EmployerId = 7,
                             IsClosed = false,
@@ -954,8 +972,8 @@ namespace FindJobsApplication.Migrations
                         {
                             JobId = 9,
                             Amount = 2m,
-                            DateFrom = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7536),
-                            DateTo = new DateTime(2025, 1, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7537),
+                            DateFrom = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1090),
+                            DateTo = new DateTime(2025, 1, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1091),
                             Description = "Giao hàng tới các địa chỉ yêu cầu.",
                             EmployerId = 8,
                             IsClosed = false,
@@ -969,8 +987,8 @@ namespace FindJobsApplication.Migrations
                         {
                             JobId = 10,
                             Amount = 10m,
-                            DateFrom = new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7539),
-                            DateTo = new DateTime(2025, 1, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7540),
+                            DateFrom = new DateTime(2024, 11, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1094),
+                            DateTo = new DateTime(2025, 1, 6, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1095),
                             Description = "Pha chế đồ uống theo yêu cầu của khách hàng.",
                             EmployerId = 9,
                             IsClosed = false,
@@ -1040,7 +1058,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 1,
-                            ApplyDate = new DateTime(2024, 10, 22, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7632),
+                            ApplyDate = new DateTime(2024, 10, 22, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1272),
                             EmployeeId = 1,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1050,7 +1068,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 2,
-                            ApplyDate = new DateTime(2024, 10, 25, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7640),
+                            ApplyDate = new DateTime(2024, 10, 25, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1279),
                             EmployeeId = 2,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1060,7 +1078,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 3,
-                            ApplyDate = new DateTime(2024, 10, 25, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7641),
+                            ApplyDate = new DateTime(2024, 10, 25, 19, 29, 51, 155, DateTimeKind.Local).AddTicks(1282),
                             EmployeeId = 3,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1168,11 +1186,14 @@ namespace FindJobsApplication.Migrations
                     b.Property<int>("AdminId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Count")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Duration")
-                        .HasColumnType("float");
+                    b.Property<int?>("Duration")
+                        .HasColumnType("int");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -1199,160 +1220,175 @@ namespace FindJobsApplication.Migrations
                             JobServiceId = 1,
                             AdminId = 1,
                             Description = "Cơ hội để bạn đưa tin tuyển dụng của mình đến với hàng triệu ứng viên. Gói này cho phép bạn đăng một tin tuyển dụng duy nhất, thu hút sự chú ý của những ứng viên tiềm năng ngay lập tức.",
-                            Duration = 1.0,
+                            Duration = 1,
+                            Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png",
                             Price = 9000m,
                             ServiceName = "Đăng tin tuyển dụng 1 lần",
-                            jobServiceType = 4
+                            jobServiceType = 1
                         },
                         new
                         {
                             JobServiceId = 2,
                             AdminId = 1,
                             Description = "Tối ưu hóa cơ hội tuyển dụng của bạn với gói 5 lần. Đăng tin tuyển dụng liên tiếp để tiếp cận nhiều ứng viên hơn và tăng khả năng tìm thấy ứng viên phù hợp.",
-                            Duration = 5.0,
+                            Duration = 5,
                             Price = 39000m,
                             ServiceName = "Đăng tin tuyển dụng 5 lần",
-                            jobServiceType = 4
+                            jobServiceType = 1
                         },
                         new
                         {
                             JobServiceId = 3,
                             AdminId = 1,
                             Description = "Với gói 10 lần, bạn có thể thoải mái đăng tin tuyển dụng của mình mà không lo lắng về chi phí. Đây là lựa chọn hoàn hảo cho các doanh nghiệp có nhu cầu tuyển dụng thường xuyên.",
-                            Duration = 10.0,
+                            Duration = 10,
+                            Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png",
                             Price = 69000m,
                             ServiceName = "Đăng tin tuyển dụng 10 lần",
-                            jobServiceType = 4
+                            jobServiceType = 1
                         },
                         new
                         {
                             JobServiceId = 4,
                             AdminId = 1,
                             Description = "Mở rộng khả năng tiếp cận ứng viên của bạn với gói đăng tin 20 lần. Gói này không chỉ tiết kiệm mà còn cho phép bạn duy trì sự hiện diện liên tục trên nền tảng tuyển dụng.",
-                            Duration = 20.0,
+                            Duration = 20,
+                            Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png",
                             Price = 109000m,
                             ServiceName = "Đăng tin tuyển dụng 20 lần",
-                            jobServiceType = 4
+                            jobServiceType = 1
                         },
                         new
                         {
                             JobServiceId = 5,
                             AdminId = 1,
                             Description = "Gói 100 lần là giải pháp tối ưu cho các doanh nghiệp lớn với nhu cầu tuyển dụng liên tục. Đăng tin không giới hạn giúp bạn dễ dàng thu hút ứng viên hàng đầu.",
-                            Duration = 100.0,
+                            Duration = 100,
+                            Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png",
                             Price = 399000m,
                             ServiceName = "Đăng tin tuyển dụng 100 lần",
-                            jobServiceType = 4
+                            jobServiceType = 1
                         },
                         new
                         {
                             JobServiceId = 6,
                             AdminId = 1,
                             Description = "Đăng tin tuyển dụng mỗi ngày trong 30 ngày, đảm bảo rằng tin tuyển dụng của bạn luôn tươi mới và thu hút. Lựa chọn lý tưởng cho những ai muốn duy trì sự chú ý của ứng viên.",
-                            Duration = 30.0,
+                            Duration = 30,
+                            Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png",
                             Price = 100000m,
                             ServiceName = "Đăng tin tuyển dụng theo ngày",
-                            jobServiceType = 4
+                            jobServiceType = 1
                         },
                         new
                         {
                             JobServiceId = 7,
                             AdminId = 1,
                             Description = "Gói đăng tin theo tháng giúp bạn dễ dàng quản lý quá trình tuyển dụng của mình. Đăng tin hàng tháng để thu hút ứng viên liên tục và mở rộng mạng lưới của bạn.",
-                            Duration = 30.0,
+                            Duration = 30,
+                            Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png",
                             Price = 250000m,
                             ServiceName = "Đăng tin tuyển dụng theo tháng",
-                            jobServiceType = 4
+                            jobServiceType = 1
                         },
                         new
                         {
                             JobServiceId = 8,
                             AdminId = 1,
                             Description = "Chọn gói đăng tin theo năm để đảm bảo sự hiện diện lâu dài của bạn trong thị trường tuyển dụng. Đây là lựa chọn tốt nhất cho các doanh nghiệp có nhu cầu tuyển dụng ổn định trong thời gian dài.",
-                            Duration = 365.0,
+                            Duration = 365,
+                            Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png",
                             Price = 1000000m,
                             ServiceName = "Đăng tin tuyển dụng theo năm",
-                            jobServiceType = 4
+                            jobServiceType = 1
                         },
                         new
                         {
                             JobServiceId = 9,
                             AdminId = 1,
                             Description = "Đưa tin tuyển dụng của bạn lên hàng đầu với gói nổi bật một lần. Đảm bảo rằng tin của bạn thu hút mọi ánh nhìn từ ứng viên ngay từ lần đầu tiên.",
-                            Duration = 1.0,
+                            Duration = 1,
+                            Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg",
                             Price = 15000m,
                             ServiceName = "Nổi Bật Tuyển Dụng 1 lần",
-                            jobServiceType = 4
+                            jobServiceType = 0
                         },
                         new
                         {
                             JobServiceId = 10,
                             AdminId = 1,
                             Description = "Đăng tin nổi bật trong 5 lần liên tiếp. Một cách hoàn hảo để đảm bảo rằng thông báo tuyển dụng của bạn luôn được chú ý và tiếp cận với nhiều ứng viên hơn.",
-                            Duration = 5.0,
+                            Duration = 5,
+                            Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg",
                             Price = 69000m,
                             ServiceName = "Nổi Bật Tuyển Dụng 5 lần",
-                            jobServiceType = 4
+                            jobServiceType = 0
                         },
                         new
                         {
                             JobServiceId = 11,
                             AdminId = 1,
                             Description = "Với gói 10 lần, bạn không chỉ nổi bật mà còn có thể thu hút nhiều ứng viên hơn thông qua những tin tuyển dụng chất lượng cao và được ưu tiên hiển thị.",
-                            Duration = 10.0,
+                            Duration = 10,
+                            Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg",
                             Price = 129000m,
                             ServiceName = "Nổi Bật Tuyển Dụng 10 lần",
-                            jobServiceType = 4
+                            jobServiceType = 0
                         },
                         new
                         {
                             JobServiceId = 12,
                             AdminId = 1,
                             Description = "Gói nổi bật 20 lần sẽ mang lại cho bạn lợi thế cạnh tranh. Tăng cường khả năng thu hút ứng viên phù hợp với gói dịch vụ này.",
-                            Duration = 20.0,
+                            Duration = 20,
+                            Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg",
                             Price = 199000m,
                             ServiceName = "Nổi Bật Tuyển Dụng 20 lần",
-                            jobServiceType = 4
+                            jobServiceType = 0
                         },
                         new
                         {
                             JobServiceId = 13,
                             AdminId = 1,
                             Description = "Gói nổi bật 100 lần là sự lựa chọn tuyệt vời cho các công ty lớn. Với số lượng đăng tin dồi dào, bạn sẽ có nhiều cơ hội tiếp cận các ứng viên chất lượng.",
-                            Duration = 100.0,
+                            Duration = 100,
+                            Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg",
                             Price = 499000m,
                             ServiceName = "Nổi Bật Tuyển Dụng 100 lần",
-                            jobServiceType = 4
+                            jobServiceType = 0
                         },
                         new
                         {
                             JobServiceId = 14,
                             AdminId = 1,
                             Description = "Đảm bảo tin tuyển dụng của bạn luôn nổi bật hàng ngày trong 30 ngày, thu hút sự chú ý liên tục từ các ứng viên tiềm năng.",
-                            Duration = 30.0,
+                            Duration = 30,
+                            Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg",
                             Price = 150000m,
                             ServiceName = "Nổi Bật Tuyển Dụng theo ngày",
-                            jobServiceType = 4
+                            jobServiceType = 0
                         },
                         new
                         {
                             JobServiceId = 15,
                             AdminId = 1,
                             Description = "Gói nổi bật theo tháng giúp bạn duy trì sự hiện diện nổi bật trong suốt thời gian dài, đảm bảo rằng tin tuyển dụng của bạn luôn ở vị trí dễ thấy.",
-                            Duration = 30.0,
+                            Duration = 30,
+                            Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg",
                             Price = 300000m,
                             ServiceName = "Nổi Bật Tuyển Dụng theo tháng",
-                            jobServiceType = 4
+                            jobServiceType = 0
                         },
                         new
                         {
                             JobServiceId = 16,
                             AdminId = 1,
                             Description = "Chọn gói nổi bật theo năm để tối đa hóa khả năng tiếp cận ứng viên và giữ cho tin tuyển dụng của bạn luôn nổi bật trong suốt thời gian dài.",
-                            Duration = 365.0,
+                            Duration = 365,
+                            Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg",
                             Price = 1200000m,
                             ServiceName = "Nổi Bật Tuyển Dụng theo năm",
-                            jobServiceType = 4
+                            jobServiceType = 0
                         });
                 });
 
@@ -1504,12 +1540,6 @@ namespace FindJobsApplication.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1517,13 +1547,19 @@ namespace FindJobsApplication.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId2")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("EmployerId");
-
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
+
+                    b.HasIndex("UserId2");
 
                     b.ToTable("Rooms");
                 });
@@ -1990,25 +2026,25 @@ namespace FindJobsApplication.Migrations
 
             modelBuilder.Entity("FindJobsApplication.Models.Room", b =>
                 {
-                    b.HasOne("FindJobsApplication.Models.User", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FindJobsApplication.Models.User", "Employer")
-                        .WithMany()
-                        .HasForeignKey("EmployerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("FindJobsApplication.Models.User", null)
                         .WithMany("Rooms")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("Employee");
+                    b.HasOne("FindJobsApplication.Models.User", "User1")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Employer");
+                    b.HasOne("FindJobsApplication.Models.User", "User2")
+                        .WithMany()
+                        .HasForeignKey("UserId2")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User1");
+
+                    b.Navigation("User2");
                 });
 
             modelBuilder.Entity("FindJobsApplication.Models.User", b =>

@@ -234,6 +234,56 @@ namespace FindJobsApplication.Controllers
                 order.PaymentDate = DateTime.Now;
 
                 _unitOfWork.Order.Update(order);
+
+                (DateTime? serviceFrom, DateTime? serviceTo) UpdateServiceDates(DateTime? serviceFrom, DateTime? serviceTo, int duration)
+                {
+                    serviceFrom = (serviceTo == null || serviceTo < DateTime.Now) ? DateTime.Now : serviceFrom;
+                    serviceTo = (serviceTo == null || serviceTo < DateTime.Now) ? DateTime.Now.AddDays(duration) : serviceTo.Value.AddDays(duration);
+                    return (serviceFrom, serviceTo);
+                }
+
+                if (order.User.UserType == UserType.Employer)
+                {
+                    var employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == order.UserId);
+                    if (employer == null)
+                    {
+                        return BadRequest("Employer not found.");
+                    }
+
+                    switch (jobService.jobServiceType)
+                    {
+                        case JobServiceType.FeaturePostJob:
+                            if (jobService.Duration.HasValue)
+                            {
+                                var updatedDates = UpdateServiceDates(employer.FeaturePostJobServiceFrom, employer.FeaturePostJobServiceTo, jobService.Duration.Value);
+                                employer.FeaturePostJobServiceFrom = updatedDates.serviceFrom;
+                                employer.FeaturePostJobServiceTo = updatedDates.serviceTo;
+                            }
+                            else if (jobService.Count.HasValue)
+                            {
+                                employer.FeaturePostJobServiceCount = (employer.FeaturePostJobServiceCount ?? 0) + jobService.Count.Value;
+                            }
+                            break;
+
+                        case JobServiceType.PostJob:
+                            if (jobService.Duration.HasValue)
+                            {
+                                var updatedDates = UpdateServiceDates(employer.PostJobServiceFrom, employer.PostJobServiceTo, jobService.Duration.Value);
+                                employer.PostJobServiceFrom = updatedDates.serviceFrom;
+                                employer.PostJobServiceTo = updatedDates.serviceTo;
+                            }
+                            else if (jobService.Count.HasValue)
+                            {
+                                employer.PostJobServiceCount = (employer.PostJobServiceCount ?? 0) + jobService.Count.Value;
+                            }
+                            break;
+                    }
+
+                    _unitOfWork.Employer.Update(employer);
+                    _unitOfWork.SaveAsync();
+                }
+
+
                 _unitOfWork.Save();
 
                 return Redirect($"{frontendLink}/payment-success");

@@ -55,6 +55,15 @@ namespace FindJobsApplication.Models
 
         public string? CIBehind { get; set; }
 
+        public DateTime? PostJobServiceFrom { get; set; }
+        public DateTime? PostJobServiceTo { get; set; }
+
+        public DateTime? FeaturePostJobServiceFrom { get; set; }
+        public DateTime? FeaturePostJobServiceTo { get; set; }
+
+        public int? FeaturePostJobServiceCount { get; set; }
+        public int? PostJobServiceCount { get; set; }
+
         [Required]
         public int UserId { get; set; }
 

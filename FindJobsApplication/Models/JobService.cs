@@ -5,6 +5,8 @@ namespace FindJobsApplication.Models
 {
     public enum JobServiceType
     {
+        FeaturePostJob,
+        PostJob,
         ForHire,
         ForSale,
         ForEmployee,
@@ -30,7 +32,9 @@ namespace FindJobsApplication.Models
 
         public decimal Price { get; set; }
 
-        public double? Duration { get; set; }
+        public int? Duration { get; set; }
+
+        public int? Count { get; set; }
 
         public int AdminId { get; set; }
 
