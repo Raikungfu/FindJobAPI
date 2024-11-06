@@ -209,7 +209,8 @@ namespace FindJobsApplication.Controllers
                 x.Employee.Education,
                 x.Employee.Language,
                 x.Employee.Avt,
-                x.Employee.Cover
+                x.Employee.Cover,
+                x.Status
             }).ToList();
             return Ok(jobApply);
         }
