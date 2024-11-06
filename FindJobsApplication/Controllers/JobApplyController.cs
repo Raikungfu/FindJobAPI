@@ -135,6 +135,7 @@ namespace FindJobsApplication.Controllers
             {
                 return NotFound();
             }
+
             return Ok(new
             {
                 jobApply.JobApplyId,

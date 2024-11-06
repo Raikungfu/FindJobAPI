@@ -45,9 +45,9 @@ namespace FindJobsApplication.Controllers
             hire.JobId = jobApply.JobId;
 
             _unitOfWork.Hire.Add(hire);
-            _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync();
 
-            return Ok();
+            return Ok(hire);
         }
 
         [Authorize(Roles = "Employer")]

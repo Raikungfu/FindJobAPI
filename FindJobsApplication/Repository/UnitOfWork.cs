@@ -20,6 +20,8 @@ namespace FindJobsApplication.Repository
             Hire = new HireRepository(_db);
             JobService = new JobServiceRepository(_db);
             Order = new OrderRepository(_db);
+            Room = new RoomRepository(_db);
+            Message = new MessageRepository(_db);
         }
 
         public IUserRepository User { get; private set; }
@@ -34,6 +36,8 @@ namespace FindJobsApplication.Repository
         public IJobServiceRepository JobService { get; private set; }
 
         public IOrderRepository Order { get; private set; }
+        public IRoomRepository Room { get; private set; }
+        public IMessageRepository Message { get; private set; }
 
         public async ValueTask DisposeAsync()
         {

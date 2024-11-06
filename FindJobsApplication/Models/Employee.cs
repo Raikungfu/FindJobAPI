@@ -69,5 +69,6 @@ namespace FindJobsApplication.Models
 
         public ICollection<JobApply> JobApplies { get; set; }
 
+
     }
 }

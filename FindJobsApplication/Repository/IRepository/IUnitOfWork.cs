@@ -12,6 +12,8 @@
         IJobServiceRepository JobService { get; }
         IHireRepository Hire { get; }
         IOrderRepository Order { get; }
+        IMessageRepository Message { get; }
+        IRoomRepository Room { get; }
         void Save();
         ValueTask DisposeAsync();
         Task SaveAsync();

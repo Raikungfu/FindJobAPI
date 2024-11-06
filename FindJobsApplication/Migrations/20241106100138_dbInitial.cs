@@ -181,6 +181,12 @@ namespace FindJobsApplication.Migrations
                     Cover = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CIFront = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CIBehind = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostJobServiceFrom = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PostJobServiceTo = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FeaturePostJobServiceFrom = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FeaturePostJobServiceTo = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FeaturePostJobServiceCount = table.Column<int>(type: "int", nullable: true),
+                    PostJobServiceCount = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -223,6 +229,39 @@ namespace FindJobsApplication.Migrations
                         principalColumn: "JobServiceId");
                     table.ForeignKey(
                         name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rooms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmployerId = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rooms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rooms_Users_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Rooms_Users_EmployerId",
+                        column: x => x.EmployerId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Rooms_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
@@ -340,6 +379,36 @@ namespace FindJobsApplication.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    MessageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    File = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FromUserId = table.Column<int>(type: "int", nullable: false),
+                    ToRoomId = table.Column<int>(type: "int", nullable: false),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.MessageId);
+                    table.ForeignKey(
+                        name: "FK_Messages_Rooms_ToRoomId",
+                        column: x => x.ToRoomId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_FromUserId",
+                        column: x => x.FromUserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -514,19 +583,19 @@ namespace FindJobsApplication.Migrations
 
             migrationBuilder.InsertData(
                 table: "Employers",
-                columns: new[] { "EmployerId", "Avt", "CIBehind", "CIFront", "CompanyBenefits", "CompanyContact", "CompanyDescription", "CompanyEmail", "CompanyFounded", "CompanyIndustry", "CompanyLocation", "CompanyLogo", "CompanyMission", "CompanyName", "CompanyPhone", "CompanyProjects", "CompanyServices", "CompanySize", "CompanyType", "CompanyValues", "CompanyVision", "CompanyWebsite", "Cover", "Description", "Name", "UserId" },
+                columns: new[] { "EmployerId", "Avt", "CIBehind", "CIFront", "CompanyBenefits", "CompanyContact", "CompanyDescription", "CompanyEmail", "CompanyFounded", "CompanyIndustry", "CompanyLocation", "CompanyLogo", "CompanyMission", "CompanyName", "CompanyPhone", "CompanyProjects", "CompanyServices", "CompanySize", "CompanyType", "CompanyValues", "CompanyVision", "CompanyWebsite", "Cover", "Description", "FeaturePostJobServiceCount", "FeaturePostJobServiceFrom", "FeaturePostJobServiceTo", "Name", "PostJobServiceCount", "PostJobServiceFrom", "PostJobServiceTo", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Quản lý Dự án Toàn cầu Ltd.", null, null, null, null, null, null, null, null, "", "Công ty chúng tôi là một trong những đơn vị hàng đầu trong lĩnh vực quản lý dự án toàn cầu, chuyên cung cấp dịch vụ tối ưu cho các doanh nghiệp và tổ chức ở mọi quy mô. Với đội ngũ chuyên gia dày dạn kinh nghiệm trong lĩnh vực quản lý và tư vấn, chúng tôi cam kết mang lại những giải pháp quản lý dự án hiệu quả nhất, giúp khách hàng tối ưu hóa quy trình làm việc, giảm thiểu rủi ro và đạt được mục tiêu kinh doanh một cách nhanh chóng và bền vững. Đặc biệt, chúng tôi luôn áp dụng những công nghệ tiên tiến nhất và các phương pháp quản lý hiện đại để đảm bảo rằng mọi dự án đều được triển khai một cách suôn sẻ và thành công. Với phương châm \"Khách hàng là trung tâm\", chúng tôi luôn sẵn sàng lắng nghe và hiểu rõ nhu cầu của từng khách hàng để cung cấp các giải pháp phù hợp nhất.", "Công ty Quản lý Dự án Toàn cầu", 2 },
-                    { 2, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Sản xuất Thiết bị Điện tử Ltd.", null, null, null, null, null, null, null, null, "", "Công ty chúng tôi nổi tiếng trong ngành sản xuất thiết bị điện tử, luôn đặt chất lượng sản phẩm lên hàng đầu và chú trọng đến sự hài lòng của khách hàng. Chúng tôi có một đội ngũ kỹ sư và chuyên gia dày dạn kinh nghiệm, không ngừng nghiên cứu và phát triển các sản phẩm mới, đảm bảo đáp ứng được các nhu cầu ngày càng đa dạng của thị trường. Bên cạnh đó, với công nghệ sản xuất hiện đại và quy trình kiểm soát chất lượng nghiêm ngặt, chúng tôi tự hào mang đến cho người tiêu dùng những sản phẩm tiên tiến, an toàn và đáng tin cậy. Chúng tôi cũng cam kết bảo vệ môi trường trong quá trình sản xuất, góp phần vào sự phát triển bền vững của xã hội.", "Công ty Sản xuất Thiết bị Điện tử", 4 },
-                    { 3, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Phát triển Phần mềm Sáng Tạo Ltd.", null, null, null, null, null, null, null, null, "", "Chúng tôi là công ty chuyên cung cấp các giải pháp phần mềm sáng tạo, giúp các doanh nghiệp hiện đại hóa quy trình làm việc và nâng cao hiệu quả hoạt động. Đội ngũ lập trình viên và chuyên viên tư vấn của chúng tôi không ngừng tìm tòi, sáng tạo và cập nhật công nghệ mới để mang lại cho khách hàng những sản phẩm phần mềm không chỉ tiện ích mà còn độc đáo và tối ưu nhất. Bên cạnh đó, chúng tôi cam kết đồng hành cùng khách hàng từ giai đoạn ý tưởng cho đến khi sản phẩm hoàn thiện và triển khai thành công. Sự hài lòng của khách hàng là động lực lớn nhất để chúng tôi không ngừng phấn đấu và hoàn thiện bản thân.", "Công ty Phát triển Phần mềm Sáng Tạo", 6 },
-                    { 4, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Xây dựng Hạ Tầng Tiên Phong Ltd.", null, null, null, null, null, null, null, null, "", "Với bề dày kinh nghiệm trong lĩnh vực xây dựng hạ tầng, công ty chúng tôi tự hào là đơn vị tiên phong trong việc cung cấp các giải pháp xây dựng chất lượng cao cho các dự án lớn. Chúng tôi cam kết áp dụng công nghệ và thiết bị hiện đại nhất để đảm bảo rằng mọi công trình đều đạt tiêu chuẩn chất lượng cao nhất và hoàn thành đúng tiến độ. Đội ngũ kỹ sư của chúng tôi luôn sẵn sàng tư vấn và giải quyết mọi vấn đề phát sinh trong quá trình thi công, đảm bảo an toàn và hiệu quả cho từng dự án. Ngoài ra, chúng tôi cũng rất chú trọng đến việc đào tạo và phát triển nguồn nhân lực, giúp nhân viên của chúng tôi phát triển toàn diện cả về chuyên môn và kỹ năng mềm.", "Công ty Xây dựng Hạ Tầng Tiên Phong", 8 },
-                    { 5, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Dịch Vụ Vận Tải An Toàn Ltd.", null, null, null, null, null, null, null, null, "", "Công ty chúng tôi chuyên cung cấp dịch vụ vận tải an toàn và đáng tin cậy, luôn cam kết mang lại sự hài lòng tối đa cho khách hàng. Với đội xe hiện đại và nhân viên lái xe chuyên nghiệp, chúng tôi sẵn sàng phục vụ khách hàng 24/7, đáp ứng mọi nhu cầu vận chuyển trong thời gian ngắn nhất. Bên cạnh đó, chúng tôi cũng liên tục cải tiến quy trình làm việc và đầu tư vào công nghệ mới nhằm tối ưu hóa chi phí và thời gian cho khách hàng. Đội ngũ chăm sóc khách hàng tận tình của chúng tôi luôn sẵn sàng lắng nghe và đáp ứng mọi yêu cầu của bạn, nhằm đảm bảo rằng trải nghiệm của khách hàng với dịch vụ của chúng tôi luôn là tốt nhất.", "Công ty Dịch Vụ Vận Tải An Toàn", 10 },
-                    { 6, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Thương Mại Quốc Tế Minh Long Ltd.", null, null, null, null, null, null, null, null, "", "Chuyên gia trong lĩnh vực thương mại quốc tế, chúng tôi cung cấp các giải pháp kinh doanh tối ưu giúp khách hàng mở rộng thị trường và phát triển bền vững. Đội ngũ chuyên viên của chúng tôi luôn nỗ lực tìm kiếm các cơ hội mới và tối ưu hóa quy trình giao dịch quốc tế, đảm bảo rằng khách hàng của chúng tôi luôn đạt được lợi nhuận cao nhất từ các giao dịch thương mại. Với mạng lưới đối tác rộng lớn và uy tín trên toàn cầu, chúng tôi tự tin mang đến cho khách hàng những giải pháp tốt nhất và hỗ trợ tận tình trong từng bước đi của khách hàng trên thị trường quốc tế.", "Công ty Thương Mại Quốc Tế Minh Long", 12 },
-                    { 7, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Dịch Vụ Tài Chính Hưng Thịnh Ltd.", null, null, null, null, null, null, null, null, "", "Chúng tôi cung cấp dịch vụ tài chính đáng tin cậy, giúp khách hàng quản lý tài sản và đầu tư hiệu quả thông qua sự tư vấn chuyên nghiệp từ các chuyên gia hàng đầu trong ngành. Với nhiều năm kinh nghiệm hoạt động, chúng tôi cam kết mang đến cho khách hàng những giải pháp tài chính linh hoạt, phù hợp với nhu cầu cá nhân hoặc doanh nghiệp. Đội ngũ tư vấn viên tận tâm của chúng tôi sẽ làm việc chặt chẽ với từng khách hàng để đảm bảo rằng mọi quyết định đầu tư đều được đưa ra một cách chính xác và có lợi nhất, nhằm tối ưu hóa giá trị tài sản của bạn.", "Công ty Dịch Vụ Tài Chính Hưng Thịnh", 14 },
-                    { 8, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Xuất Nhập Khẩu Phúc Lợi Ltd.", null, null, null, null, null, null, null, null, "", "Công ty chúng tôi nổi bật trong lĩnh vực xuất nhập khẩu, chuyên cung cấp những sản phẩm và dịch vụ tốt nhất, đáp ứng nhu cầu đa dạng của thị trường trong và ngoài nước. Chúng tôi có mạng lưới đối tác rộng khắp, đảm bảo cung cấp sản phẩm chất lượng với giá cả cạnh tranh nhất. Đội ngũ nhân viên giàu kinh nghiệm và am hiểu thị trường quốc tế của chúng tôi luôn sẵn sàng hỗ trợ khách hàng từ khâu tìm kiếm nguồn cung ứng cho đến khâu vận chuyển, giúp khách hàng tiết kiệm thời gian và chi phí. Chúng tôi cũng cam kết bảo vệ quyền lợi của khách hàng và đảm bảo rằng mọi giao dịch đều minh bạch và công bằng.", "Công ty Xuất Nhập Khẩu Phúc Lợi", 16 },
-                    { 9, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Đầu Tư Bất Động Sản Nam Phong Ltd.", null, null, null, null, null, null, null, null, "", "Chúng tôi chuyên cung cấp các giải pháp đầu tư bất động sản sáng tạo, giúp khách hàng tối đa hóa lợi nhuận từ các dự án đầu tư của mình. Với đội ngũ chuyên viên dày dạn kinh nghiệm trong ngành, chúng tôi cam kết mang đến cho khách hàng những tư vấn chuyên sâu và chính xác nhất về xu hướng thị trường và các cơ hội đầu tư tiềm năng. Bên cạnh đó, chúng tôi cũng hỗ trợ khách hàng trong việc quản lý và phát triển các dự án bất động sản, đảm bảo mang lại giá trị gia tăng tối đa cho các khoản đầu tư của bạn và đồng hành cùng bạn trong suốt quá trình đầu tư.", "Công ty Đầu Tư Bất Động Sản Nam Phong", 18 },
-                    { 10, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Truyền Thông & Quảng Cáo Đỉnh Cao Ltd.", null, null, null, null, null, null, null, null, "", "Chúng tôi là công ty hàng đầu trong lĩnh vực truyền thông và quảng cáo, chuyên cung cấp các giải pháp marketing hiệu quả giúp thương hiệu của bạn tỏa sáng giữa đám đông. Với đội ngũ sáng tạo và dày dạn kinh nghiệm, chúng tôi luôn cập nhật các xu hướng mới nhất trong ngành và xây dựng những chiến dịch quảng cáo độc đáo, thu hút sự chú ý của khách hàng. Đội ngũ nhân viên của chúng tôi sẽ làm việc chặt chẽ với bạn từ giai đoạn ý tưởng cho đến khi triển khai chiến dịch, đảm bảo rằng mọi khía cạnh của thương hiệu đều được chăm sóc và phát triển một cách tốt nhất, từ việc xây dựng hình ảnh cho đến việc tương tác với khách hàng trên các nền tảng truyền thông xã hội.", "Công ty Truyền Thông & Quảng Cáo Đỉnh Cao", 20 }
+                    { 1, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Quản lý Dự án Toàn cầu Ltd.", null, null, null, null, null, null, null, null, "", "Công ty chúng tôi là một trong những đơn vị hàng đầu trong lĩnh vực quản lý dự án toàn cầu, chuyên cung cấp dịch vụ tối ưu cho các doanh nghiệp và tổ chức ở mọi quy mô. Với đội ngũ chuyên gia dày dạn kinh nghiệm trong lĩnh vực quản lý và tư vấn, chúng tôi cam kết mang lại những giải pháp quản lý dự án hiệu quả nhất, giúp khách hàng tối ưu hóa quy trình làm việc, giảm thiểu rủi ro và đạt được mục tiêu kinh doanh một cách nhanh chóng và bền vững. Đặc biệt, chúng tôi luôn áp dụng những công nghệ tiên tiến nhất và các phương pháp quản lý hiện đại để đảm bảo rằng mọi dự án đều được triển khai một cách suôn sẻ và thành công. Với phương châm \"Khách hàng là trung tâm\", chúng tôi luôn sẵn sàng lắng nghe và hiểu rõ nhu cầu của từng khách hàng để cung cấp các giải pháp phù hợp nhất.", null, null, null, "Công ty Quản lý Dự án Toàn cầu", null, null, null, 2 },
+                    { 2, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Sản xuất Thiết bị Điện tử Ltd.", null, null, null, null, null, null, null, null, "", "Công ty chúng tôi nổi tiếng trong ngành sản xuất thiết bị điện tử, luôn đặt chất lượng sản phẩm lên hàng đầu và chú trọng đến sự hài lòng của khách hàng. Chúng tôi có một đội ngũ kỹ sư và chuyên gia dày dạn kinh nghiệm, không ngừng nghiên cứu và phát triển các sản phẩm mới, đảm bảo đáp ứng được các nhu cầu ngày càng đa dạng của thị trường. Bên cạnh đó, với công nghệ sản xuất hiện đại và quy trình kiểm soát chất lượng nghiêm ngặt, chúng tôi tự hào mang đến cho người tiêu dùng những sản phẩm tiên tiến, an toàn và đáng tin cậy. Chúng tôi cũng cam kết bảo vệ môi trường trong quá trình sản xuất, góp phần vào sự phát triển bền vững của xã hội.", null, null, null, "Công ty Sản xuất Thiết bị Điện tử", null, null, null, 4 },
+                    { 3, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Phát triển Phần mềm Sáng Tạo Ltd.", null, null, null, null, null, null, null, null, "", "Chúng tôi là công ty chuyên cung cấp các giải pháp phần mềm sáng tạo, giúp các doanh nghiệp hiện đại hóa quy trình làm việc và nâng cao hiệu quả hoạt động. Đội ngũ lập trình viên và chuyên viên tư vấn của chúng tôi không ngừng tìm tòi, sáng tạo và cập nhật công nghệ mới để mang lại cho khách hàng những sản phẩm phần mềm không chỉ tiện ích mà còn độc đáo và tối ưu nhất. Bên cạnh đó, chúng tôi cam kết đồng hành cùng khách hàng từ giai đoạn ý tưởng cho đến khi sản phẩm hoàn thiện và triển khai thành công. Sự hài lòng của khách hàng là động lực lớn nhất để chúng tôi không ngừng phấn đấu và hoàn thiện bản thân.", null, null, null, "Công ty Phát triển Phần mềm Sáng Tạo", null, null, null, 6 },
+                    { 4, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Xây dựng Hạ Tầng Tiên Phong Ltd.", null, null, null, null, null, null, null, null, "", "Với bề dày kinh nghiệm trong lĩnh vực xây dựng hạ tầng, công ty chúng tôi tự hào là đơn vị tiên phong trong việc cung cấp các giải pháp xây dựng chất lượng cao cho các dự án lớn. Chúng tôi cam kết áp dụng công nghệ và thiết bị hiện đại nhất để đảm bảo rằng mọi công trình đều đạt tiêu chuẩn chất lượng cao nhất và hoàn thành đúng tiến độ. Đội ngũ kỹ sư của chúng tôi luôn sẵn sàng tư vấn và giải quyết mọi vấn đề phát sinh trong quá trình thi công, đảm bảo an toàn và hiệu quả cho từng dự án. Ngoài ra, chúng tôi cũng rất chú trọng đến việc đào tạo và phát triển nguồn nhân lực, giúp nhân viên của chúng tôi phát triển toàn diện cả về chuyên môn và kỹ năng mềm.", null, null, null, "Công ty Xây dựng Hạ Tầng Tiên Phong", null, null, null, 8 },
+                    { 5, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Dịch Vụ Vận Tải An Toàn Ltd.", null, null, null, null, null, null, null, null, "", "Công ty chúng tôi chuyên cung cấp dịch vụ vận tải an toàn và đáng tin cậy, luôn cam kết mang lại sự hài lòng tối đa cho khách hàng. Với đội xe hiện đại và nhân viên lái xe chuyên nghiệp, chúng tôi sẵn sàng phục vụ khách hàng 24/7, đáp ứng mọi nhu cầu vận chuyển trong thời gian ngắn nhất. Bên cạnh đó, chúng tôi cũng liên tục cải tiến quy trình làm việc và đầu tư vào công nghệ mới nhằm tối ưu hóa chi phí và thời gian cho khách hàng. Đội ngũ chăm sóc khách hàng tận tình của chúng tôi luôn sẵn sàng lắng nghe và đáp ứng mọi yêu cầu của bạn, nhằm đảm bảo rằng trải nghiệm của khách hàng với dịch vụ của chúng tôi luôn là tốt nhất.", null, null, null, "Công ty Dịch Vụ Vận Tải An Toàn", null, null, null, 10 },
+                    { 6, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Thương Mại Quốc Tế Minh Long Ltd.", null, null, null, null, null, null, null, null, "", "Chuyên gia trong lĩnh vực thương mại quốc tế, chúng tôi cung cấp các giải pháp kinh doanh tối ưu giúp khách hàng mở rộng thị trường và phát triển bền vững. Đội ngũ chuyên viên của chúng tôi luôn nỗ lực tìm kiếm các cơ hội mới và tối ưu hóa quy trình giao dịch quốc tế, đảm bảo rằng khách hàng của chúng tôi luôn đạt được lợi nhuận cao nhất từ các giao dịch thương mại. Với mạng lưới đối tác rộng lớn và uy tín trên toàn cầu, chúng tôi tự tin mang đến cho khách hàng những giải pháp tốt nhất và hỗ trợ tận tình trong từng bước đi của khách hàng trên thị trường quốc tế.", null, null, null, "Công ty Thương Mại Quốc Tế Minh Long", null, null, null, 12 },
+                    { 7, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Dịch Vụ Tài Chính Hưng Thịnh Ltd.", null, null, null, null, null, null, null, null, "", "Chúng tôi cung cấp dịch vụ tài chính đáng tin cậy, giúp khách hàng quản lý tài sản và đầu tư hiệu quả thông qua sự tư vấn chuyên nghiệp từ các chuyên gia hàng đầu trong ngành. Với nhiều năm kinh nghiệm hoạt động, chúng tôi cam kết mang đến cho khách hàng những giải pháp tài chính linh hoạt, phù hợp với nhu cầu cá nhân hoặc doanh nghiệp. Đội ngũ tư vấn viên tận tâm của chúng tôi sẽ làm việc chặt chẽ với từng khách hàng để đảm bảo rằng mọi quyết định đầu tư đều được đưa ra một cách chính xác và có lợi nhất, nhằm tối ưu hóa giá trị tài sản của bạn.", null, null, null, "Công ty Dịch Vụ Tài Chính Hưng Thịnh", null, null, null, 14 },
+                    { 8, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Xuất Nhập Khẩu Phúc Lợi Ltd.", null, null, null, null, null, null, null, null, "", "Công ty chúng tôi nổi bật trong lĩnh vực xuất nhập khẩu, chuyên cung cấp những sản phẩm và dịch vụ tốt nhất, đáp ứng nhu cầu đa dạng của thị trường trong và ngoài nước. Chúng tôi có mạng lưới đối tác rộng khắp, đảm bảo cung cấp sản phẩm chất lượng với giá cả cạnh tranh nhất. Đội ngũ nhân viên giàu kinh nghiệm và am hiểu thị trường quốc tế của chúng tôi luôn sẵn sàng hỗ trợ khách hàng từ khâu tìm kiếm nguồn cung ứng cho đến khâu vận chuyển, giúp khách hàng tiết kiệm thời gian và chi phí. Chúng tôi cũng cam kết bảo vệ quyền lợi của khách hàng và đảm bảo rằng mọi giao dịch đều minh bạch và công bằng.", null, null, null, "Công ty Xuất Nhập Khẩu Phúc Lợi", null, null, null, 16 },
+                    { 9, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Đầu Tư Bất Động Sản Nam Phong Ltd.", null, null, null, null, null, null, null, null, "", "Chúng tôi chuyên cung cấp các giải pháp đầu tư bất động sản sáng tạo, giúp khách hàng tối đa hóa lợi nhuận từ các dự án đầu tư của mình. Với đội ngũ chuyên viên dày dạn kinh nghiệm trong ngành, chúng tôi cam kết mang đến cho khách hàng những tư vấn chuyên sâu và chính xác nhất về xu hướng thị trường và các cơ hội đầu tư tiềm năng. Bên cạnh đó, chúng tôi cũng hỗ trợ khách hàng trong việc quản lý và phát triển các dự án bất động sản, đảm bảo mang lại giá trị gia tăng tối đa cho các khoản đầu tư của bạn và đồng hành cùng bạn trong suốt quá trình đầu tư.", null, null, null, "Công ty Đầu Tư Bất Động Sản Nam Phong", null, null, null, 18 },
+                    { 10, "", null, null, null, null, null, null, null, null, null, null, null, "Công ty Truyền Thông & Quảng Cáo Đỉnh Cao Ltd.", null, null, null, null, null, null, null, null, "", "Chúng tôi là công ty hàng đầu trong lĩnh vực truyền thông và quảng cáo, chuyên cung cấp các giải pháp marketing hiệu quả giúp thương hiệu của bạn tỏa sáng giữa đám đông. Với đội ngũ sáng tạo và dày dạn kinh nghiệm, chúng tôi luôn cập nhật các xu hướng mới nhất trong ngành và xây dựng những chiến dịch quảng cáo độc đáo, thu hút sự chú ý của khách hàng. Đội ngũ nhân viên của chúng tôi sẽ làm việc chặt chẽ với bạn từ giai đoạn ý tưởng cho đến khi triển khai chiến dịch, đảm bảo rằng mọi khía cạnh của thương hiệu đều được chăm sóc và phát triển một cách tốt nhất, từ việc xây dựng hình ảnh cho đến việc tương tác với khách hàng trên các nền tảng truyền thông xã hội.", null, null, null, "Công ty Truyền Thông & Quảng Cáo Đỉnh Cao", null, null, null, 20 }
                 });
 
             migrationBuilder.InsertData(
@@ -544,8 +613,8 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "InvoiceId", "Amount", "EmployerId", "IssueDate" },
                 values: new object[,]
                 {
-                    { 1, 150m, 1, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5378) },
-                    { 2, 200m, 2, new DateTime(2024, 10, 29, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5382) }
+                    { 1, 150m, 1, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7698) },
+                    { 2, 200m, 2, new DateTime(2024, 11, 1, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7702) }
                 });
 
             migrationBuilder.InsertData(
@@ -576,16 +645,16 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobId", "Amount", "DateFrom", "DateTo", "Description", "EmployerId", "IsClosed", "JobCategoryId", "JobType", "Location", "Salary", "Title", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 10m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5060), new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5075), "Phát triển ứng dụng.", 1, false, 1, 0, 15, 60000m, "Lập trình viên phần mềm", null },
-                    { 2, 3m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5087), new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5088), "Tạo các trang web đẹp.", 1, false, 1, 0, 15, 50000m, "Nhà thiết kế web", null },
-                    { 3, 15m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5093), new DateTime(2025, 2, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5093), "Nâng cao trải nghiệm người dùng.", 2, false, 1, 1, 0, 55000m, "Nhà thiết kế UX/UI", null },
-                    { 4, 5m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5098), new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5098), "Bán sản phẩm và tư vấn khách hàng.", 3, false, 4, 1, 2, 30000m, "Nhân viên bán hàng", null },
-                    { 5, 10m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5102), new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5103), "Dạy kèm học sinh cấp 2 và cấp 3.", 4, false, 5, 1, 1, 20000m, "Gia sư Toán", null },
-                    { 6, 8m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5106), new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5107), "Phục vụ khách hàng trong nhà hàng.", 5, false, 6, 1, 2, 25000m, "Phục vụ nhà hàng", null },
-                    { 7, 20m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5111), new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5112), "Nhập dữ liệu vào hệ thống quản lý.", 6, false, 7, 1, 1, 22000m, "Nhân viên nhập liệu", null },
-                    { 8, 6m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5116), new DateTime(2024, 12, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5117), "Giải đáp thắc mắc và hỗ trợ khách hàng.", 7, false, 8, 1, 26, 27000m, "Nhân viên chăm sóc khách hàng", null },
-                    { 9, 2m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5120), new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5121), "Giao hàng tới các địa chỉ yêu cầu.", 8, false, 9, 1, 3, 30000m, "Nhân viên giao hàng", null },
-                    { 10, 10m, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5124), new DateTime(2025, 1, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5125), "Pha chế đồ uống theo yêu cầu của khách hàng.", 9, false, 10, 1, 0, 28000m, "Nhân viên pha chế", null }
+                    { 1, 10m, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7492), new DateTime(2024, 12, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7507), "Phát triển ứng dụng.", 1, false, 1, 0, 15, 60000m, "Lập trình viên phần mềm", null },
+                    { 2, 3m, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7516), new DateTime(2025, 1, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7516), "Tạo các trang web đẹp.", 1, false, 1, 0, 15, 50000m, "Nhà thiết kế web", null },
+                    { 3, 15m, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7519), new DateTime(2025, 2, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7520), "Nâng cao trải nghiệm người dùng.", 2, false, 1, 1, 0, 55000m, "Nhà thiết kế UX/UI", null },
+                    { 4, 5m, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7522), new DateTime(2024, 12, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7523), "Bán sản phẩm và tư vấn khách hàng.", 3, false, 4, 1, 2, 30000m, "Nhân viên bán hàng", null },
+                    { 5, 10m, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7525), new DateTime(2025, 1, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7526), "Dạy kèm học sinh cấp 2 và cấp 3.", 4, false, 5, 1, 1, 20000m, "Gia sư Toán", null },
+                    { 6, 8m, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7528), new DateTime(2024, 12, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7528), "Phục vụ khách hàng trong nhà hàng.", 5, false, 6, 1, 2, 25000m, "Phục vụ nhà hàng", null },
+                    { 7, 20m, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7531), new DateTime(2024, 12, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7531), "Nhập dữ liệu vào hệ thống quản lý.", 6, false, 7, 1, 1, 22000m, "Nhân viên nhập liệu", null },
+                    { 8, 6m, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7534), new DateTime(2024, 12, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7534), "Giải đáp thắc mắc và hỗ trợ khách hàng.", 7, false, 8, 1, 26, 27000m, "Nhân viên chăm sóc khách hàng", null },
+                    { 9, 2m, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7536), new DateTime(2025, 1, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7537), "Giao hàng tới các địa chỉ yêu cầu.", 8, false, 9, 1, 3, 30000m, "Nhân viên giao hàng", null },
+                    { 10, 10m, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7539), new DateTime(2025, 1, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7540), "Pha chế đồ uống theo yêu cầu của khách hàng.", 9, false, 10, 1, 0, 28000m, "Nhân viên pha chế", null }
                 });
 
             migrationBuilder.InsertData(
@@ -603,9 +672,9 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "JobApplyId", "ApplyDate", "CV", "EmployeeId", "EmployerId", "IsAccept", "IsRefuse", "JobDescription", "JobId", "JobSalary", "JobTitle", "Message", "Status" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 10, 19, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5274), null, 1, null, false, false, null, 1, null, null, null, 0 },
-                    { 2, new DateTime(2024, 10, 22, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5282), null, 2, null, false, false, null, 1, null, null, null, 0 },
-                    { 3, new DateTime(2024, 10, 22, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5285), null, 3, null, false, false, null, 2, null, null, null, 0 }
+                    { 1, new DateTime(2024, 10, 22, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7632), null, 1, null, false, false, null, 1, null, null, null, 0 },
+                    { 2, new DateTime(2024, 10, 25, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7640), null, 2, null, false, false, null, 1, null, null, null, 0 },
+                    { 3, new DateTime(2024, 10, 25, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7641), null, 3, null, false, false, null, 2, null, null, null, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -613,9 +682,9 @@ namespace FindJobsApplication.Migrations
                 columns: new[] { "HireId", "EmployeeId", "EmployerId", "HireDate", "JobApplyId", "JobId", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, new DateTime(2024, 11, 3, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5324), 1, 1, 0, null },
-                    { 2, 2, 1, new DateTime(2024, 10, 24, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5330), 2, 1, 0, null },
-                    { 3, 3, 2, new DateTime(2024, 10, 29, 23, 26, 31, 838, DateTimeKind.Local).AddTicks(5333), 3, 2, 0, null }
+                    { 1, 1, 1, new DateTime(2024, 11, 6, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7666), 1, 1, 0, null },
+                    { 2, 2, 1, new DateTime(2024, 10, 27, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7670), 2, 1, 0, null },
+                    { 3, 3, 2, new DateTime(2024, 11, 1, 17, 1, 37, 692, DateTimeKind.Local).AddTicks(7672), 3, 2, 0, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -704,6 +773,16 @@ namespace FindJobsApplication.Migrations
                 column: "AdminId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Messages_FromUserId",
+                table: "Messages",
+                column: "FromUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_ToRoomId",
+                table: "Messages",
+                column: "ToRoomId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_JobServiceId",
                 table: "Orders",
                 column: "JobServiceId");
@@ -721,6 +800,21 @@ namespace FindJobsApplication.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_UserId",
                 table: "Reviews",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rooms_EmployeeId",
+                table: "Rooms",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rooms_EmployerId",
+                table: "Rooms",
+                column: "EmployerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rooms_UserId",
+                table: "Rooms",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -754,6 +848,9 @@ namespace FindJobsApplication.Migrations
                 name: "Invoices");
 
             migrationBuilder.DropTable(
+                name: "Messages");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -764,6 +861,9 @@ namespace FindJobsApplication.Migrations
 
             migrationBuilder.DropTable(
                 name: "JobApplies");
+
+            migrationBuilder.DropTable(
+                name: "Rooms");
 
             migrationBuilder.DropTable(
                 name: "JobServices");

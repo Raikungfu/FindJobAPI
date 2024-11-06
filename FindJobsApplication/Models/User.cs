@@ -30,5 +30,7 @@ namespace FindJobsApplication.Models
         public ICollection<Job> Jobs { get; set; }
         public ICollection<Hire> Hires { get; set; }
         public ICollection<Order> Orders { get; set; }
+
+        public ICollection<Room> Rooms { get; set; }
     }
 }

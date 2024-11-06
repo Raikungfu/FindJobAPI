@@ -21,6 +21,8 @@ namespace FindJobsApplication.Models
         public DbSet<EmployeeCertification> EmployeeCertifications { get; set; }
         public DbSet<JobApply> JobApplies { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -87,6 +89,24 @@ namespace FindJobsApplication.Models
                 .WithMany()
                 .HasForeignKey(h => h.JobApplyId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Room>()
+           .HasOne(r => r.Employer)
+           .WithMany()
+           .HasForeignKey(r => r.EmployerId)
+           .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Room>()
+                .HasOne(r => r.Employee)
+                .WithMany()
+                .HasForeignKey(r => r.EmployeeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.ToRoom)
+                .WithMany(r => r.Messages)
+                .HasForeignKey(m => m.ToRoomId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, Username = "admin", PasswordHash = "admin123", Email = "admin@example.com", Phone = "0123456789", UserType = UserType.Admin },
