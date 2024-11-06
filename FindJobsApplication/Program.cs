@@ -13,10 +13,9 @@ using FindJobsApplication.Service.IService;
 using FindJobsApplication.Mapper;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
+using FindJobsApplication.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
@@ -138,7 +137,6 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUploadFileService, UploadFileService>();
 builder.Services.AddSignalR().AddAzureSignalR(builder.Configuration.GetConnectionString("SignalRConnection"));
-
 var app = builder.Build();
 
 app.UseCors("AllowSpecificOrigin");

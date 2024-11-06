@@ -36,7 +36,7 @@ namespace FindJobsApplication.Controllers
                 return Unauthorized("User not found.");
             }
 
-            var rooms = await _unitOfWork.Room.GetAllAsync(r => r.UserId1 == id || r.UserId2 == id, null, "Messages,Messages.FromUser");
+            var rooms = await _unitOfWork.Room.GetAllAsync(r => r.UserId1 == id || r.UserId2 == id, null, "Messages,User1,User2,Messages.FromUser");
 
             var result = rooms.Select(r => new
             {
