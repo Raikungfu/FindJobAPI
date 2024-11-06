@@ -35,7 +35,7 @@ namespace FindJobsApplication.Controllers
             }
 
             var jobApply = new JobApply { JobApplyId = hireVm.JobApplyId, Status = JobApplyStatus.Accepted };
-            await _unitOfWork.JobApply.UpdateStatusAsync(jobApply);
+            jobApply = await _unitOfWork.JobApply.UpdateStatusAsync(jobApply);
             await _unitOfWork.SaveAsync();
 
             Hire hire = _mapper.Map<Hire>(hireVm);
@@ -47,7 +47,15 @@ namespace FindJobsApplication.Controllers
             _unitOfWork.Hire.Add(hire);
             await _unitOfWork.SaveAsync();
 
-            return Ok(hire);
+            return Ok(new
+            {
+                hire.HireId,
+                hire.JobId,
+                hire.EmployeeId,
+                hire.EmployerId,
+                hire.Status,
+                hire.HireDate
+            });
         }
 
         [Authorize(Roles = "Employer")]

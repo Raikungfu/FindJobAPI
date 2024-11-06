@@ -39,12 +39,12 @@ namespace FindJobsApplication.Controllers
         public IActionResult StartChat([FromBody] StartChatRequest request)
         {
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null)
+            if (userIdClaim == null || !int.TryParse(userIdClaim, out int id))
             {
                 return Unauthorized("User not logged in.");
             }
 
-            var user = _unitOfWork.User.GetFirstOrDefault(u => u.NameIdentifier == userIdClaim);
+            var user = _unitOfWork.User.GetFirstOrDefault(u => u.UserId == id);
             if (user == null)
             {
                 return Unauthorized("User not found.");
@@ -65,12 +65,12 @@ namespace FindJobsApplication.Controllers
                 room = new Room
                 {
                     Name = $"Chat with employer {request.EmployerId}",
-                    EmployeeId = userIdClaim,
+                    EmployeeId = id,
                     EmployerId = request.EmployerId
                 };
 
                 _unitOfWork.Room.Add(room);
-                await _unitOfWork.SaveAsync();
+                _unitOfWork.SaveAsync();
             }
 
             return Ok(new { roomId = room.Id });
@@ -95,7 +95,7 @@ namespace FindJobsApplication.Controllers
         public IActionResult SendMessage([FromBody] SendMessageRequest request)
         {
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userIdClaim == null)
+            if (userIdClaim == null || !int.TryParse(userIdClaim, out int id))
             {
                 return Unauthorized("User not logged in.");
             }
@@ -109,7 +109,7 @@ namespace FindJobsApplication.Controllers
             var message = new Message
             {
                 Content = request.Content,
-                FromUserId = userIdClaim,
+                FromUserId = id,
                 ToRoomId = request.RoomId,
                 Timestamp = DateTime.Now
             };
