@@ -146,9 +146,13 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUploadFileService, UploadFileService>();
 builder.Services.AddSignalR().AddAzureSignalR(builder.Configuration.GetConnectionString("SignalRConnection"));
+
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 app.UseCors("AllowSpecificOrigin");
+
 
 app.UseSwagger();
 app.UseSwaggerUI();

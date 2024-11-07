@@ -5,7 +5,12 @@ using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Net.payOS;
+using Net.payOS.Types;
+using Newtonsoft.Json;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
 
 namespace FindJobsApplication.Controllers
 {
@@ -14,15 +19,17 @@ namespace FindJobsApplication.Controllers
     public class OrderController : ControllerBase
     {
 
+        private readonly HttpClient _httpClient;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
-        public OrderController(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)
+        public OrderController(HttpClient httpClient, IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _configuration = configuration;
+            _httpClient = httpClient;
         }
 
         // GET: OrderController
@@ -220,83 +227,139 @@ namespace FindJobsApplication.Controllers
                     return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
                 }
 
-                var jobService = _unitOfWork.JobService.GetFirstOrDefault(x => x.JobServiceId == order.JobServiceId);
 
-                if (jobService.Duration.HasValue)
-                {
-                    order.DateFrom = DateTime.Now;
-                    order.DateTo = DateTime.Now.AddDays(jobService.Duration ?? 0.0);
-                }
 
                 order.OrderStatus = vnp_ResponseCode == "00" ? OrderStatus.Accepted : OrderStatus.Rejected;
                 order.PaymentMethod = PaymentMethod.VNPay;
                 order.PaymentRef = transactionNo;
                 order.PaymentDate = DateTime.Now;
 
-                _unitOfWork.Order.Update(order);
-
-                (DateTime? serviceFrom, DateTime? serviceTo) UpdateServiceDates(DateTime? serviceFrom, DateTime? serviceTo, int duration)
+                if (UpdateOrder(order))
                 {
-                    serviceFrom = (serviceTo == null || serviceTo < DateTime.Now) ? DateTime.Now : serviceFrom;
-                    serviceTo = (serviceTo == null || serviceTo < DateTime.Now) ? DateTime.Now.AddDays(duration) : serviceTo.Value.AddDays(duration);
-                    return (serviceFrom, serviceTo);
-                }
+                    return Redirect($"{frontendLink}/payment-success");
 
-                if (order.User.UserType == UserType.Employer)
+                }
+                else
                 {
-                    var employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == order.UserId);
-                    if (employer == null)
-                    {
-                        return BadRequest("Employer not found.");
-                    }
-
-                    switch (jobService.jobServiceType)
-                    {
-                        case JobServiceType.FeaturePostJob:
-                            if (jobService.Duration.HasValue)
-                            {
-                                var updatedDates = UpdateServiceDates(employer.FeaturePostJobServiceFrom, employer.FeaturePostJobServiceTo, jobService.Duration.Value);
-                                employer.FeaturePostJobServiceFrom = updatedDates.serviceFrom;
-                                employer.FeaturePostJobServiceTo = updatedDates.serviceTo;
-                            }
-                            else if (jobService.Count.HasValue)
-                            {
-                                employer.FeaturePostJobServiceCount = (employer.FeaturePostJobServiceCount ?? 0) + jobService.Count.Value;
-                            }
-                            break;
-
-                        case JobServiceType.PostJob:
-                            if (jobService.Duration.HasValue)
-                            {
-                                var updatedDates = UpdateServiceDates(employer.PostJobServiceFrom, employer.PostJobServiceTo, jobService.Duration.Value);
-                                employer.PostJobServiceFrom = updatedDates.serviceFrom;
-                                employer.PostJobServiceTo = updatedDates.serviceTo;
-                            }
-                            else if (jobService.Count.HasValue)
-                            {
-                                employer.PostJobServiceCount = (employer.PostJobServiceCount ?? 0) + jobService.Count.Value;
-                            }
-                            break;
-                    }
-
-                    _unitOfWork.Employer.Update(employer);
-                    _unitOfWork.SaveAsync();
+                    return Redirect($"{frontendLink}/payment-fail?message={"Payment failed!"}");
                 }
-
-
-                _unitOfWork.Save();
-
-                return Redirect($"{frontendLink}/payment-success");
             }
             catch (Exception e)
             {
                 string errorMessage = Uri.EscapeDataString(e.Message);
                 return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
-
             }
         }
 
-        private bool VerifySecureHash(string secureHash)
+        [AllowAnonymous]
+        [HttpGet("confirm-payment-payos")]
+        public async Task<IActionResult> ConfirmPaymentPayOS([FromBody]PayOSResponse payOS)
+        {
+            string frontendLink = _configuration["FrontendLink"];
+            try
+            {
+                var order = _unitOfWork.Order.GetFirstOrDefault(o => o.OrderId == payOS.orderCode);
+
+                if (order == null)
+                {
+                    string errorMessage = Uri.EscapeDataString("Đơn hàng không tồn tại.");
+                    return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
+                }
+
+                order.OrderStatus = payOS.status == "PAID" ? OrderStatus.Accepted : OrderStatus.Rejected;
+                order.PaymentMethod = PaymentMethod.PayOS;
+                order.PaymentRef = payOS.id;
+                order.PaymentDate = DateTime.Now;
+
+                if (UpdateOrder(order))
+                {
+                    return Redirect($"{frontendLink}/payment-success?message={"Update status order success!"}");
+                }
+                else
+                {
+                    return Redirect($"{frontendLink}/payment-fail?message={"Update status order failed!"}");
+                }
+
+            }catch (Exception e)
+            {
+                string errorMessage = Uri.EscapeDataString(e.Message);
+                return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
+            }
+        }
+
+        private bool UpdateOrder(Order order)
+        {
+            var jobService = _unitOfWork.JobService.GetFirstOrDefault(x => x.JobServiceId == order.JobServiceId);
+
+            if (jobService.Duration.HasValue)
+            {
+                order.DateFrom = DateTime.Now;
+                order.DateTo = DateTime.Now.AddDays(jobService.Duration ?? 0.0);
+            }
+
+            _unitOfWork.Order.Update(order);
+
+            (DateTime? serviceFrom, DateTime? serviceTo) UpdateServiceDates(DateTime? serviceFrom, DateTime? serviceTo, int duration)
+            {
+                serviceFrom = (serviceTo == null || serviceTo < DateTime.Now) ? DateTime.Now : serviceFrom;
+                serviceTo = (serviceTo == null || serviceTo < DateTime.Now) ? DateTime.Now.AddDays(duration) : serviceTo.Value.AddDays(duration);
+                return (serviceFrom, serviceTo);
+            }
+
+            if (order.User.UserType == UserType.Employer)
+            {
+                var employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == order.UserId);
+                if (employer == null)
+                {
+                    return false;
+                }
+
+                switch (jobService.jobServiceType)
+                {
+                    case JobServiceType.FeaturePostJob:
+                        if (jobService.Duration.HasValue)
+                        {
+                            var updatedDates = UpdateServiceDates(employer.FeaturePostJobServiceFrom, employer.FeaturePostJobServiceTo, jobService.Duration.Value);
+                            employer.FeaturePostJobServiceFrom = updatedDates.serviceFrom;
+                            employer.FeaturePostJobServiceTo = updatedDates.serviceTo;
+                        }
+                        else if (jobService.Count.HasValue)
+                        {
+                            employer.FeaturePostJobServiceCount = (employer.FeaturePostJobServiceCount ?? 0) + jobService.Count.Value;
+                        }
+                        break;
+
+                    case JobServiceType.PostJob:
+                        if (jobService.Duration.HasValue)
+                        {
+                            var updatedDates = UpdateServiceDates(employer.PostJobServiceFrom, employer.PostJobServiceTo, jobService.Duration.Value);
+                            employer.PostJobServiceFrom = updatedDates.serviceFrom;
+                            employer.PostJobServiceTo = updatedDates.serviceTo;
+                        }
+                        else if (jobService.Count.HasValue)
+                        {
+                            employer.PostJobServiceCount = (employer.PostJobServiceCount ?? 0) + jobService.Count.Value;
+                        }
+                        break;
+                }
+
+                _unitOfWork.Employer.Update(employer);
+                _unitOfWork.SaveAsync();
+            }
+
+            _unitOfWork.Save();
+            return true;
+        }
+        /*
+        [AllowAnonymous]
+        [HttpGet("confirm-payment-payos")]
+        public async Task<IActionResult> ConfirmPaymentPayOS()
+        { 
+        
+        }
+        */
+
+            private bool VerifySecureHash(string secureHash)
         {
             string vnp_HashSecret = _configuration["VnPay:HashSecret"];
             VnPayLibrary vnpay = new VnPayLibrary();
@@ -319,5 +382,81 @@ namespace FindJobsApplication.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+
+
+        [HttpPost("payment-payos")]
+        public async Task<IActionResult> PlaceOrder([FromBody] OrderPaymentViewModel orderPayment)
+        {
+            try
+            {
+                var claimId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (claimId == null || !int.TryParse(claimId, out int userId))
+                {
+                    return Unauthorized(new { message = "User not logged in. Please log in to continue." });
+                }
+
+                var order = _unitOfWork.Order.GetFirstOrDefault(x => x.OrderId.ToString() == orderPayment.OrderId);
+                if (order == null)
+                {
+                    return BadRequest(new { message = "Order not found!" });
+                }
+
+                if (DateTime.Now.AddDays(1) < order.OrderDate)
+                {
+                    return BadRequest(new { message = "Order has expired!" });
+                }
+
+                var jobService = _unitOfWork.JobService.GetFirstOrDefault(x => x.JobServiceId == order.JobServiceId);
+                if (jobService == null)
+                {
+                    return BadRequest(new { message = "Job Service not found!" });
+                }
+
+                var payOS = new PayOS(
+                    _configuration["PAYOS_CLIENT_ID"],
+                    _configuration["PAYOS_API_KEY"],
+                    _configuration["PAYOS_CHECKSUM_KEY"]
+                );
+
+                var paymentData = new PaymentData(
+                    orderCode: int.Parse(DateTimeOffset.Now.ToString("ffffff")),
+                    amount: (int) Math.Round(order.Price),
+                    description: $"Payment for Order ID: {order.OrderId}",
+                    items: new List<ItemData> { new ItemData(jobService.ServiceName, 1, (int) jobService.Price)},
+                    returnUrl: $"{_configuration["BackendLink"]}/test",
+                    cancelUrl: _configuration["BackendLink"]
+                );
+
+                var paymentResponse = await payOS.createPaymentLink(paymentData);
+                if (paymentResponse == null || string.IsNullOrEmpty(paymentResponse.checkoutUrl))
+                {
+                    throw new Exception("Failed to create payment link");
+                }
+
+                return Ok(new
+                {
+                    message = "Order placed successfully",
+                    paymentUrl = paymentResponse.checkoutUrl
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while processing the order",
+                    error = ex.Message
+                });
+            }
+        }
+    }
+
+    public class PayOSResponse
+    {
+        public bool loading { get; set; }
+        public string code { get; set; }
+        public string id { get; set; }
+        public string cancel { get; set; }
+        public int orderCode { get; set; }
+        public string status { get; set; }
     }
 }

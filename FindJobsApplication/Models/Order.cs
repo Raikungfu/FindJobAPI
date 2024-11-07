@@ -23,7 +23,8 @@ namespace FindJobsApplication.Models
     public enum PaymentMethod
     {
         VNPay,
-        PayPal
+        PayPal,
+        PayOS
     }
 
     public class Order
