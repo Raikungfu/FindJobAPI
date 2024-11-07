@@ -138,16 +138,16 @@ namespace FindJobsApplication.Models
             );
 
             modelBuilder.Entity<Employer>().HasData(
-                new Employer { EmployerId = 1, Name = "Công ty Quản lý Dự án Toàn cầu", Description = "Công ty chúng tôi là một trong những đơn vị hàng đầu trong lĩnh vực quản lý dự án toàn cầu, chuyên cung cấp dịch vụ tối ưu cho các doanh nghiệp và tổ chức ở mọi quy mô. Với đội ngũ chuyên gia dày dạn kinh nghiệm trong lĩnh vực quản lý và tư vấn, chúng tôi cam kết mang lại những giải pháp quản lý dự án hiệu quả nhất, giúp khách hàng tối ưu hóa quy trình làm việc, giảm thiểu rủi ro và đạt được mục tiêu kinh doanh một cách nhanh chóng và bền vững. Đặc biệt, chúng tôi luôn áp dụng những công nghệ tiên tiến nhất và các phương pháp quản lý hiện đại để đảm bảo rằng mọi dự án đều được triển khai một cách suôn sẻ và thành công. Với phương châm \"Khách hàng là trung tâm\", chúng tôi luôn sẵn sàng lắng nghe và hiểu rõ nhu cầu của từng khách hàng để cung cấp các giải pháp phù hợp nhất.", CompanyName = "Công ty Quản lý Dự án Toàn cầu Ltd.", UserId = 2, Avt = "", Cover = "" },
-                new Employer { EmployerId = 2, Name = "Công ty Sản xuất Thiết bị Điện tử", Description = "Công ty chúng tôi nổi tiếng trong ngành sản xuất thiết bị điện tử, luôn đặt chất lượng sản phẩm lên hàng đầu và chú trọng đến sự hài lòng của khách hàng. Chúng tôi có một đội ngũ kỹ sư và chuyên gia dày dạn kinh nghiệm, không ngừng nghiên cứu và phát triển các sản phẩm mới, đảm bảo đáp ứng được các nhu cầu ngày càng đa dạng của thị trường. Bên cạnh đó, với công nghệ sản xuất hiện đại và quy trình kiểm soát chất lượng nghiêm ngặt, chúng tôi tự hào mang đến cho người tiêu dùng những sản phẩm tiên tiến, an toàn và đáng tin cậy. Chúng tôi cũng cam kết bảo vệ môi trường trong quá trình sản xuất, góp phần vào sự phát triển bền vững của xã hội.", CompanyName = "Công ty Sản xuất Thiết bị Điện tử Ltd.", UserId = 4, Avt = "", Cover = "" },
-                new Employer { EmployerId = 3, Name = "Công ty Phát triển Phần mềm Sáng Tạo", Description = "Chúng tôi là công ty chuyên cung cấp các giải pháp phần mềm sáng tạo, giúp các doanh nghiệp hiện đại hóa quy trình làm việc và nâng cao hiệu quả hoạt động. Đội ngũ lập trình viên và chuyên viên tư vấn của chúng tôi không ngừng tìm tòi, sáng tạo và cập nhật công nghệ mới để mang lại cho khách hàng những sản phẩm phần mềm không chỉ tiện ích mà còn độc đáo và tối ưu nhất. Bên cạnh đó, chúng tôi cam kết đồng hành cùng khách hàng từ giai đoạn ý tưởng cho đến khi sản phẩm hoàn thiện và triển khai thành công. Sự hài lòng của khách hàng là động lực lớn nhất để chúng tôi không ngừng phấn đấu và hoàn thiện bản thân.", CompanyName = "Công ty Phát triển Phần mềm Sáng Tạo Ltd.", UserId = 6, Avt = "", Cover = "" },
-                new Employer { EmployerId = 4, Name = "Công ty Xây dựng Hạ Tầng Tiên Phong", Description = "Với bề dày kinh nghiệm trong lĩnh vực xây dựng hạ tầng, công ty chúng tôi tự hào là đơn vị tiên phong trong việc cung cấp các giải pháp xây dựng chất lượng cao cho các dự án lớn. Chúng tôi cam kết áp dụng công nghệ và thiết bị hiện đại nhất để đảm bảo rằng mọi công trình đều đạt tiêu chuẩn chất lượng cao nhất và hoàn thành đúng tiến độ. Đội ngũ kỹ sư của chúng tôi luôn sẵn sàng tư vấn và giải quyết mọi vấn đề phát sinh trong quá trình thi công, đảm bảo an toàn và hiệu quả cho từng dự án. Ngoài ra, chúng tôi cũng rất chú trọng đến việc đào tạo và phát triển nguồn nhân lực, giúp nhân viên của chúng tôi phát triển toàn diện cả về chuyên môn và kỹ năng mềm.", CompanyName = "Công ty Xây dựng Hạ Tầng Tiên Phong Ltd.", UserId = 8, Avt = "", Cover = "" },
-                new Employer { EmployerId = 5, Name = "Công ty Dịch Vụ Vận Tải An Toàn", Description = "Công ty chúng tôi chuyên cung cấp dịch vụ vận tải an toàn và đáng tin cậy, luôn cam kết mang lại sự hài lòng tối đa cho khách hàng. Với đội xe hiện đại và nhân viên lái xe chuyên nghiệp, chúng tôi sẵn sàng phục vụ khách hàng 24/7, đáp ứng mọi nhu cầu vận chuyển trong thời gian ngắn nhất. Bên cạnh đó, chúng tôi cũng liên tục cải tiến quy trình làm việc và đầu tư vào công nghệ mới nhằm tối ưu hóa chi phí và thời gian cho khách hàng. Đội ngũ chăm sóc khách hàng tận tình của chúng tôi luôn sẵn sàng lắng nghe và đáp ứng mọi yêu cầu của bạn, nhằm đảm bảo rằng trải nghiệm của khách hàng với dịch vụ của chúng tôi luôn là tốt nhất.", CompanyName = "Công ty Dịch Vụ Vận Tải An Toàn Ltd.", UserId = 10, Avt = "", Cover = "" },
-                new Employer { EmployerId = 6, Name = "Công ty Thương Mại Quốc Tế Minh Long", Description = "Chuyên gia trong lĩnh vực thương mại quốc tế, chúng tôi cung cấp các giải pháp kinh doanh tối ưu giúp khách hàng mở rộng thị trường và phát triển bền vững. Đội ngũ chuyên viên của chúng tôi luôn nỗ lực tìm kiếm các cơ hội mới và tối ưu hóa quy trình giao dịch quốc tế, đảm bảo rằng khách hàng của chúng tôi luôn đạt được lợi nhuận cao nhất từ các giao dịch thương mại. Với mạng lưới đối tác rộng lớn và uy tín trên toàn cầu, chúng tôi tự tin mang đến cho khách hàng những giải pháp tốt nhất và hỗ trợ tận tình trong từng bước đi của khách hàng trên thị trường quốc tế.", CompanyName = "Công ty Thương Mại Quốc Tế Minh Long Ltd.", UserId = 12, Avt = "", Cover = "" },
-                new Employer { EmployerId = 7, Name = "Công ty Dịch Vụ Tài Chính Hưng Thịnh", Description = "Chúng tôi cung cấp dịch vụ tài chính đáng tin cậy, giúp khách hàng quản lý tài sản và đầu tư hiệu quả thông qua sự tư vấn chuyên nghiệp từ các chuyên gia hàng đầu trong ngành. Với nhiều năm kinh nghiệm hoạt động, chúng tôi cam kết mang đến cho khách hàng những giải pháp tài chính linh hoạt, phù hợp với nhu cầu cá nhân hoặc doanh nghiệp. Đội ngũ tư vấn viên tận tâm của chúng tôi sẽ làm việc chặt chẽ với từng khách hàng để đảm bảo rằng mọi quyết định đầu tư đều được đưa ra một cách chính xác và có lợi nhất, nhằm tối ưu hóa giá trị tài sản của bạn.", CompanyName = "Công ty Dịch Vụ Tài Chính Hưng Thịnh Ltd.", UserId = 14, Avt = "", Cover = "" },
-                new Employer { EmployerId = 8, Name = "Công ty Xuất Nhập Khẩu Phúc Lợi", Description = "Công ty chúng tôi nổi bật trong lĩnh vực xuất nhập khẩu, chuyên cung cấp những sản phẩm và dịch vụ tốt nhất, đáp ứng nhu cầu đa dạng của thị trường trong và ngoài nước. Chúng tôi có mạng lưới đối tác rộng khắp, đảm bảo cung cấp sản phẩm chất lượng với giá cả cạnh tranh nhất. Đội ngũ nhân viên giàu kinh nghiệm và am hiểu thị trường quốc tế của chúng tôi luôn sẵn sàng hỗ trợ khách hàng từ khâu tìm kiếm nguồn cung ứng cho đến khâu vận chuyển, giúp khách hàng tiết kiệm thời gian và chi phí. Chúng tôi cũng cam kết bảo vệ quyền lợi của khách hàng và đảm bảo rằng mọi giao dịch đều minh bạch và công bằng.", CompanyName = "Công ty Xuất Nhập Khẩu Phúc Lợi Ltd.", UserId = 16, Avt = "", Cover = "" },
-                new Employer { EmployerId = 9, Name = "Công ty Đầu Tư Bất Động Sản Nam Phong", Description = "Chúng tôi chuyên cung cấp các giải pháp đầu tư bất động sản sáng tạo, giúp khách hàng tối đa hóa lợi nhuận từ các dự án đầu tư của mình. Với đội ngũ chuyên viên dày dạn kinh nghiệm trong ngành, chúng tôi cam kết mang đến cho khách hàng những tư vấn chuyên sâu và chính xác nhất về xu hướng thị trường và các cơ hội đầu tư tiềm năng. Bên cạnh đó, chúng tôi cũng hỗ trợ khách hàng trong việc quản lý và phát triển các dự án bất động sản, đảm bảo mang lại giá trị gia tăng tối đa cho các khoản đầu tư của bạn và đồng hành cùng bạn trong suốt quá trình đầu tư.", CompanyName = "Công ty Đầu Tư Bất Động Sản Nam Phong Ltd.", UserId = 18, Avt = "", Cover = "" },
-                new Employer { EmployerId = 10, Name = "Công ty Truyền Thông & Quảng Cáo Đỉnh Cao", Description = "Chúng tôi là công ty hàng đầu trong lĩnh vực truyền thông và quảng cáo, chuyên cung cấp các giải pháp marketing hiệu quả giúp thương hiệu của bạn tỏa sáng giữa đám đông. Với đội ngũ sáng tạo và dày dạn kinh nghiệm, chúng tôi luôn cập nhật các xu hướng mới nhất trong ngành và xây dựng những chiến dịch quảng cáo độc đáo, thu hút sự chú ý của khách hàng. Đội ngũ nhân viên của chúng tôi sẽ làm việc chặt chẽ với bạn từ giai đoạn ý tưởng cho đến khi triển khai chiến dịch, đảm bảo rằng mọi khía cạnh của thương hiệu đều được chăm sóc và phát triển một cách tốt nhất, từ việc xây dựng hình ảnh cho đến việc tương tác với khách hàng trên các nền tảng truyền thông xã hội.", CompanyName = "Công ty Truyền Thông & Quảng Cáo Đỉnh Cao Ltd.", UserId = 20, Avt = "", Cover = "" }
+                new Employer { EmployerId = 1, Name = "Nguyễn Thanh Tuấn", Description = "Công ty chúng tôi là một trong những đơn vị hàng đầu trong lĩnh vực quản lý dự án toàn cầu, chuyên cung cấp dịch vụ tối ưu cho các doanh nghiệp và tổ chức ở mọi quy mô...", CompanyName = "Công ty Quản lý Dự án Toàn cầu Ltd.", UserId = 2, Avt = "", Cover = "" },
+                new Employer { EmployerId = 2, Name = "Lê Thị Thu Nhi", Description = "Công ty chúng tôi nổi tiếng trong ngành sản xuất thiết bị điện tử, luôn đặt chất lượng sản phẩm lên hàng đầu và chú trọng đến sự hài lòng của khách hàng...", CompanyName = "Công ty Sản xuất Thiết bị Điện tử Ltd.", UserId = 4, Avt = "", Cover = "" },
+                new Employer { EmployerId = 3, Name = "Ngô Quang Hùng", Description = "Chúng tôi là công ty chuyên cung cấp các giải pháp phần mềm sáng tạo, giúp các doanh nghiệp hiện đại hóa quy trình làm việc và nâng cao hiệu quả hoạt động...", CompanyName = "Công ty Phát triển Phần mềm Sáng Tạo Ltd.", UserId = 6, Avt = "", Cover = "" },
+                new Employer { EmployerId = 4, Name = "Phan Thị Trúc Ly", Description = "Với bề dày kinh nghiệm trong lĩnh vực xây dựng hạ tầng, công ty chúng tôi tự hào là đơn vị tiên phong trong việc cung cấp các giải pháp xây dựng chất lượng cao cho các dự án lớn...", CompanyName = "Công ty Xây dựng Hạ Tầng Tiên Phong Ltd.", UserId = 8, Avt = "", Cover = "" },
+                new Employer { EmployerId = 5, Name = "Hứa Hồng Ân", Description = "Công ty chúng tôi chuyên cung cấp dịch vụ vận tải an toàn và đáng tin cậy, luôn cam kết mang lại sự hài lòng tối đa cho khách hàng...", CompanyName = "Công ty Dịch Vụ Vận Tải An Toàn Ltd.", UserId = 10, Avt = "", Cover = "" },
+                new Employer { EmployerId = 6, Name = "Phan Thành Duy", Description = "Chuyên gia trong lĩnh vực thương mại quốc tế, chúng tôi cung cấp các giải pháp kinh doanh tối ưu giúp khách hàng mở rộng thị trường và phát triển bền vững...", CompanyName = "Công ty Thương Mại Quốc Tế Minh Long Ltd.", UserId = 12, Avt = "", Cover = "" },
+                new Employer { EmployerId = 7, Name = "Nguyễn Thành Sơn", Description = "Chúng tôi cung cấp dịch vụ tài chính đáng tin cậy, giúp khách hàng quản lý tài sản và đầu tư hiệu quả thông qua sự tư vấn chuyên nghiệp từ các chuyên gia hàng đầu trong ngành...", CompanyName = "Công ty Dịch Vụ Tài Chính Hưng Thịnh Ltd.", UserId = 14, Avt = "", Cover = "" },
+                new Employer { EmployerId = 8, Name = "Nguyễn Thanh Tùng", Description = "Công ty chúng tôi nổi bật trong lĩnh vực xuất nhập khẩu, chuyên cung cấp những sản phẩm và dịch vụ tốt nhất, đáp ứng nhu cầu đa dạng của thị trường trong và ngoài nước...", CompanyName = "Công ty Xuất Nhập Khẩu Phúc Lợi Ltd.", UserId = 16, Avt = "", Cover = "" },
+                new Employer { EmployerId = 9, Name = "Nguyễn Hoàng Lâm", Description = "Chúng tôi chuyên cung cấp các giải pháp đầu tư bất động sản sáng tạo, giúp khách hàng tối đa hóa lợi nhuận từ các dự án đầu tư của mình...", CompanyName = "Công ty Đầu Tư Bất Động Sản Nam Phong Ltd.", UserId = 18, Avt = "", Cover = "" },
+                new Employer { EmployerId = 10, Name = "Nguyễn Hoàng Oanh", Description = "Chúng tôi là công ty hàng đầu trong lĩnh vực truyền thông và quảng cáo, chuyên cung cấp các giải pháp marketing hiệu quả giúp thương hiệu của bạn tỏa sáng giữa đám đông...", CompanyName = "Công ty Truyền Thông & Quảng Cáo Đỉnh Cao Ltd.", UserId = 20, Avt = "", Cover = "" }
             );
 
             modelBuilder.Entity<Certification>().HasData(
@@ -184,51 +184,112 @@ namespace FindJobsApplication.Models
             );
 
             modelBuilder.Entity<JobCategory>().HasData(
-                new JobCategory { JobCategoryId = 1, JobCategoryName = "Phát triển phần mềm", Image = "https://e7.pngegg.com/pngimages/169/909/png-clipart-computer-icons-source-code-software-developer-computer-programming-computer-software-software-ico-angle-logo.png" },
-                new JobCategory { JobCategoryId = 2, JobCategoryName = "Thiết Kế Web", Image = "https://e7.pngegg.com/pngimages/758/371/png-clipart-web-development-web-service-web-developer-digital-marketing-develop-trademark-logo.png" },
-                new JobCategory { JobCategoryId = 3, JobCategoryName = "Thiết kế UX/UI", Image = "https://www.applify.com.sg/blog/wp-content/uploads/2023/09/Key-Differences-Between-UX-Designer-vs.-UI-Designer.png" },
-                new JobCategory { JobCategoryId = 4, JobCategoryName = "Nhân viên bán hàng", Image = "https://static.thenounproject.com/png/1085397-200.png " },
-                new JobCategory { JobCategoryId = 5, JobCategoryName = "Gia sư", Image = "https://logowik.com/content/uploads/images/education635.logowik.com.webp" },
-                new JobCategory { JobCategoryId = 6, JobCategoryName = "Phục vụ nhà hàng", Image = "https://e7.pngegg.com/pngimages/282/85/png-clipart-catering-restaurant-waiter-logo-chef-mart-restaurant-supply-food-vertebrate-thumbnail.png" },
-                new JobCategory { JobCategoryId = 7, JobCategoryName = "Nhân viên nhập liệu", Image = "https://e7.pngegg.com/pngimages/547/96/png-clipart-data-entry-clerk-paper-service-computer-services-miscellaneous-blue.png" },
-                new JobCategory { JobCategoryId = 8, JobCategoryName = "Chăm sóc khách hàng", Image = "https://media.istockphoto.com/id/1133541602/vector/hotline-support-service-with-headphones-icon-isolated-on-white-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=81lT8-ARXAeMJzDY7JbzguDoEGSro-GjTomnROdTT3M=" },
-                new JobCategory { JobCategoryId = 9, JobCategoryName = "Nhân viên giao hàng", Image = "https://i.pinimg.com/736x/ac/02/83/ac02831601243c01d22fdfc98cc45eec.jpg" },
-                new JobCategory { JobCategoryId = 10, JobCategoryName = "Nhân viên pha chế", Image = "https://cdn.vectorstock.com/i/500p/02/85/cocktail-shaker-vector-37740285.jpg" }
-
-            );
+                new JobCategory { JobCategoryId = 1, JobCategoryName = "Phục vụ", Image = "https://e7.pngegg.com/pngimages/282/85/png-clipart-catering-restaurant-waiter-logo-chef-mart-restaurant-supply-food-vertebrate-thumbnail.png" },
+                new JobCategory { JobCategoryId = 2, JobCategoryName = "Giao hàng", Image = "https://i.pinimg.com/736x/ac/02/83/ac02831601243c01d22fdfc98cc45eec.jpg" },
+                new JobCategory { JobCategoryId = 3, JobCategoryName = "Dọn dẹp", Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4q1NHyfNcrY8aCIZoo6oc1iB7pe_o0brc0w&s" },
+                new JobCategory { JobCategoryId = 4, JobCategoryName = "Nấu cơm", Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0tEZKIIWbIsOTnKM1BFkl7Bhy-UJ5iRtrdw&s" },
+                new JobCategory { JobCategoryId = 5, JobCategoryName = "Đi chợ", Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZSoI3sKPbNclvWn4Vugq3kwb1bRITL7oGng&s" },
+                new JobCategory { JobCategoryId = 6, JobCategoryName = "Chăm em bé", Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ6UxWQc6mbjt8Ed3u1UARTU4ytPVxSZ1t4g&s" },
+                new JobCategory { JobCategoryId = 7, JobCategoryName = "Sửa chữa", Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzDxpicQTpZzRJS1xidKgEg5P7AFa8rpi-JQ&s" },
+                new JobCategory { JobCategoryId = 8, JobCategoryName = "MC", Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQni3YqPQR-cMrJu3hB_hPeCevuNpY0SguhZg&s" },
+                new JobCategory { JobCategoryId = 9, JobCategoryName = "Khác", Image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6bcLlerH8U0ew1SVypV6NCQgKuPHOBFUSvQ&s" }
+);
 
             modelBuilder.Entity<Job>().HasData(
-                new Job { JobId = 1, Title = "Lập trình viên phần mềm", Description = "Phát triển ứng dụng.", Amount = 10, Salary = 60000, Location = JobLocation.BinhDinh, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(1), JobType = JobType.FullTime, JobCategoryId = 1, EmployerId = 1 },
-                new Job { JobId = 2, Title = "Nhà thiết kế web", Description = "Tạo các trang web đẹp.", Amount = 3, Salary = 50000, Location = JobLocation.BinhDinh, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(2), JobType = JobType.FullTime, JobCategoryId = 1, EmployerId = 1 },
-                new Job { JobId = 3, Title = "Nhà thiết kế UX/UI", Description = "Nâng cao trải nghiệm người dùng.", Amount = 15, Location = JobLocation.HaNoi, Salary = 55000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(3), JobType = JobType.PartTime, JobCategoryId = 1, EmployerId = 2 },
-                new Job { JobId = 4, Title = "Nhân viên bán hàng", Description = "Bán sản phẩm và tư vấn khách hàng.", Amount = 5, Location = JobLocation.DaNang, Salary = 30000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(1), JobType = JobType.PartTime, JobCategoryId = 4, EmployerId = 3 },
-                new Job { JobId = 5, Title = "Gia sư Toán", Description = "Dạy kèm học sinh cấp 2 và cấp 3.", Amount = 10, Location = JobLocation.HoChiMinh, Salary = 20000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(2), JobType = JobType.PartTime, JobCategoryId = 5, EmployerId = 4 },
-                new Job { JobId = 6, Title = "Phục vụ nhà hàng", Description = "Phục vụ khách hàng trong nhà hàng.", Amount = 8, Location = JobLocation.DaNang, Salary = 25000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(1), JobType = JobType.PartTime, JobCategoryId = 6, EmployerId = 5 },
-                new Job { JobId = 7, Title = "Nhân viên nhập liệu", Description = "Nhập dữ liệu vào hệ thống quản lý.", Amount = 20, Location = JobLocation.HoChiMinh, Salary = 22000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(1), JobType = JobType.PartTime, JobCategoryId = 7, EmployerId = 6 },
-                new Job { JobId = 8, Title = "Nhân viên chăm sóc khách hàng", Description = "Giải đáp thắc mắc và hỗ trợ khách hàng.", Amount = 6, Location = JobLocation.HaTinh, Salary = 27000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(1), JobType = JobType.PartTime, JobCategoryId = 8, EmployerId = 7 },
-                new Job { JobId = 9, Title = "Nhân viên giao hàng", Description = "Giao hàng tới các địa chỉ yêu cầu.", Amount = 2, Location = JobLocation.HaiPhong, Salary = 30000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(2), JobType = JobType.PartTime, JobCategoryId = 9, EmployerId = 8 },
-                new Job { JobId = 10, Title = "Nhân viên pha chế", Description = "Pha chế đồ uống theo yêu cầu của khách hàng.", Amount = 10, Location = JobLocation.HaNoi, Salary = 28000, DateFrom = DateTime.Now, DateTo = DateTime.Now.AddMonths(2), JobType = JobType.PartTime, JobCategoryId = 10, EmployerId = 9 }
+                new Job 
+                { 
+                    JobId = 1, 
+                    Title = "Dọn dẹp sau tiệc", 
+                    Description = "Dọn dẹp sau khi kết thúc tiệc, vệ sinh bàn ghế và khu vực tổ chức tiệc, làm từ 20h - 22h.", 
+                    Amount = 1, 
+                    Salary = 100000, 
+                    Location = JobLocation.BinhDinh, 
+                    DateFrom = new DateTime(2024, 10, 25, 20, 0, 0), 
+                    DateTo = new DateTime(2024, 10, 25, 22, 0, 0), 
+                    JobType = JobType.PartTime, 
+                    JobCategoryId = 3, 
+                    EmployerId = 1 
+                },
+                new Job 
+                { 
+                    JobId = 2, 
+                    Title = "Phục vụ đám cưới", 
+                    Description = "Phục vụ tiệc cưới cho khách tại nhà hàng, bao gồm mang đồ ăn và hỗ trợ khách, làm từ 18h - 23h. 80k/h", 
+                    Amount = 1, 
+                    Salary = 80000, 
+                    Location = JobLocation.BinhDinh, 
+                    DateFrom = new DateTime(2024, 10, 30, 18, 0, 0), 
+                    DateTo = new DateTime(2024, 10, 30, 23, 0, 0), 
+                    JobType = JobType.PartTime, 
+                    JobCategoryId = 1, 
+                    EmployerId = 2 
+                },
+                new Job 
+                { 
+                    JobId = 3, 
+                    Title = "Thu hoạch rau củ", 
+                    Description = "Thu hoạch rau củ tại ruộng, hỗ trợ đóng gói vào túi, làm từ 6h - 12h. 200k/1 ngày", 
+                    Amount = 1, 
+                    Salary = 200000, 
+                    Location = JobLocation.BinhDinh, 
+                    DateFrom = new DateTime(2024, 10, 22, 6, 0, 0), 
+                    DateTo = new DateTime(2024, 10, 22, 12, 0, 0), 
+                    JobType = JobType.PartTime, 
+                    JobCategoryId = 9, 
+                    EmployerId = 3 
+                },
+                new Job 
+                { 
+                    JobId = 4, 
+                    Title = "Giúp việc theo giờ", 
+                    Description = "Dọn dẹp nhà cửa, giặt đồ, rửa bát, làm từ 14h - 18h. 30k/1h", 
+                    Amount = 1, 
+                    Salary = 30000, 
+                    Location = JobLocation.BinhDinh, 
+                    DateFrom = new DateTime(2024, 10, 26, 14, 0, 0), 
+                    DateTo = new DateTime(2024, 10, 26, 18, 0, 0), 
+                    JobType = JobType.PartTime, 
+                    JobCategoryId = 3, 
+                    EmployerId = 4 
+                },
+                new Job 
+                { 
+                    JobId = 5, 
+                    Title = "Bán hàng lưu niệm", 
+                    Description = "Bán hàng, tư vấn khách và đóng gói sản phẩm lưu niệm, làm từ 8h - 12h. 45k/h", 
+                    Amount = 1, 
+                    Salary = 45000, 
+                    Location = JobLocation.BinhDinh, 
+                    DateFrom = new DateTime(2024, 10, 27, 8, 0, 0), 
+                    DateTo = new DateTime(2024, 10, 27, 12, 0, 0), 
+                    JobType = JobType.PartTime, 
+                    JobCategoryId = 9, 
+                    EmployerId = 5 
+                },
+                new Job 
+                { 
+                    JobId = 6, 
+                    Title = "Chăm sóc cây cảnh", 
+                    Description = "Tưới cây, bón phân và cắt tỉa cây cảnh tại sân vườn, làm từ 7h - 10h. 50k/h", 
+                    Amount = 1, 
+                    Salary = 50000, 
+                    Location = JobLocation.BinhDinh, 
+                    DateFrom = new DateTime(2024, 10, 28, 7, 0, 0), 
+                    DateTo = new DateTime(2024, 10, 28, 10, 0, 0), 
+                    JobType = JobType.PartTime, 
+                    JobCategoryId = 9, 
+                    EmployerId = 6 
+                }
             );
 
             modelBuilder.Entity<JobService>().HasData(
-                 new JobService { JobServiceId = 1, ServiceName = "Đăng tin tuyển dụng 1 lần", Description = "Cơ hội để bạn đưa tin tuyển dụng của mình đến với hàng triệu ứng viên. Gói này cho phép bạn đăng một tin tuyển dụng duy nhất, thu hút sự chú ý của những ứng viên tiềm năng ngay lập tức.", Price = 9000, AdminId = 1, Count = 1, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
-                 new JobService { JobServiceId = 2, ServiceName = "Đăng tin tuyển dụng 5 lần", Description = "Tối ưu hóa cơ hội tuyển dụng của bạn với gói 5 lần. Đăng tin tuyển dụng liên tiếp để tiếp cận nhiều ứng viên hơn và tăng khả năng tìm thấy ứng viên phù hợp.", Price = 39000, AdminId = 1, Count = 5, jobServiceType = JobServiceType.PostJob },
-                 new JobService { JobServiceId = 3, ServiceName = "Đăng tin tuyển dụng 10 lần", Description = "Với gói 10 lần, bạn có thể thoải mái đăng tin tuyển dụng của mình mà không lo lắng về chi phí. Đây là lựa chọn hoàn hảo cho các doanh nghiệp có nhu cầu tuyển dụng thường xuyên.", Price = 69000, AdminId = 1, Count = 10, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
-                 new JobService { JobServiceId = 4, ServiceName = "Đăng tin tuyển dụng 20 lần", Description = "Mở rộng khả năng tiếp cận ứng viên của bạn với gói đăng tin 20 lần. Gói này không chỉ tiết kiệm mà còn cho phép bạn duy trì sự hiện diện liên tục trên nền tảng tuyển dụng.", Price = 109000, AdminId = 1, Count = 20, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
-                 new JobService { JobServiceId = 5, ServiceName = "Đăng tin tuyển dụng 100 lần", Description = "Gói 100 lần là giải pháp tối ưu cho các doanh nghiệp lớn với nhu cầu tuyển dụng liên tục. Đăng tin không giới hạn giúp bạn dễ dàng thu hút ứng viên hàng đầu.", Price = 399000, AdminId = 1, Count = 100, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
-                 new JobService { JobServiceId = 6, ServiceName = "Đăng tin tuyển dụng theo ngày", Description = "Đăng tin tuyển dụng mỗi ngày trong 30 ngày, đảm bảo rằng tin tuyển dụng của bạn luôn tươi mới và thu hút. Lựa chọn lý tưởng cho những ai muốn duy trì sự chú ý của ứng viên.", Price = 100000, AdminId = 1, Duration = 1, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
-                 new JobService { JobServiceId = 7, ServiceName = "Đăng tin tuyển dụng theo tháng", Description = "Gói đăng tin theo tháng giúp bạn dễ dàng quản lý quá trình tuyển dụng của mình. Đăng tin hàng tháng để thu hút ứng viên liên tục và mở rộng mạng lưới của bạn.", Price = 250000, AdminId = 1, Duration = 30, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
-                 new JobService { JobServiceId = 8, ServiceName = "Đăng tin tuyển dụng theo năm", Description = "Chọn gói đăng tin theo năm để đảm bảo sự hiện diện lâu dài của bạn trong thị trường tuyển dụng. Đây là lựa chọn tốt nhất cho các doanh nghiệp có nhu cầu tuyển dụng ổn định trong thời gian dài.", Price = 1000000, AdminId = 1, Duration = 365, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
+                new JobService { JobServiceId = 1, ServiceName = "Combo Trải Nghiệm", Description = "Gói 2 lần đăng bài", Price = 18000, AdminId = 1, Count = 2, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
+                new JobService { JobServiceId = 2, ServiceName = "Combo Ngẫu Hứng", Description = "Gói 5 lần đăng bài", Price = 39000, AdminId = 1, Count = 5, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
+                new JobService { JobServiceId = 3, ServiceName = "Combo Thoải Mái", Description = "Gói 10 lần đăng bài", Price = 69000, AdminId = 1, Count = 10, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
+                new JobService { JobServiceId = 4, ServiceName = "Combo Vi Vu", Description = "Gói 20 lần đăng bài", Price = 109000, AdminId = 1, Count = 20, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" },
+                new JobService { JobServiceId = 5, ServiceName = "Combo Thả Ga", Description = "Gói 100 lần đăng bài", Price = 399000, AdminId = 1, Count = 100, jobServiceType = JobServiceType.PostJob, Image = "https://sim.ussh.vnu.edu.vn/uploads/student/2022_04/tuyendung.png" }
+);
 
-                 new JobService { JobServiceId = 9, ServiceName = "Nổi Bật Tuyển Dụng 1 lần", Description = "Đưa tin tuyển dụng của bạn lên hàng đầu với gói nổi bật một lần. Đảm bảo rằng tin của bạn thu hút mọi ánh nhìn từ ứng viên ngay từ lần đầu tiên.", Price = 15000, AdminId = 1, Count = 1, jobServiceType = JobServiceType.FeaturePostJob, Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg" },
-                 new JobService { JobServiceId = 10, ServiceName = "Nổi Bật Tuyển Dụng 5 lần", Description = "Đăng tin nổi bật trong 5 lần liên tiếp. Một cách hoàn hảo để đảm bảo rằng thông báo tuyển dụng của bạn luôn được chú ý và tiếp cận với nhiều ứng viên hơn.", Price = 69000, AdminId = 1, Count = 5, jobServiceType = JobServiceType.FeaturePostJob, Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg" },
-                 new JobService { JobServiceId = 11, ServiceName = "Nổi Bật Tuyển Dụng 10 lần", Description = "Với gói 10 lần, bạn không chỉ nổi bật mà còn có thể thu hút nhiều ứng viên hơn thông qua những tin tuyển dụng chất lượng cao và được ưu tiên hiển thị.", Price = 129000, AdminId = 1, Count = 10, jobServiceType = JobServiceType.FeaturePostJob, Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg" },
-                 new JobService { JobServiceId = 12, ServiceName = "Nổi Bật Tuyển Dụng 20 lần", Description = "Gói nổi bật 20 lần sẽ mang lại cho bạn lợi thế cạnh tranh. Tăng cường khả năng thu hút ứng viên phù hợp với gói dịch vụ này.", Price = 199000, AdminId = 1, Count = 20, jobServiceType = JobServiceType.FeaturePostJob, Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg" },
-                 new JobService { JobServiceId = 13, ServiceName = "Nổi Bật Tuyển Dụng 100 lần", Description = "Gói nổi bật 100 lần là sự lựa chọn tuyệt vời cho các công ty lớn. Với số lượng đăng tin dồi dào, bạn sẽ có nhiều cơ hội tiếp cận các ứng viên chất lượng.", Price = 499000, AdminId = 1, Count = 100, jobServiceType = JobServiceType.FeaturePostJob, Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg" },
-                 new JobService { JobServiceId = 14, ServiceName = "Nổi Bật Tuyển Dụng theo ngày", Description = "Đảm bảo tin tuyển dụng của bạn luôn nổi bật hàng ngày trong 30 ngày, thu hút sự chú ý liên tục từ các ứng viên tiềm năng.", Price = 150000, AdminId = 1, Duration = 1, jobServiceType = JobServiceType.FeaturePostJob, Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg" },
-                 new JobService { JobServiceId = 15, ServiceName = "Nổi Bật Tuyển Dụng theo tháng", Description = "Gói nổi bật theo tháng giúp bạn duy trì sự hiện diện nổi bật trong suốt thời gian dài, đảm bảo rằng tin tuyển dụng của bạn luôn ở vị trí dễ thấy.", Price = 300000, AdminId = 1, Duration = 30, jobServiceType = JobServiceType.FeaturePostJob, Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg" },
-                 new JobService { JobServiceId = 16, ServiceName = "Nổi Bật Tuyển Dụng theo năm", Description = "Chọn gói nổi bật theo năm để tối đa hóa khả năng tiếp cận ứng viên và giữ cho tin tuyển dụng của bạn luôn nổi bật trong suốt thời gian dài.", Price = 1200000, AdminId = 1, Duration = 365, jobServiceType = JobServiceType.FeaturePostJob, Image = "https://tuyendung.topcv.vn/bai-viet/wp-content/uploads/2022/06/dang-tin-tuyen-dung-o-dau-2a.jpg" }
-             );
 
             modelBuilder.Entity<JobApply>().HasData(
                 new JobApply { JobApplyId = 1, JobId = 1, EmployeeId = 1, ApplyDate = DateTime.Now.AddDays(-15), Status = JobApplyStatus.Pending },
