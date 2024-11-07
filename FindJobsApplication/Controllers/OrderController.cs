@@ -253,12 +253,12 @@ namespace FindJobsApplication.Controllers
 
         [AllowAnonymous]
         [HttpGet("confirm-payment-payos")]
-        public async Task<IActionResult> ConfirmPaymentPayOS([FromBody]PayOSResponse payOS)
+        public async Task<IActionResult> ConfirmPaymentPayOS([FromQuery]string code, [FromQuery] string id, [FromQuery] bool cancel, [FromQuery] string status, [FromQuery] int orderCode)
         {
             string frontendLink = _configuration["FrontendLink"];
             try
             {
-                var order = _unitOfWork.Order.GetFirstOrDefault(o => o.OrderId == payOS.orderCode);
+                var order = _unitOfWork.Order.GetFirstOrDefault(o => o.OrderId == orderCode);
 
                 if (order == null)
                 {
@@ -266,9 +266,9 @@ namespace FindJobsApplication.Controllers
                     return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
                 }
 
-                order.OrderStatus = payOS.status == "PAID" ? OrderStatus.Accepted : OrderStatus.Rejected;
+                order.OrderStatus = status == "PAID" ? OrderStatus.Accepted : OrderStatus.Rejected;
                 order.PaymentMethod = PaymentMethod.PayOS;
-                order.PaymentRef = payOS.id;
+                order.PaymentRef = id;
                 order.PaymentDate = DateTime.Now;
 
                 if (UpdateOrder(order))
@@ -350,14 +350,6 @@ namespace FindJobsApplication.Controllers
             _unitOfWork.Save();
             return true;
         }
-        /*
-        [AllowAnonymous]
-        [HttpGet("confirm-payment-payos")]
-        public async Task<IActionResult> ConfirmPaymentPayOS()
-        { 
-        
-        }
-        */
 
             private bool VerifySecureHash(string secureHash)
         {
@@ -419,12 +411,12 @@ namespace FindJobsApplication.Controllers
                 );
 
                 var paymentData = new PaymentData(
-                    orderCode: int.Parse(DateTimeOffset.Now.ToString("ffffff")),
+                    orderCode: order.OrderId,
                     amount: (int) Math.Round(order.Price),
                     description: $"Payment for Order ID: {order.OrderId}",
                     items: new List<ItemData> { new ItemData(jobService.ServiceName, 1, (int) jobService.Price)},
-                    returnUrl: $"{_configuration["BackendLink"]}/test",
-                    cancelUrl: _configuration["BackendLink"]
+                    returnUrl: $"{_configuration["BackendLink"]}/confirm-payment-payos",
+                    cancelUrl: $"{_configuration["BackendLink"]}/confirm-payment-payos"
                 );
 
                 var paymentResponse = await payOS.createPaymentLink(paymentData);
