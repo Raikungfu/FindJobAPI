@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace FindJobsApplication.Controllers
 {
@@ -157,7 +158,7 @@ namespace FindJobsApplication.Controllers
                 vnpay.AddRequestData("vnp_CurrCode", "VND");
                 vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress(HttpContext));
                 vnpay.AddRequestData("vnp_Locale", "vn");
-                vnpay.AddRequestData("vnp_OrderInfo", CreatePaymentDescription(order, jobService));
+                vnpay.AddRequestData("vnp_OrderInfo", ("JOBBY " + RemoveDiacritics(jobService.ServiceName)).ToUpper());
                 vnpay.AddRequestData("vnp_OrderType", "other");
                 vnpay.AddRequestData("vnp_ReturnUrl", vnp_ReturnUrl);
                 vnpay.AddRequestData("vnp_TxnRef", orderPayment.OrderId);
@@ -401,7 +402,7 @@ namespace FindJobsApplication.Controllers
                 var paymentData = new PaymentData(
                     orderCode: order.OrderId,
                     amount: (int) Math.Round(order.Price),
-                    description: CreatePaymentDescription(order, jobService),
+                    description: ("JOBBY " + RemoveDiacritics(jobService.ServiceName)).ToUpper(),
                     items: new List<ItemData> { new ItemData(jobService.ServiceName, 1, (int) jobService.Price)},
                     returnUrl: $"{_configuration["BackendLink"]}/confirm-payment-payos",
                     cancelUrl: $"{_configuration["BackendLink"]}/confirm-payment-payos"
@@ -429,24 +430,16 @@ namespace FindJobsApplication.Controllers
             }
         }
 
-        private string CreatePaymentDescription(Order order, JobService jobService)
+        public static string RemoveDiacritics(string text)
         {
-            var user = _unitOfWork.User.GetFirstOrDefault(x => x.UserId == order.UserId);
+            string normalizedString = text.Normalize(NormalizationForm.FormD);
 
-            switch (user.UserType)
-            {
-                case UserType.Employer:
-                    var empployer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == user.UserId);
-                    return ("CUSTOMER " + (string.IsNullOrEmpty(empployer.Name) ? user.Username : empployer.Name) + " " + jobService.ServiceName + " ID " + order.OrderId).ToUpper();
-                case UserType.Employee:
-                    var empployee = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == user.UserId);
-                    return ("CUSTOMER " + ((string.IsNullOrEmpty(empployee.LastName) && string.IsNullOrEmpty(empployee.FirstName)) ? user.Username : (empployee.LastName + " " + empployee.FirstName)) + " " + jobService.ServiceName + " ID " + order.OrderId).ToUpper();
-                case UserType.Admin:
-                    var admin = _unitOfWork.Admin.GetFirstOrDefault(x => x.UserId == user.UserId);
-                    return ("CUSTOMER " + (string.IsNullOrEmpty(admin.Name) ? user.Username : admin.Name) + " " + jobService.ServiceName + " ID " + order.OrderId).ToUpper();
-            }
-            return "";
+            Regex regex = new Regex(@"\p{IsCombiningDiacriticalMarks}+");
+            string withoutDiacritics = regex.Replace(normalizedString, "");
+
+            return withoutDiacritics.Normalize(NormalizationForm.FormC);
         }
+
     }
 
     public class PayOSResponse
