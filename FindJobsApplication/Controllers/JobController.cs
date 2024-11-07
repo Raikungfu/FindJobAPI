@@ -198,11 +198,17 @@ namespace FindJobsApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateJob([FromBody] JobViewModel job)
+        public async Task<IActionResult> CreateJob([FromBody] JobViewModel job)
         {
             try
             {
-                if (job == null || job.Title.IsNullOrEmpty())
+                if (job == null || string.IsNullOrEmpty(job.Title))
+                {
+                    ModelState.AddModelError("Title", "Job title is required.");
+                    return BadRequest(ModelState);
+                }
+
+                if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
@@ -210,7 +216,7 @@ namespace FindJobsApplication.Controllers
                 var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
                 if (claimRole != UserType.Employer.ToString())
                 {
-                    return Unauthorized("You are not authorized to create job.");
+                    return Unauthorized("You are not authorized to create a job.");
                 }
 
                 var claimValue = User.FindFirst("Id")?.Value;
@@ -219,14 +225,14 @@ namespace FindJobsApplication.Controllers
                     return Unauthorized("User not logged in. Please log in to continue.");
                 }
 
-                var employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.EmployerId == employerId);
+                var employer = await _unitOfWork.Employer.GetFirstOrDefaultAsync(e => e.EmployerId == employerId);
 
-                if(employer == null)
+                if (employer == null)
                 {
                     return NotFound("Employer not found.");
                 }
 
-                if(employer.PostJobServiceCount <= 0 || employer.PostJobServiceTo != null || employer.PostJobServiceTo < DateTime.Now)
+                if (employer.PostJobServiceCount <= 0 || (employer.PostJobServiceTo != null && employer.PostJobServiceTo < DateTime.Now))
                 {
                     return BadRequest("You have no more job posting service left.");
                 }
@@ -234,22 +240,41 @@ namespace FindJobsApplication.Controllers
                 var newJob = _mapper.Map<Job>(job);
                 newJob.EmployerId = employerId;
 
-                _unitOfWork.Job.Add(newJob);
+                await _unitOfWork.Job.AddAsync(newJob);
 
-                if(employer.PostJobServiceTo == null || employer.PostJobServiceTo < DateTime.Now)
+                if (employer.PostJobServiceTo == null || employer.PostJobServiceTo < DateTime.Now)
                 {
                     employer.PostJobServiceCount--;
                     _unitOfWork.Employer.Update(employer);
                 }
 
-                _unitOfWork.Save();
-                return CreatedAtRoute("GetJob", new { jobId = newJob.JobId }, newJob);
+                await _unitOfWork.SaveAsync();
+
+                return CreatedAtRoute("GetJob", new { jobId = newJob.JobId }, new
+                {
+                    newJob.JobId,
+                    newJob.Title,
+                    newJob.JobCategory,
+                    newJob.JobType,
+                    newJob.Salary,
+                    newJob.Amount,
+                    newJob.DateFrom,
+                    newJob.DateTo,
+                    newJob.Description,
+                    EmployerName = employer.Name,
+                    employer.CompanyName,
+                    EmployerDescription = employer.Description,
+                    Location = newJob.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(newJob.Location.Value)
+                        ? JobLocationDictionary.Locations[newJob.Location.Value]
+                        : employer.CompanyLocation
+                });
             }
             catch (Exception e)
             {
                 return StatusCode(500, "Internal server error: " + e.Message);
             }
         }
+
 
         [HttpGet("{jobId}", Name = "GetJob")]
         public IActionResult GetJob(int jobId)
