@@ -234,7 +234,7 @@ namespace FindJobsApplication.Controllers
 
                 if ((employer.PostJobServiceCount == null || employer.PostJobServiceCount <= 0) && (employer.PostJobServiceTo == null || employer.PostJobServiceTo < DateTime.Now))
                 {
-                    return Forbid("You have no more job posting service left.");
+                    return Forbid();
                 }
 
                 var newJob = _mapper.Map<Job>(job);
