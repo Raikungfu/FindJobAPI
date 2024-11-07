@@ -219,12 +219,30 @@ namespace FindJobsApplication.Controllers
                     return Unauthorized("User not logged in. Please log in to continue.");
                 }
 
+                var employer = _unitOfWork.Employer.GetFirstOrDefault(e => e.EmployerId == employerId);
+
+                if(employer == null)
+                {
+                    return NotFound("Employer not found.");
+                }
+
+                if(employer.PostJobServiceCount <= 0 || employer.PostJobServiceTo != null || employer.PostJobServiceTo < DateTime.Now)
+                {
+                    return BadRequest("You have no more job posting service left.");
+                }
+
                 var newJob = _mapper.Map<Job>(job);
                 newJob.EmployerId = employerId;
 
                 _unitOfWork.Job.Add(newJob);
-                _unitOfWork.Save();
 
+                if(employer.PostJobServiceTo == null || employer.PostJobServiceTo < DateTime.Now)
+                {
+                    employer.PostJobServiceCount--;
+                    _unitOfWork.Employer.Update(employer);
+                }
+
+                _unitOfWork.Save();
                 return CreatedAtRoute("GetJob", new { jobId = newJob.JobId }, newJob);
             }
             catch (Exception e)

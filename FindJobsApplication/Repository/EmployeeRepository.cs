@@ -42,6 +42,10 @@ namespace FindJobsApplication.Repository
                 objFromDb.SocialMedia = employee.SocialMedia;
                 objFromDb.Status = employee.Status;
 
+                objFromDb.PostJobServiceCount = employee.PostJobServiceCount;
+                objFromDb.PostJobServiceFrom = employee.PostJobServiceFrom;
+                objFromDb.PostJobServiceTo = employee.PostJobServiceTo;
+
                 if (!string.IsNullOrEmpty(employee.Avt))
                 {
                     objFromDb.Avt = employee.Avt;

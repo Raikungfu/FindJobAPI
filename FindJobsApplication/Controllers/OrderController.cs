@@ -153,8 +153,6 @@ namespace FindJobsApplication.Controllers
                     vnpay.AddRequestData("vnp_BankCode", "INTCARD");
                 }
 
-
-
                 vnpay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
                 vnpay.AddRequestData("vnp_CurrCode", "VND");
                 vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress(HttpContext));
@@ -319,19 +317,6 @@ namespace FindJobsApplication.Controllers
 
                 switch (jobService.jobServiceType)
                 {
-                    case JobServiceType.FeaturePostJob:
-                        if (jobService.Duration.HasValue)
-                        {
-                            var updatedDates = UpdateServiceDates(employer.FeaturePostJobServiceFrom, employer.FeaturePostJobServiceTo, jobService.Duration.Value);
-                            employer.FeaturePostJobServiceFrom = updatedDates.serviceFrom;
-                            employer.FeaturePostJobServiceTo = updatedDates.serviceTo;
-                        }
-                        else if (jobService.Count.HasValue)
-                        {
-                            employer.FeaturePostJobServiceCount = (employer.FeaturePostJobServiceCount ?? 0) + jobService.Count.Value;
-                        }
-                        break;
-
                     case JobServiceType.PostJob:
                         if (jobService.Duration.HasValue)
                         {
@@ -453,15 +438,12 @@ namespace FindJobsApplication.Controllers
                 case UserType.Employer:
                     var empployer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == user.UserId);
                     return "CUSTOMER " + (string.IsNullOrEmpty(empployer.Name) ? user.Username : empployer.Name) + " " + jobService.ServiceName + " ID " + order.OrderId;
-                    break;
                 case UserType.Employee:
                     var empployee = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == user.UserId);
                     return "CUSTOMER " + ((string.IsNullOrEmpty(empployee.LastName) && string.IsNullOrEmpty(empployee.FirstName)) ? user.Username : (empployee.LastName + " " + empployee.FirstName)) + " " + jobService.ServiceName + " ID " + order.OrderId;
-                    break;
                 case UserType.Admin:
                     var admin = _unitOfWork.Admin.GetFirstOrDefault(x => x.UserId == user.UserId);
                     return "CUSTOMER " + (string.IsNullOrEmpty(admin.Name) ? user.Username : admin.Name) + " " + jobService.ServiceName + " ID " + order.OrderId;
-                    break;
             }
             return "";
         }

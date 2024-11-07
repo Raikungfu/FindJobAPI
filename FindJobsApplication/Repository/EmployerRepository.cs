@@ -38,6 +38,10 @@ namespace FindJobsApplication.Repository
                 objFromDb.CompanyProjects = employer.CompanyProjects;
                 objFromDb.CompanyServices = employer.CompanyServices;
 
+                objFromDb.PostJobServiceCount = employer.PostJobServiceCount;
+                objFromDb.PostJobServiceFrom = employer.PostJobServiceFrom;
+                objFromDb.PostJobServiceTo = employer.PostJobServiceTo;
+
                 if (!string.IsNullOrEmpty(employer.CompanyLogo))
                 {
                     objFromDb.CompanyLogo = employer.CompanyLogo;
