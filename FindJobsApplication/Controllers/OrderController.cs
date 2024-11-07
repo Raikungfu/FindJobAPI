@@ -153,11 +153,13 @@ namespace FindJobsApplication.Controllers
                     vnpay.AddRequestData("vnp_BankCode", "INTCARD");
                 }
 
+
+
                 vnpay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
                 vnpay.AddRequestData("vnp_CurrCode", "VND");
                 vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress(HttpContext));
                 vnpay.AddRequestData("vnp_Locale", "vn");
-                vnpay.AddRequestData("vnp_OrderInfo", "Don hang: " + orderPayment.OrderId + ". Thanh toan dich vu " + jobService.ServiceName + " tai Jobby");
+                vnpay.AddRequestData("vnp_OrderInfo", CreatePaymentDescription(order, jobService));
                 vnpay.AddRequestData("vnp_OrderType", "other");
                 vnpay.AddRequestData("vnp_ReturnUrl", vnp_ReturnUrl);
                 vnpay.AddRequestData("vnp_TxnRef", orderPayment.OrderId);
@@ -414,7 +416,7 @@ namespace FindJobsApplication.Controllers
                 var paymentData = new PaymentData(
                     orderCode: order.OrderId,
                     amount: (int) Math.Round(order.Price),
-                    description: $"Payment for Order ID: {order.OrderId}",
+                    description: CreatePaymentDescription(order, jobService),
                     items: new List<ItemData> { new ItemData(jobService.ServiceName, 1, (int) jobService.Price)},
                     returnUrl: $"{_configuration["BackendLink"]}/confirm-payment-payos",
                     cancelUrl: $"{_configuration["BackendLink"]}/confirm-payment-payos"
@@ -440,6 +442,28 @@ namespace FindJobsApplication.Controllers
                     error = ex.Message
                 });
             }
+        }
+
+        private string CreatePaymentDescription(Order order, JobService jobService)
+        {
+            var user = _unitOfWork.User.GetFirstOrDefault(x => x.UserId == order.UserId);
+
+            switch (user.UserType)
+            {
+                case UserType.Employer:
+                    var empployer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == user.UserId);
+                    return "CUSTOMER " + (string.IsNullOrEmpty(empployer.Name) ? user.Username : empployer.Name) + " " + jobService.ServiceName + " ID " + order.OrderId;
+                    break;
+                case UserType.Employee:
+                    var empployee = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == user.UserId);
+                    return "CUSTOMER " + ((string.IsNullOrEmpty(empployee.LastName) && string.IsNullOrEmpty(empployee.FirstName)) ? user.Username : (empployee.LastName + " " + empployee.FirstName)) + " " + jobService.ServiceName + " ID " + order.OrderId;
+                    break;
+                case UserType.Admin:
+                    var admin = _unitOfWork.Admin.GetFirstOrDefault(x => x.UserId == user.UserId);
+                    return "CUSTOMER " + (string.IsNullOrEmpty(admin.Name) ? user.Username : admin.Name) + " " + jobService.ServiceName + " ID " + order.OrderId;
+                    break;
+            }
+            return "";
         }
     }
 
