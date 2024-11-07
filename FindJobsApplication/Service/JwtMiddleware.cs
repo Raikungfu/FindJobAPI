@@ -23,6 +23,13 @@ namespace FindJobsApplication.Service
                 return;
             }
 
+            if (endpoint != null && endpoint.Metadata.GetMetadata<AllowAnonymousAttribute>() != null)
+            {
+                await _next(context);
+                return;
+            }
+
+
             var token = context.Request.Headers["Authorization"].ToString()?.Replace("Bearer ", "");
 
             if (!string.IsNullOrEmpty(token))

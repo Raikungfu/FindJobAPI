@@ -260,7 +260,7 @@ namespace FindJobsApplication.Controllers
             string frontendLink = _configuration["FrontendLink"];
             try
             {
-                var order = _unitOfWork.Order.GetFirstOrDefault(o => o.OrderId == orderCode);
+                var order = _unitOfWork.Order.GetFirstOrDefault(o => o.OrderId == orderCode, "User");
 
                 if (order == null)
                 {
@@ -270,6 +270,7 @@ namespace FindJobsApplication.Controllers
 
                 order.OrderStatus = status == "PAID" ? OrderStatus.Accepted : OrderStatus.Rejected;
                 order.PaymentMethod = PaymentMethod.PayOS;
+                order.PaymentStatus = cancel ? PaymentStatus.Paid : PaymentStatus.Failed;
                 order.PaymentRef = id;
                 order.PaymentDate = DateTime.Now;
 
@@ -404,8 +405,8 @@ namespace FindJobsApplication.Controllers
                     amount: (int) Math.Round(order.Price),
                     description: ("JOBBY " + RemoveDiacritics(jobService.ServiceName)).ToUpper(),
                     items: new List<ItemData> { new ItemData(jobService.ServiceName, 1, (int) jobService.Price)},
-                    returnUrl: $"{_configuration["BackendLink"]}/confirm-payment-payos",
-                    cancelUrl: $"{_configuration["BackendLink"]}/confirm-payment-payos"
+                    returnUrl: $"{_configuration["BackendLink"]}/api/Order/confirm-payment-payos",
+                    cancelUrl: $"{_configuration["BackendLink"]}/api/Order/confirm-payment-payos"
                 );
 
                 var paymentResponse = await payOS.createPaymentLink(paymentData);
