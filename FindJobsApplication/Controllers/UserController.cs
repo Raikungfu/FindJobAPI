@@ -28,14 +28,14 @@ namespace FindJobsApplication.Controllers
         }
 
         [HttpGet("profile")]
-        public IActionResult GetProfile(int? userId)
+        public IActionResult GetProfile([FromQuery] int? userId)
         {
             if (userId == null)
             {
                 var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
                 var claimValue = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                if (claimRole.IsNullOrEmpty() || string.IsNullOrEmpty(claimValue) || !Enum.TryParse(claimRole, out UserType role) || !int.TryParse(claimValue, out int userId))
+                if (claimRole.IsNullOrEmpty() || string.IsNullOrEmpty(claimValue) || !Enum.TryParse(claimRole, out UserType role) || !int.TryParse(claimValue, out int uId))
                 {
                     return Unauthorized("User not logged in. Please log in to continue.");
                 }
@@ -43,21 +43,21 @@ namespace FindJobsApplication.Controllers
                 switch (role)
                 {
                     case UserType.Employee:
-                        var employee = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == userId);
+                        var employee = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == uId);
                         if (employee == null)
                         {
                             return NotFound();
                         }
                         return Ok(employee);
                     case UserType.Employer:
-                        var employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == userId);
+                        var employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == uId);
                         if (employer == null)
                         {
                             return NotFound();
                         }
                         return Ok(employer);
                     case UserType.Admin:
-                        var admin = _unitOfWork.Admin.GetFirstOrDefault(x => x.UserId == userId);
+                        var admin = _unitOfWork.Admin.GetFirstOrDefault(x => x.UserId == uId);
                         if (admin == null)
                         {
                             return NotFound();
