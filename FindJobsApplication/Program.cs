@@ -173,6 +173,10 @@ app.UseRouting();
 
 app.UseSession();
 
+app.UseMiddleware<JwtMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
+
 
 app.UseEndpoints(endpoints =>
 {
