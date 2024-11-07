@@ -360,43 +360,43 @@ MigrationBackup/
 FodyWeavers.xsd
 
 .vs/
-ClothesStoreMobileApplication/bin/
-ClothesStoreMobileApplication/obj/
-ClothesStoreMobileApplication/*.user
-ClothesStoreMobileApplication/*.suo
-ClothesStoreMobileApplication/*.ncb
-ClothesStoreMobileApplication/*.sdf
-ClothesStoreMobileApplication/*.vssscc
-ClothesStoreMobileApplication/.vscode/
-ClothesStoreMobileApplication/*.csproj.user
-ClothesStoreMobileApplication/*.csproj.suo
-ClothesStoreMobileApplication/*.csproj.*
-ClothesStoreMobileApplication/*.sln.docstates
-ClothesStoreMobileApplication/*.dbmdl
-ClothesStoreMobileApplication/*.bak
-ClothesStoreMobileApplication/*.log
-ClothesStoreMobileApplication/*.tmp
-ClothesStoreMobileApplication/*.swp
-ClothesStoreMobileApplication/*.json
+FindJobsApplication/bin/
+FindJobsApplication/obj/
+FindJobsApplication/*.user
+FindJobsApplication/*.suo
+FindJobsApplication/*.ncb
+FindJobsApplication/*.sdf
+FindJobsApplication/*.vssscc
+FindJobsApplication/.vscode/
+FindJobsApplication/*.csproj.user
+FindJobsApplication/*.csproj.suo
+FindJobsApplication/*.csproj.*
+FindJobsApplication/*.sln.docstates
+FindJobsApplication/*.dbmdl
+FindJobsApplication/*.bak
+FindJobsApplication/*.log
+FindJobsApplication/*.tmp
+FindJobsApplication/*.swp
+FindJobsApplication/*.json
 
-# Bỏ qua các tệp nhị phân của dự án và build trong thư mục ClothesStoreMobileApplication
-ClothesStoreMobileApplication/*.dll
-ClothesStoreMobileApplication/*.exe
-ClothesStoreMobileApplication/*.pdb
-ClothesStoreMobileApplication/*.cache
-ClothesStoreMobileApplication/*.aspnetcompiler
-ClothesStoreMobileApplication/*.jfm
-ClothesStoreMobileApplication/*.js
-ClothesStoreMobileApplication/*.css
-ClothesStoreMobileApplication/*.map
+# Bỏ qua các tệp nhị phân của dự án và build trong thư mục FindJobsApplication
+FindJobsApplication/*.dll
+FindJobsApplication/*.exe
+FindJobsApplication/*.pdb
+FindJobsApplication/*.cache
+FindJobsApplication/*.aspnetcompiler
+FindJobsApplication/*.jfm
+FindJobsApplication/*.js
+FindJobsApplication/*.css
+FindJobsApplication/*.map
 
-# Bỏ qua các tệp của ASP.NET trong thư mục ClothesStoreMobileApplication
-ClothesStoreMobileApplication/project.lock.json
-ClothesStoreMobileApplication/project.fragment.lock.json
-ClothesStoreMobileApplication/artifacts/
+# Bỏ qua các tệp của ASP.NET trong thư mục FindJobsApplication
+FindJobsApplication/project.lock.json
+FindJobsApplication/project.fragment.lock.json
+FindJobsApplication/artifacts/
 
-# Bỏ qua các tệp của Visual Studio Code trong thư mục ClothesStoreMobileApplication
-ClothesStoreMobileApplication/.vscode/
+# Bỏ qua các tệp của Visual Studio Code trong thư mục FindJobsApplication
+FindJobsApplication/.vscode/
 
 # Bỏ qua các thư mục và tệp hệ thống
 *.DS_Store
