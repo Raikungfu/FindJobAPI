@@ -437,13 +437,13 @@ namespace FindJobsApplication.Controllers
             {
                 case UserType.Employer:
                     var empployer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == user.UserId);
-                    return "CUSTOMER " + (string.IsNullOrEmpty(empployer.Name) ? user.Username : empployer.Name) + " " + jobService.ServiceName + " ID " + order.OrderId;
+                    return ("CUSTOMER " + (string.IsNullOrEmpty(empployer.Name) ? user.Username : empployer.Name) + " " + jobService.ServiceName + " ID " + order.OrderId).ToUpper();
                 case UserType.Employee:
                     var empployee = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == user.UserId);
-                    return "CUSTOMER " + ((string.IsNullOrEmpty(empployee.LastName) && string.IsNullOrEmpty(empployee.FirstName)) ? user.Username : (empployee.LastName + " " + empployee.FirstName)) + " " + jobService.ServiceName + " ID " + order.OrderId;
+                    return ("CUSTOMER " + ((string.IsNullOrEmpty(empployee.LastName) && string.IsNullOrEmpty(empployee.FirstName)) ? user.Username : (empployee.LastName + " " + empployee.FirstName)) + " " + jobService.ServiceName + " ID " + order.OrderId).ToUpper();
                 case UserType.Admin:
                     var admin = _unitOfWork.Admin.GetFirstOrDefault(x => x.UserId == user.UserId);
-                    return "CUSTOMER " + (string.IsNullOrEmpty(admin.Name) ? user.Username : admin.Name) + " " + jobService.ServiceName + " ID " + order.OrderId;
+                    return ("CUSTOMER " + (string.IsNullOrEmpty(admin.Name) ? user.Username : admin.Name) + " " + jobService.ServiceName + " ID " + order.OrderId).ToUpper();
             }
             return "";
         }
