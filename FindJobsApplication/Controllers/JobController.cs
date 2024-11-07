@@ -216,13 +216,13 @@ namespace FindJobsApplication.Controllers
                 var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
                 if (claimRole != UserType.Employer.ToString())
                 {
-                    return Unauthorized("You are not authorized to create a job.");
+                    return Unauthorized(new { message = "You are not authorized to create a job." });
                 }
 
                 var claimValue = User.FindFirst("Id")?.Value;
                 if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int employerId))
                 {
-                    return Unauthorized("User not logged in. Please log in to continue.");
+                    return Unauthorized(new { message = "User not logged in. Please log in to continue." });
                 }
 
                 var employer = await _unitOfWork.Employer.GetFirstOrDefaultAsync(e => e.EmployerId == employerId);
@@ -234,7 +234,7 @@ namespace FindJobsApplication.Controllers
 
                 if (employer.PostJobServiceCount <= 0 || employer.PostJobServiceTo == null || employer.PostJobServiceTo < DateTime.Now)
                 {
-                    return BadRequest("You have no more job posting service left.");
+                    return BadRequest(new { message = "You have no more job posting service left." });
                 }
 
                 var newJob = _mapper.Map<Job>(job);
