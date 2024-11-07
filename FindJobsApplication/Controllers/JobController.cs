@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.AspNetCore.OData.Query;
+using FindJobsApplication.Models.Enum;
 
 namespace FindJobsApplication.Controllers
 {

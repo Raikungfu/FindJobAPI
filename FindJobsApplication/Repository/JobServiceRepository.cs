@@ -28,6 +28,7 @@ namespace FindJobsApplication.Repository
                 }
                 objFromDb.Price = jobService.Price;
                 objFromDb.Duration = jobService.Duration;
+                objFromDb.Count = jobService.Count;
                 objFromDb.jobServiceType = jobService.jobServiceType;
                 objFromDb.AdminId = jobService.AdminId;
 

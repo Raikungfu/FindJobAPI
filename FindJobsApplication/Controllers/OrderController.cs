@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FindJobsApplication.Library;
 using FindJobsApplication.Models;
+using FindJobsApplication.Models.Enum;
 using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;

@@ -16,6 +16,8 @@ namespace FindJobsApplication.Models.ViewModel
 
         public double? Duration { get; set; }
 
+        public int? Count { get; set; }
+
         public JobServiceType jobServiceType { get; set; } = JobServiceType.Other;
     }
 }
