@@ -100,8 +100,21 @@ namespace FindJobsApplication.Controllers
                 return NotFound("Room not found.");
             }
 
-            room.Messages = room.Messages.OrderByDescending(m => m.Timestamp).Take(20).ToList();
-            return Ok(room);
+            room.Messages = room.Messages.OrderByDescending(m => m.Timestamp).Take(5).ToList();
+            return Ok(new
+            {
+                room.Id,
+                room.Name,
+                room.UserId1,
+                room.UserId2,
+                messages = room.Messages.Select(m => new
+                {
+                    id = m.MessageId,
+                    content = m.Content,
+                    timestamp = m.Timestamp,
+                    fromUserName = m.FromUser.Username
+                })
+            });
         }
     }
 

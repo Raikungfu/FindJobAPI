@@ -14,6 +14,12 @@ using FindJobsApplication.Mapper;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using FindJobsApplication.Hubs;
+using Microsoft.AspNetCore.OData.Extensions;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
+using System.Reflection.Emit;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,11 +46,14 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddControllers()
-    .AddOData(options =>
-    {
-        options.Select().Expand().Filter().OrderBy().Count();
-    })
+builder.Services.AddControllers().AddOData(options =>
+{
+    var modelBuilder = new ODataConventionModelBuilder();
+    modelBuilder.EntitySet<Job>("Jobs");
+    options.Select().Filter().OrderBy().Expand().Count()
+           .SetMaxTop(100)
+           .AddRouteComponents("odata", modelBuilder.GetEdmModel());
+})
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -165,16 +174,14 @@ app.UseRouting();
 app.UseSession();
 
 app.UseMiddleware<JwtMiddleware>();
-
 app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers();
-
 
 app.UseEndpoints(endpoints =>
 {
+    endpoints.MapControllers();
     endpoints.MapHub<ChatHub>("/chatHub");
 });
 

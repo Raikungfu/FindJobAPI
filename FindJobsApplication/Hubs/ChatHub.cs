@@ -18,16 +18,16 @@ namespace FindJobsApplication.Hubs
     {
         public readonly static List<UserViewModel> _Connections = new List<UserViewModel>();
         private readonly IUnitOfWork _unitOfWork;
-        private static readonly Dictionary<string, List<string>> _userRooms = new Dictionary<string, List<string>>();
+        private static readonly Dictionary<string, List<int>> _userRooms = new Dictionary<string, List<int>>();
 
         public ChatHub(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Leave(string roomName)
+        public async Task Leave(int roomName)
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName.ToString());
 
             if (_userRooms.ContainsKey(Context.ConnectionId))
             {
@@ -54,35 +54,65 @@ namespace FindJobsApplication.Hubs
 
             if (!_userRooms.ContainsKey(Context.ConnectionId))
             {
-                _userRooms[Context.ConnectionId] = new List<string>();
+                _userRooms[Context.ConnectionId] = new List<int>();
             }
             await base.OnConnectedAsync();
         }
 
-        public async Task JoinRoom(string roomName, string userName)
+        public async Task JoinRoom(int roomId, string name)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
+            await Groups.AddToGroupAsync(Context.ConnectionId, roomId.ToString());
 
             if (_userRooms.ContainsKey(Context.ConnectionId))
             {
-                _userRooms[Context.ConnectionId].Add(roomName);
+                _userRooms[Context.ConnectionId].Add(roomId);
             }
 
-            await Clients.Group(roomName).SendAsync("ReceiveNewUserNotification", userName);
+            await Clients.Group(roomId.ToString()).SendAsync("ReceiveNewUserNotification", name);
         }
 
-        public async Task SendMessageToRoom(string roomName, string messageContent)
+        public async Task SendMessageToRoom(int roomId, string messageContent)
         {
-            var userName = Context.User.Identity.Name;
-            var message = new MessageViewModel
+            var claimId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (claimId == null || !int.TryParse(claimId, out int id))
             {
-                Room = roomName,
-                FromName = userName,
-                Content = messageContent,
-                Timestamp = DateTime.UtcNow
+                return;
+            }
+
+            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(u => u.UserId == id);
+            if (user == null)
+            {
+                return;
+            }
+
+            var room = await _unitOfWork.Room.GetFirstOrDefaultAsync(r => r.Id == roomId);
+
+            if (room == null)
+            {
+                return;
+            }
+
+            var msg = new Message()
+            {
+                Content = Regex.Replace(messageContent, @"<.*?>", string.Empty),
+                FromUserId = id,
+                ToRoomId = room.Id,
+                Timestamp = DateTime.Now
             };
 
-            await Clients.Group(roomName).SendAsync("ReceiveMessage", message)
+            _unitOfWork.Message.Add(msg);
+            _unitOfWork.Save();
+
+            var createdMessage = new MessageViewModel
+            {
+                Id = msg.MessageId,
+                Content = msg.Content,
+                Timestamp = msg.Timestamp,
+                FromName = claimId.ToString(),
+                Room = room.Name,
+            };
+
+            await Clients.Group(roomId.ToString()).SendAsync("ReceiveMessage", createdMessage)
                  .ConfigureAwait(false);
         }
 
@@ -122,7 +152,7 @@ namespace FindJobsApplication.Hubs
                 Id = msg.MessageId,
                 Content = msg.Content,
                 Timestamp = msg.Timestamp,
-                FromName = user.Username,
+                FromName = claimId.ToString(),
                 Room = room.Name,
             };
 
@@ -145,7 +175,7 @@ namespace FindJobsApplication.Hubs
             {
                 foreach (var room in _userRooms[Context.ConnectionId])
                 {
-                    await Groups.RemoveFromGroupAsync(Context.ConnectionId, room);
+                    await Groups.RemoveFromGroupAsync(Context.ConnectionId, room.ToString());
                 }
 
                 _userRooms.Remove(Context.ConnectionId);

@@ -14,13 +14,15 @@ using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using System.Text;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace FindJobsApplication.Controllers
 {
     [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
-    public class JobController : ControllerBase
+    public class JobController : ODataController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
@@ -31,6 +33,14 @@ namespace FindJobsApplication.Controllers
             _unitOfWork = unitOfWork;
             _configuration = configuration;
             _mapper = mapper;
+        }
+
+        [HttpGet("odata/jobs")]
+        [EnableQuery]
+        public IActionResult GetJobsOData()
+        {
+            var jobs = _unitOfWork.Job.GetAll().AsQueryable();
+            return Ok(jobs);
         }
 
         [HttpGet("outstanding-job")]
@@ -368,6 +378,4 @@ namespace FindJobsApplication.Controllers
         protected override Expression VisitParameter(ParameterExpression node) =>
             _map.TryGetValue(node, out var replacement) ? replacement : node;
     }
-
-
 }
