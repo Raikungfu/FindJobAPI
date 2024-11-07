@@ -107,8 +107,6 @@ namespace FindJobsApplication.Controllers
                     filter = searchExpression;
                 }
 
-
-
                 if (searchParams.TryGetValue("title", out var title) && !string.IsNullOrEmpty(title))
                 {
                     title = RemoveDiacritics(title).ToLower();
