@@ -194,7 +194,6 @@ namespace FindJobsApplication.Models
                 new JobCategory { JobCategoryId = 8, JobCategoryName = "Chăm sóc khách hàng", Image = "https://media.istockphoto.com/id/1133541602/vector/hotline-support-service-with-headphones-icon-isolated-on-white-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=81lT8-ARXAeMJzDY7JbzguDoEGSro-GjTomnROdTT3M=" },
                 new JobCategory { JobCategoryId = 9, JobCategoryName = "Nhân viên giao hàng", Image = "https://i.pinimg.com/736x/ac/02/83/ac02831601243c01d22fdfc98cc45eec.jpg" },
                 new JobCategory { JobCategoryId = 10, JobCategoryName = "Nhân viên pha chế", Image = "https://cdn.vectorstock.com/i/500p/02/85/cocktail-shaker-vector-37740285.jpg" }
-
             );
 
             modelBuilder.Entity<Job>().HasData(
