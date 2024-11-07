@@ -232,7 +232,7 @@ namespace FindJobsApplication.Controllers
                     return NotFound("Employer not found.");
                 }
 
-                if (employer.PostJobServiceCount <= 0 && (employer.PostJobServiceTo == null || employer.PostJobServiceTo < DateTime.Now))
+                if ((employer.PostJobServiceCount == null || employer.PostJobServiceCount <= 0) && (employer.PostJobServiceTo == null || employer.PostJobServiceTo < DateTime.Now))
                 {
                     return Forbid("You have no more job posting service left.");
                 }
