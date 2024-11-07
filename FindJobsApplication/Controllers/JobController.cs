@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.OData.Query;
 namespace FindJobsApplication.Controllers
 {
     [AllowAnonymous]
-    [Route("api/[controller]")]
+    [Route("odata/[controller]")]
     [ApiController]
     public class JobController : ODataController
     {
@@ -35,11 +35,11 @@ namespace FindJobsApplication.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("odata/jobs")]
         [EnableQuery]
+        [HttpGet]
         public IActionResult GetJobsOData()
         {
-            var jobs = _unitOfWork.Job.GetAll().AsQueryable();
+            var jobs = _unitOfWork.Job.GetAll();
             return Ok(jobs);
         }
 

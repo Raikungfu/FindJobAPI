@@ -49,10 +49,10 @@ builder.Services.AddSession(options =>
 builder.Services.AddControllers().AddOData(options =>
 {
     var modelBuilder = new ODataConventionModelBuilder();
-    modelBuilder.EntitySet<Job>("Jobs");
+    modelBuilder.EntitySet<Job>("Job");
     options.Select().Filter().OrderBy().Expand().Count()
            .SetMaxTop(100)
-           .AddRouteComponents("odata", modelBuilder.GetEdmModel());
+           .AddRouteComponents("api", modelBuilder.GetEdmModel());
 })
     .AddJsonOptions(options =>
     {
@@ -172,11 +172,6 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseSession();
-
-app.UseMiddleware<JwtMiddleware>();
-app.UseAuthentication();
-
-app.UseAuthorization();
 
 
 app.UseEndpoints(endpoints =>
