@@ -1,4 +1,5 @@
 ﻿using FindJobsApplication.Models;
+using FindJobsApplication.Models.Enum;
 using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Service;
 using FindJobsApplication.Service.IService;
@@ -43,6 +44,8 @@ namespace FindJobsApplication.Controllers
                 PasswordHash = model.Password,
                 Email = model.Email,
                 Phone = model.Phone,
+                BirthDay = model.BirthDay,
+                Gender = model.Gender,
                 UserType = model.UserType ?? UserType.Employee
             };
 

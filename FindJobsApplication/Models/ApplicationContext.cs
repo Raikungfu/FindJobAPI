@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FindJobsApplication.Models.Enum;
+using Microsoft.EntityFrameworkCore;
 
 namespace FindJobsApplication.Models
 {

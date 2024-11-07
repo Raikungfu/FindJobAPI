@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using FindJobsApplication.Models.Enum;
 
 namespace FindJobsApplication.Models
 {
@@ -21,6 +22,10 @@ namespace FindJobsApplication.Models
 
         [Required]
         public string Phone { get; set; }
+
+        public DateTime? BirthDay { get; set; }
+
+        public UserGender? Gender { get; set; } = UserGender.Other;
 
         public bool IsBanned { get; set; } = false;
 

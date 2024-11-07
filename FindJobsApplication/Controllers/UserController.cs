@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FindJobsApplication.Models;
+using FindJobsApplication.Models.Enum;
 using FindJobsApplication.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,77 +31,81 @@ namespace FindJobsApplication.Controllers
         [HttpGet("profile")]
         public IActionResult GetProfile([FromQuery] int? userId)
         {
+            User user;
             if (userId == null)
             {
-                var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
                 var claimValue = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-                if (claimRole.IsNullOrEmpty() || string.IsNullOrEmpty(claimValue) || !Enum.TryParse(claimRole, out UserType role) || !int.TryParse(claimValue, out int uId))
+                if (string.IsNullOrEmpty(claimValue) || !int.TryParse(claimValue, out int uId))
                 {
                     return Unauthorized("User not logged in. Please log in to continue.");
                 }
-
-                switch (role)
-                {
-                    case UserType.Employee:
-                        var employee = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == uId);
-                        if (employee == null)
-                        {
-                            return NotFound();
-                        }
-                        return Ok(employee);
-                    case UserType.Employer:
-                        var employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == uId);
-                        if (employer == null)
-                        {
-                            return NotFound();
-                        }
-                        return Ok(employer);
-                    case UserType.Admin:
-                        var admin = _unitOfWork.Admin.GetFirstOrDefault(x => x.UserId == uId);
-                        if (admin == null)
-                        {
-                            return NotFound();
-                        }
-                        return Ok(admin);
-                    default:
-                        return Unauthorized("User not logged in. Please log in to continue.");
-                }
+                user = _unitOfWork.User.GetFirstOrDefault(x => x.UserId == uId);
             }
             else
             {
-                var user = _unitOfWork.User.GetFirstOrDefault(x => x.UserId == userId);
-                if (user == null)
-                {
-                    return NotFound();
-                }
+                user = _unitOfWork.User.GetFirstOrDefault(x => x.UserId == userId);
+            }
 
-                switch (user.UserType)
-                {
-                    case UserType.Employee:
-                        var employee = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == userId);
-                        if (employee == null)
-                        {
-                            return NotFound();
-                        }
-                        return Ok(employee);
-                    case UserType.Employer:
-                        var employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == userId);
-                        if (employer == null)
-                        {
-                            return NotFound();
-                        }
-                        return Ok(employer);
-                    case UserType.Admin:
-                        var admin = _unitOfWork.Admin.GetFirstOrDefault(x => x.UserId == userId);
-                        if (admin == null)
-                        {
-                            return NotFound();
-                        }
-                        return Ok(admin);
-                    default:
-                        return Unauthorized("User not logged in. Please log in to continue.");
-                }
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            switch (user.UserType)
+            {
+                case UserType.Employee:
+                    var employee = _unitOfWork.Employee.GetFirstOrDefault(x => x.UserId == user.UserId);
+                    if (employee == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(new {
+                        employee,
+                        user.Email,
+                        user.Phone,
+                        user.UserType,
+                        user.UserId,
+                        user.Username,
+                        user.BirthDay,
+                        user.Gender,
+                    });
+                case UserType.Employer:
+                    var employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.UserId == user.UserId);
+                    if (employer == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(new
+                    {
+                        employer,
+                        user.Email,
+                        user.Phone,
+                        user.UserType,
+                        user.UserId,
+                        user.Username,
+                        user.BirthDay,
+                        user.Gender,
+                    });
+                case UserType.Admin:
+                    var admin = _unitOfWork.Admin.GetFirstOrDefault(x => x.UserId == user.UserId);
+                    if (admin == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(new
+                    {
+                        admin,
+                        user.Email,
+                        user.Phone,
+                        user.UserType,
+                        user.UserId,
+                        user.Username,
+                        user.BirthDay,
+                        user.Gender,
+                    });
+                default:
+                    return Unauthorized("User not logged in. Please log in to continue.");
             }
         }
     }

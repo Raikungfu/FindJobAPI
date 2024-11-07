@@ -1,4 +1,4 @@
-﻿using FindJobsApplication.Models;
+﻿using FindJobsApplication.Models.Enum;
 
 namespace FindJobsApplication.Models.ViewModel
 {
@@ -10,6 +10,8 @@ namespace FindJobsApplication.Models.ViewModel
         public string? Password { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }
+        public UserGender? Gender { get; set; }
+        public DateTime? BirthDay { get; set; }
         public UserType? UserType { get; set; }
     }
 }

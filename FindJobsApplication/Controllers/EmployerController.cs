@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FindJobsApplication.Models;
+using FindJobsApplication.Models.Enum;
 using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Repository.IRepository;
 using FindJobsApplication.Service.IService;
