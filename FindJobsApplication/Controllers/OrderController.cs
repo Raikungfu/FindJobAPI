@@ -265,12 +265,15 @@ namespace FindJobsApplication.Controllers
                 if (order == null)
                 {
                     string errorMessage = Uri.EscapeDataString("Đơn hàng không tồn tại.");
+
                     return Redirect($"{frontendLink}/payment-fail?message={errorMessage}");
                 }
 
                 order.OrderStatus = status == "PAID" ? OrderStatus.Accepted : OrderStatus.Rejected;
                 order.PaymentMethod = PaymentMethod.PayOS;
-                order.PaymentStatus = cancel ? PaymentStatus.Paid : PaymentStatus.Failed;
+                order.PaymentStatus = cancel ? PaymentStatus.Failed :
+                    (status == "CANCELLED" ? PaymentStatus.Failed :
+                    (status == "PAID" ? PaymentStatus.Paid : PaymentStatus.Pending));
                 order.PaymentRef = id;
                 order.PaymentDate = DateTime.Now;
 
