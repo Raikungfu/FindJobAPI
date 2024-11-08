@@ -279,11 +279,13 @@ namespace FindJobsApplication.Controllers
 
                 if (UpdateOrder(order))
                 {
-                    return Redirect($"{frontendLink}/payment-success?message={"Update status order success!"}");
+                    string successMessage = Uri.EscapeDataString("Update status order success!");
+                    return Redirect($"{frontendLink}/payment-success?message={successMessage}");
                 }
                 else
                 {
-                    return Redirect($"{frontendLink}/payment-fail?message={"Update status order failed!"}");
+                    string failedMessage = Uri.EscapeDataString("Update status order failed!");
+                    return Redirect($"{frontendLink}/payment-fail?message={failedMessage}");
                 }
 
             }catch (Exception e)
