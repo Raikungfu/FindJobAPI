@@ -1,12 +1,13 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - find-job
+name: Build and deploy ASP.Net Core app to Azure Web Apps
 
 on:
   push:
     branches:
       - main
+      - test
   workflow_dispatch:
 
 jobs:
@@ -19,7 +20,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.x'
+          dotnet-version: "8.x"
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -27,27 +28,28 @@ jobs:
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{ github.workspace }}/publish
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
           path: ${{ github.workspace }}/publish
 
-  deploy:
+  deploy-main:
     runs-on: windows-latest
     needs: build
+    if: github.ref == 'refs/heads/main'
     environment:
-      name: 'Production'
+      name: "Production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -55,11 +57,41 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_247C8EAF1A824F6084CD1F531552A2DB }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A575AE6A34C349E2803FBF0E9501D2BA }}
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App (Main)
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'find-job'
+          app-name: "find-job-main"
+          slot-name: "Production"
+          package: .
+
+  deploy-test:
+    runs-on: windows-latest
+    needs: build
+    if: github.ref == 'refs/heads/test'
+    environment:
+      name: "Production"
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-app
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_8491B9BEEB7B48BA9C1ADC6FF21AA567 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E6FAA74D98194D86A00F0B0CFCC97AE8 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C91D8FA1F1B84533A4425409116564D4 }}
+
+      - name: Deploy to Azure Web App (Test)
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'find-job-dev'
           slot-name: 'Production'
           package: .
-          
