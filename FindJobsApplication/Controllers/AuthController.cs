@@ -4,6 +4,7 @@ using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Service;
 using FindJobsApplication.Service.IService;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -152,6 +153,7 @@ namespace FindJobsApplication.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
         /*
         [HttpGet("user/{type}")]
         public async Task<IActionResult> GetUserByType(UserType type)
@@ -160,6 +162,7 @@ namespace FindJobsApplication.Controllers
             return Ok(users);
         }
         */
+
         [HttpGet("GetUserNameAndAvt")]
         public async Task<IActionResult> GetUserNameAndAvt()
         {
@@ -200,5 +203,90 @@ namespace FindJobsApplication.Controllers
             }
             return Ok(user);
         }
+
+        [HttpPost("forgot-password")]
+        public IActionResult ForgotPasswordRequestOtp([FromBody] VerifyOtpDto model)
+        {
+            if (string.IsNullOrEmpty(model.email))
+                return BadRequest(new { Message = "Email is required." });
+
+            var user = _context.Users.FirstOrDefault(x => x.Email == model.email);
+            if (user == null)
+                return BadRequest(new { Message = "Email not found." });
+
+            var otp = GenerateOtp();
+            var expiry = DateTime.UtcNow.AddMinutes(5);
+
+            HttpContext.Session.SetString("Otp", otp);
+            HttpContext.Session.SetString("OtpExpiry", expiry.ToString());
+            HttpContext.Session.SetString("OtpEmail", model.email);
+
+            _emailService.SendMail(
+                title: "OTP for Password Reset",
+                recip: model.email,
+                s: $"Your OTP code is: <b>{otp}</b>. It expires in 5 minutes."
+            );
+
+            return Ok(new { Message = "OTP sent to your email." });
+        }
+
+        [HttpPost("verify-otp")]
+        public IActionResult VerifyOtp([FromBody] VerifyOtpDto dto)
+        {
+            var otp = HttpContext.Session.GetString("Otp");
+            var expiryString = HttpContext.Session.GetString("OtpExpiry");
+            var storedEmail = HttpContext.Session.GetString("OtpEmail");
+
+            if (otp == null || expiryString == null || storedEmail == null)
+                return Ok(new { Message = "No OTP request found." });
+
+            if (storedEmail != dto.email)
+                return Ok(new { Message = "Email mismatch." });
+
+            if (otp != dto.otp)
+                return Ok(new { Message = "Invalid OTP." });
+
+            if (DateTime.TryParse(expiryString, out var expiry) && expiry < DateTime.UtcNow)
+                return Ok(new { success = false, message = "OTP expired." });
+
+            HttpContext.Session.Remove("Otp");
+            HttpContext.Session.Remove("OtpExpiry");
+            HttpContext.Session.Remove("OtpEmail");
+
+            return Ok(new { Message = "OTP verified successfully." });
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto model)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == model.email);
+            if (user == null)
+                return Ok(new { Message = "Email not found." });
+
+            var passwordHasher = new PasswordHasher<User>();
+
+            user.PasswordHash = passwordHasher.HashPassword(user, model.newPassword);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { Message = "Password reset successful." });
+        }
+
+        private string GenerateOtp()
+        {
+            var random = new Random();
+            return random.Next(100000, 999999).ToString();
+        }
+    }
+
+    public class VerifyOtpDto
+    {
+        public string email { get; set; }
+        public string otp { get; set; }
+    }
+
+    public class ResetPasswordDto
+    {
+        public string email { get; set; }
+        public string newPassword { get; set; }
     }
 }

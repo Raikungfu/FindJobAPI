@@ -24,7 +24,6 @@ namespace FindJobsApplication.Repository
                 objFromDb.JobId = jobApply.JobId;
                 objFromDb.Job = jobApply.Job;
 
-                _db.SaveChanges();
             }
             else
             {
