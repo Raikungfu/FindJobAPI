@@ -32,7 +32,6 @@ namespace FindJobsApplication.Repository
                 objFromDb.jobServiceType = jobService.jobServiceType;
                 objFromDb.AdminId = jobService.AdminId;
 
-                _db.SaveChanges();
             }
             else
             {

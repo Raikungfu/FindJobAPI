@@ -67,7 +67,6 @@ namespace FindJobsApplication.Repository
                     objFromDb.CIBehind = employee.CIBehind;
                 }
 
-                _db.SaveChanges();
             }
             else
             {

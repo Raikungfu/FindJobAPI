@@ -14,6 +14,8 @@ namespace FindJobsApplication.Mapper
             CreateMap<JobService, JobServiceViewModel>().ReverseMap();
             CreateMap<Order, OrderViewModel>().ReverseMap();
             CreateMap<Hire, HireViewModel>().ReverseMap();
+            CreateMap<User, CreateUserViewModels>().ReverseMap();
+            CreateMap<User, UpdateUserViewModel>().ReverseMap();
         }
     }
 }

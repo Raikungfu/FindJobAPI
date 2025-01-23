@@ -22,7 +22,6 @@ namespace FindJobsApplication.Repository
                 objFromDb.PaymentRef = order.PaymentRef;
                 objFromDb.PaymentStatus = order.PaymentStatus;
 
-                _db.SaveChanges();
             }
             else
             {

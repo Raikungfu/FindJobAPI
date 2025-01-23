@@ -27,8 +27,7 @@ namespace FindJobsApplication.Repository
                 objFromDb.DateTo = job.DateTo;
                 objFromDb.JobCategoryId = job.JobCategoryId;
                 objFromDb.JobType = job.JobType;
-
-                _db.SaveChanges();
+                
             }
             else
             {
