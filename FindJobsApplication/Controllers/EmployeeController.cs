@@ -38,7 +38,20 @@ namespace FindJobsApplication.Controllers
             {
                 return NotFound();
             }
-            return Ok(employee);
+            return Ok(new
+            {
+                employee.FirstName,
+                employee.LastName,
+                employee.City,
+                employee.Country,
+                employee.Description,
+                employee.Address,
+                employee.EmployeeId,
+                employee.PostalCode,
+                employee.Region,
+                Email = employee.User.Email,
+                Phone = employee.User.Phone,
+            });
         }
 
         [HttpPut("update")]
