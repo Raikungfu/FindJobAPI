@@ -38,7 +38,12 @@ namespace FindJobsApplication.Controllers
             {
                 return NotFound();
             }
-            return Ok(employee);
+            return Ok(new
+            {
+                employee,
+                Email = employee.User.Email,
+                Phone = employee.User.Phone,
+            });
         }
 
         [HttpPut("update")]
