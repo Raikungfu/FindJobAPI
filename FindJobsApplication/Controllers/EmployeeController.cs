@@ -40,7 +40,15 @@ namespace FindJobsApplication.Controllers
             }
             return Ok(new
             {
-                employee,
+                employee.FirstName,
+                employee.LastName,
+                employee.City,
+                employee.Country,
+                employee.Description,
+                employee.Address,
+                employee.EmployeeId,
+                employee.PostalCode,
+                employee.Region,
                 Email = employee.User.Email,
                 Phone = employee.User.Phone,
             });
