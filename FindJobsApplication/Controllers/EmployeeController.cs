@@ -33,7 +33,7 @@ namespace FindJobsApplication.Controllers
         [HttpGet("{id}")]
         public IActionResult GeEmployeeDetail(int id)
         {
-            var employee = _unitOfWork.Employee.Get(id);
+            var employee = _unitOfWork.Employee.GetFirstOrDefault(j => j.EmployeeId == id, includeProperties: "User");
             if (employee == null)
             {
                 return NotFound();
