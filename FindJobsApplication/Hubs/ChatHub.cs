@@ -160,6 +160,21 @@ namespace FindJobsApplication.Hubs
                  .ConfigureAwait(false);
         }
 
+        public async Task SendNewApplicationNotification(int employerId, string jobTitle, string employeeName)
+        {
+            var employerUser = _Connections.FirstOrDefault(u => u.UserId == employerId);
+            if (employerUser != null && !string.IsNullOrEmpty(employerUser.ConnectionId))
+            {
+                await Clients.Client(employerUser.ConnectionId).SendAsync("ReceiveNewApplication", new
+                {
+                    JobTitle = jobTitle,
+                    EmployeeName = employeeName,
+                    Message = $"Ứng viên {employeeName} đã ứng tuyển vào công việc {jobTitle}!"
+                });
+            }
+        }
+
+
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             var user = _Connections.FirstOrDefault(u => u.ConnectionId == Context.ConnectionId);

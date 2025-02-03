@@ -1,4 +1,6 @@
-﻿namespace FindJobsApplication.Service.IService
+﻿using FindJobsApplication.Models;
+
+namespace FindJobsApplication.Service.IService
 {
     public interface IEmailService
     {
@@ -8,5 +10,6 @@
         public void SendForgotPasswordMail(string recip, string name, string pw);
         public void SendConfirmQ(string recip, string name, string title);
         public void SendResponseQ(string recip, string name, string title, string messageQ, string response);
+        public void SendApllyJobNotification(string recip, JobApply jobApply, Employee employee);
     }
 }

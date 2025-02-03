@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FindJobsApplication.Hubs;
 using FindJobsApplication.Models;
 using FindJobsApplication.Models.Enum;
 using FindJobsApplication.Models.ViewModel;
@@ -8,6 +9,7 @@ using FindJobsApplication.Service;
 using FindJobsApplication.Service.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq.Expressions;
@@ -24,13 +26,17 @@ namespace FindJobsApplication.Controllers
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly IUploadFileService _uploadFileService;
+        private readonly IEmailService _emailService;
+        private readonly IHubContext<ChatHub> _chatHubContext; 
 
-        public JobApplyController(IUnitOfWork unitOfWork, IConfiguration configuration, IMapper mapper, IUploadFileService uploadFileService)
+        public JobApplyController(IUnitOfWork unitOfWork, IConfiguration configuration, IMapper mapper, IUploadFileService uploadFileService, IEmailService emailService, IHubContext<ChatHub> chatHubContext)
         {
             _unitOfWork = unitOfWork;
             _configuration = configuration;
             _mapper = mapper;
             _uploadFileService = uploadFileService;
+            _emailService = emailService;
+            _chatHubContext = chatHubContext;
         }
 
         [HttpPost("apply-job")]
@@ -53,6 +59,18 @@ namespace FindJobsApplication.Controllers
             jobApply.JobDescription = job.Description;
             jobApply.JobTitle = job.Title;
 
+            var employer = _unitOfWork.Employer.GetFirstOrDefault(x => x.EmployerId == job.EmployerId, "User");
+            if (employer == null)
+            {
+                return BadRequest("Employer not found!");
+            }
+
+            var employee = _unitOfWork.Employee.GetFirstOrDefault(x => x.EmployeeId == employeeId, "User");
+            if (employee == null)
+            {
+                return BadRequest("Employee not found!");
+            }
+
             if (jobApplyVm.CV != null)
             {
                 jobApply.CV = _uploadFileService.uploadImage(jobApplyVm.CV, "Image");
@@ -62,6 +80,30 @@ namespace FindJobsApplication.Controllers
 
             _unitOfWork.JobApply.Add(jobApply);
             _unitOfWork.Save();
+
+            var notification = new Notification
+            {
+                Title = "New Job Application",
+                Message = $"{User.Identity.Name} applied for {job.Title}",
+                Date = DateTime.UtcNow,
+                IsRead = false,
+                Url = "job/" + jobApply.JobId,
+                Type = "JobApplication",
+                SenderId = employee.UserId,
+                UserId = employer.UserId
+            };
+
+            _unitOfWork.Notification.Add(notification);
+            _unitOfWork.Save();
+
+            _emailService.SendApllyJobNotification(employer.User.Email, jobApply, employee);
+
+            _chatHubContext.Clients.All.SendAsync("ReceiveNewApplication", new
+            {
+                JobTitle = job.Title,
+                EmployeeName = User.Identity.Name,
+                Message = $"Ứng viên {User.Identity.Name} đã ứng tuyển vào công việc {job.Title}!"
+            });
 
             return Ok(jobApply);
         }
@@ -216,5 +258,6 @@ namespace FindJobsApplication.Controllers
             }).ToList();
             return Ok(jobApply);
         }
+
     }
 }

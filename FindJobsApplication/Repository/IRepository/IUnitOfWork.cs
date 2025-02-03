@@ -14,6 +14,11 @@
         IOrderRepository Order { get; }
         IMessageRepository Message { get; }
         IRoomRepository Room { get; }
+        IInvoiceRepository Invoice { get; }
+        IReviewRepository Review { get; }
+        IEmployeeCertificationRepository EmployeeCertification { get; }
+        INotificationRepository Notification { get; }
+
         void Save();
         ValueTask DisposeAsync();
         Task SaveAsync();

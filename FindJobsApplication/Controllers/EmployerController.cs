@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace FindJobsApplication.Controllers
 {
-    [Authorize(Roles = "Employer")]
+    [Authorize(Roles = "Employer,Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployerController : ControllerBase
@@ -143,5 +143,47 @@ namespace FindJobsApplication.Controllers
 
             return CreatedAtAction(nameof(GetEmployerJobs), new { employerId = employer.EmployerId }, job);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("delete/{employerId}")]
+        public IActionResult Delete(int employerId)
+        {
+            var employer = _unitOfWork.Employer.GetFirstOrDefault(
+                x => x.EmployerId == employerId,
+                includeProperties: "PostedJobs,Hires,Invoices,JobApplies,User,User.Orders,User.Rooms"
+            );
+
+            if (employer == null)
+            {
+                return NotFound("Employer not found.");
+            }
+
+            if (employer.PostedJobs.Any())
+            {
+                _unitOfWork.Job.RemoveRange(employer.PostedJobs);
+            }
+            if (employer.Hires.Any())
+            {
+                _unitOfWork.Hire.RemoveRange(employer.Hires);
+            }
+            if (employer.Invoices.Any())
+            {
+                _unitOfWork.Invoice.RemoveRange(employer.Invoices);
+            }
+            if (employer.JobApplies.Any())
+            {
+                _unitOfWork.JobApply.RemoveRange(employer.JobApplies);
+            }
+
+            _unitOfWork.Employer.Remove(employer);
+
+            _unitOfWork.Order.RemoveRange(employer.User.Orders);
+            _unitOfWork.Room.RemoveRange(employer.User.Rooms);
+            _unitOfWork.User.Remove(employer.User);
+            _unitOfWork.Save();
+
+            return NoContent();
+        }
+
     }
 }

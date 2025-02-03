@@ -178,6 +178,10 @@ namespace FindJobsApplication.Controllers
                     x.Employer.CompanyLogo,
                     x.Employer.CompanyName,
                     x.Employer.CompanyIndustry,
+                    x.WorkingHours,
+                    x.Requirements,
+                    x.Benefits,
+                    x.SalaryUnit,
                     Location = x.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(x.Location.Value)
                                 ? JobLocationDictionary.Locations[x.Location.Value]
                                 : x.Employer.CompanyLocation
@@ -264,6 +268,10 @@ namespace FindJobsApplication.Controllers
                     EmployerName = employer.Name,
                     employer.CompanyName,
                     EmployerDescription = employer.Description,
+                    newJob.WorkingHours,
+                    newJob.Requirements,
+                    newJob.Benefits,
+                    newJob.SalaryUnit,
                     Location = newJob.Location.HasValue && JobLocationDictionary.Locations.ContainsKey(newJob.Location.Value)
                         ? JobLocationDictionary.Locations[newJob.Location.Value]
                         : employer.CompanyLocation
@@ -296,6 +304,10 @@ namespace FindJobsApplication.Controllers
                 job.DateFrom,
                 job.DateTo,
                 job.Description,
+                job.WorkingHours,
+                job.Requirements,
+                job.Benefits,
+                job.SalaryUnit,
                 EmployerName = job.Employer.Name,
                 job.Employer.CompanyName,
                 EmployerDescription = job.Employer.Description,
@@ -339,6 +351,10 @@ namespace FindJobsApplication.Controllers
                 job.DateFrom,
                 job.DateTo,
                 job.Description,
+                job.WorkingHours,
+                job.Requirements,
+                job.Benefits,
+                job.SalaryUnit,
                 EmployerName = job.Employer.Name,
                 job.Employer.CompanyName,
                 EmployerDescription = job.Employer.Description,

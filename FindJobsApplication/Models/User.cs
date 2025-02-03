@@ -31,9 +31,6 @@ namespace FindJobsApplication.Models
 
         public UserType UserType { get; set; }
 
-        public ICollection<Review> Reviews { get; set; }
-        public ICollection<Job> Jobs { get; set; }
-        public ICollection<Hire> Hires { get; set; }
         public ICollection<Order> Orders { get; set; }
 
         public ICollection<Room> Rooms { get; set; }

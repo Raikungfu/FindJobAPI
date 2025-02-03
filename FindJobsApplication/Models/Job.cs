@@ -23,6 +23,14 @@ namespace FindJobsApplication.Models
 
         public JobType JobType { get; set; }
 
+        public string? WorkingHours { get; set; }
+
+        public string? Requirements { get; set; }
+
+        public string? Benefits { get; set; }
+
+        public SalaryUnit SalaryUnit { get; set; } = SalaryUnit.PerMonth;
+
         public int EmployerId { get; set; }
 
         public int JobCategoryId { get; set; }
@@ -36,6 +44,15 @@ namespace FindJobsApplication.Models
 
         [ForeignKey("EmployerId")]
         public Employer Employer { get; set; }
+    }
+
+    public enum SalaryUnit
+    {
+        PerHour,
+        PerDay,
+        PerMonth,
+        PerYear,
+        PerProject
     }
 
     public enum JobType

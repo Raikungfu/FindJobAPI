@@ -22,6 +22,10 @@ namespace FindJobsApplication.Repository
             Order = new OrderRepository(_db);
             Room = new RoomRepository(_db);
             Message = new MessageRepository(_db);
+            Invoice = new InvoiceRepository(_db);
+            Review = new ReviewRepository(_db);
+            EmployeeCertification = new EmployeeCertificationRepository(_db);
+            Notification = new NotificationRepository(_db);
         }
 
         public IUserRepository User { get; private set; }
@@ -38,6 +42,11 @@ namespace FindJobsApplication.Repository
         public IOrderRepository Order { get; private set; }
         public IRoomRepository Room { get; private set; }
         public IMessageRepository Message { get; private set; }
+
+        public IInvoiceRepository Invoice { get; private set; }
+        public IReviewRepository Review { get; private set; }
+        public IEmployeeCertificationRepository EmployeeCertification { get; private set; }
+        public INotificationRepository Notification { get; private set; }
 
         public async ValueTask DisposeAsync()
         {
