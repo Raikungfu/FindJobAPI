@@ -108,7 +108,7 @@ namespace FindJobsApplication.Controllers
         }
 
         [HttpGet("my-applied-job")]
-        public IActionResult MyAppliedJob()
+        public IActionResult MyAppliedJob(bool? success = null)
         {
             var claimRole = User.FindFirst(ClaimTypes.Role)?.Value;
             if (claimRole.IsNullOrEmpty() || claimRole != UserType.Employee.ToString())
@@ -116,13 +116,14 @@ namespace FindJobsApplication.Controllers
                 return Unauthorized("User not logged in as Employee. Please log in as Employee to continue.");
             }
             int employeeId = int.Parse(User.FindFirst("Id")?.Value);
-            var jobApply = _unitOfWork.JobApply.GetAll(x => x.EmployeeId == employeeId, null, "Job,Job.JobCategory,Job.Employer").Select(x => new
+            var jobApply = _unitOfWork.JobApply.GetAll(x => x.EmployeeId == employeeId && (success == null || x.IsAccept == success), null, "Job,Job.JobCategory,Job.Employer").Select(x => new
             {
                 x.JobApplyId,
                 x.ApplyDate,
                 x.JobDescription,
                 x.JobSalary,
                 x.JobTitle,
+                x.JobId,
                 JobDetail = x.Job != null ? new
                 {
                     x.Job.JobCategory.JobCategoryName,
