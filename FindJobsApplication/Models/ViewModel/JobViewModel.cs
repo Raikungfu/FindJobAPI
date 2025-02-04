@@ -25,5 +25,13 @@ namespace FindJobsApplication.Models.ViewModel
         public int JobCategoryId { get; set; }
 
         public JobLocation? Location { get; set; }
+
+        public string? WorkingHours { get; set; }
+
+        public string? Requirements { get; set; }
+
+        public string? Benefits { get; set; }
+
+        public SalaryUnit SalaryUnit { get; set; }
     }
 }

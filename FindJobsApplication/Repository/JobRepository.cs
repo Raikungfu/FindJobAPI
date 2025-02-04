@@ -27,7 +27,10 @@ namespace FindJobsApplication.Repository
                 objFromDb.DateTo = job.DateTo;
                 objFromDb.JobCategoryId = job.JobCategoryId;
                 objFromDb.JobType = job.JobType;
-                
+                objFromDb.Benefits = job.Benefits;
+                objFromDb.Requirements = job.Requirements;
+                objFromDb.WorkingHours = job.WorkingHours;
+                objFromDb.SalaryUnit = job.SalaryUnit;
             }
             else
             {

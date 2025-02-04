@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FindJobsApplication.Models;
 using FindJobsApplication.Models.Enum;
 using FindJobsApplication.Models.ViewModel;
 using FindJobsApplication.Repository.IRepository;
@@ -112,5 +113,48 @@ namespace FindJobsApplication.Controllers
 
             return NoContent();
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("delete/{employeeId}")]
+        public IActionResult Delete(int employeeId)
+        {
+            var employee = _unitOfWork.Employee.GetFirstOrDefault(
+                x => x.EmployeeId == employeeId,
+                includeProperties: "PostedJobs,Hires,Invoices,JobApplies,User,User.Orders,User.Rooms"
+            );
+
+            if (employee == null)
+            {
+                return NotFound("Employee not found.");
+            }
+
+            if (employee.Reviews.Any())
+            {
+                _unitOfWork.Review.RemoveRange(employee.Reviews);
+            }
+            if (employee.Hires.Any())
+            {
+                _unitOfWork.Hire.RemoveRange(employee.Hires);
+            }
+            if (employee.EmployeeCertifications.Any())
+            {
+                _unitOfWork.EmployeeCertification.RemoveRange(employee.EmployeeCertifications);
+            }
+
+            if (employee.JobApplies.Any())
+            {
+                _unitOfWork.JobApply.RemoveRange(employee.JobApplies);
+            }
+
+            _unitOfWork.Employee.Remove(employee);
+
+            _unitOfWork.Order.RemoveRange(employee.User.Orders);
+            _unitOfWork.Room.RemoveRange(employee.User.Rooms);
+            _unitOfWork.User.Remove(employee.User);
+            _unitOfWork.Save();
+
+            return NoContent();
+        }
+
     }
 }

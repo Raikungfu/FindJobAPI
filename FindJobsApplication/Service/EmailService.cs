@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text.RegularExpressions;
 using FindJobsApplication.Service.IService;
+using FindJobsApplication.Models;
 
 namespace FindJobsApplication.Service
 {
@@ -124,6 +125,43 @@ namespace FindJobsApplication.Service
             catch (Exception ex)
             {
                 throw new Exception("Email không thể gửi đi. " + ex.Message);
+            }
+        }
+
+
+        public void SendApllyJobNotification(string recip, JobApply jobApply, Employee employee)
+        {
+            string subject = "Ứng viên mới đã ứng tuyển - Jobby!";
+            string message = string.Format(@"
+        <!DOCTYPE html>
+        <html lang='en'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Ứng viên mới</title>
+        </head>
+        <body>
+            <h2>Thông báo ứng tuyển mới</h2>
+            <p>Xin chào,</p>
+            <p>Một ứng viên mới đã ứng tuyển vào công việc của bạn.</p>
+            <p><strong>Vị trí:</strong> {0}</p>
+            <p><strong>Mức lương:</strong> {1} VND</p>
+            <p><strong>Ứng viên:</strong> {2}</p>
+            <p><strong>Email:</strong> {3}</p>
+            <p>Vui lòng kiểm tra hệ thống để xem chi tiết hồ sơ.</p>
+            <p>Trân trọng,</p>
+            <p>Đội ngũ Jobby</p>
+        </body>
+        </html>", jobApply.JobTitle, jobApply.JobSalary, employee.FirstName + " " + employee.LastName, employee.User.Email);
+
+            try
+            {
+                checkEmailValid(recip);
+                SendMail(subject, recip, message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Không thể gửi email: " + ex.Message);
             }
         }
 

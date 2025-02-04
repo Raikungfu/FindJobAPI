@@ -4,6 +4,7 @@ using FindJobsApplication.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobsApplication.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20250203193506_dbInitial2")]
+    partial class dbInitial2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -699,7 +702,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 1,
                             EmployeeId = 1,
                             EmployerId = 1,
-                            HireDate = new DateTime(2025, 2, 4, 10, 4, 7, 575, DateTimeKind.Local).AddTicks(5261),
+                            HireDate = new DateTime(2025, 2, 4, 2, 35, 6, 134, DateTimeKind.Local).AddTicks(4629),
                             JobApplyId = 1,
                             JobId = 1,
                             Status = 0
@@ -709,7 +712,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 2,
                             EmployeeId = 2,
                             EmployerId = 1,
-                            HireDate = new DateTime(2025, 1, 25, 10, 4, 7, 575, DateTimeKind.Local).AddTicks(5266),
+                            HireDate = new DateTime(2025, 1, 25, 2, 35, 6, 134, DateTimeKind.Local).AddTicks(4635),
                             JobApplyId = 2,
                             JobId = 1,
                             Status = 0
@@ -719,7 +722,7 @@ namespace FindJobsApplication.Migrations
                             HireId = 3,
                             EmployeeId = 3,
                             EmployerId = 2,
-                            HireDate = new DateTime(2025, 1, 30, 10, 4, 7, 575, DateTimeKind.Local).AddTicks(5299),
+                            HireDate = new DateTime(2025, 1, 30, 2, 35, 6, 134, DateTimeKind.Local).AddTicks(4637),
                             JobApplyId = 3,
                             JobId = 2,
                             Status = 0
@@ -755,14 +758,14 @@ namespace FindJobsApplication.Migrations
                             InvoiceId = 1,
                             Amount = 150m,
                             EmployerId = 1,
-                            IssueDate = new DateTime(2025, 2, 4, 10, 4, 7, 575, DateTimeKind.Local).AddTicks(5330)
+                            IssueDate = new DateTime(2025, 2, 4, 2, 35, 6, 134, DateTimeKind.Local).AddTicks(4670)
                         },
                         new
                         {
                             InvoiceId = 2,
                             Amount = 200m,
                             EmployerId = 2,
-                            IssueDate = new DateTime(2025, 1, 30, 10, 4, 7, 575, DateTimeKind.Local).AddTicks(5332)
+                            IssueDate = new DateTime(2025, 1, 30, 2, 35, 6, 134, DateTimeKind.Local).AddTicks(4673)
                         });
                 });
 
@@ -985,7 +988,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 1,
-                            ApplyDate = new DateTime(2025, 1, 20, 10, 4, 7, 575, DateTimeKind.Local).AddTicks(5225),
+                            ApplyDate = new DateTime(2025, 1, 20, 2, 35, 6, 134, DateTimeKind.Local).AddTicks(4596),
                             EmployeeId = 1,
                             IsAccept = false,
                             IsRefuse = false,
@@ -995,7 +998,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 2,
-                            ApplyDate = new DateTime(2025, 1, 23, 10, 4, 7, 575, DateTimeKind.Local).AddTicks(5231),
+                            ApplyDate = new DateTime(2025, 1, 23, 2, 35, 6, 134, DateTimeKind.Local).AddTicks(4602),
                             EmployeeId = 2,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1005,7 +1008,7 @@ namespace FindJobsApplication.Migrations
                         new
                         {
                             JobApplyId = 3,
-                            ApplyDate = new DateTime(2025, 1, 23, 10, 4, 7, 575, DateTimeKind.Local).AddTicks(5233),
+                            ApplyDate = new DateTime(2025, 1, 23, 2, 35, 6, 134, DateTimeKind.Local).AddTicks(4604),
                             EmployeeId = 3,
                             IsAccept = false,
                             IsRefuse = false,
@@ -1226,47 +1229,6 @@ namespace FindJobsApplication.Migrations
                     b.HasIndex("ToRoomId");
 
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("FindJobsApplication.Models.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("FindJobsApplication.Models.Order", b =>
@@ -1850,17 +1812,6 @@ namespace FindJobsApplication.Migrations
                     b.Navigation("ToRoom");
                 });
 
-            modelBuilder.Entity("FindJobsApplication.Models.Notification", b =>
-                {
-                    b.HasOne("FindJobsApplication.Models.User", "User")
-                        .WithMany("Notifications")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("FindJobsApplication.Models.Order", b =>
                 {
                     b.HasOne("FindJobsApplication.Models.JobService", "JobService")
@@ -1968,8 +1919,6 @@ namespace FindJobsApplication.Migrations
 
             modelBuilder.Entity("FindJobsApplication.Models.User", b =>
                 {
-                    b.Navigation("Notifications");
-
                     b.Navigation("Orders");
 
                     b.Navigation("Rooms");
