@@ -25,7 +25,7 @@ namespace FindJobsApplication.Models
 
         public DateTime? BirthDay { get; set; }
 
-        public UserGender? Gender { get; set; } =  UserGender.Other;
+        public UserGender? Gender { get; set; } = UserGender.Other;
 
         public bool IsBanned { get; set; } = false;
 
