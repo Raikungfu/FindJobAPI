@@ -23,11 +23,6 @@ namespace FindJobsApplication.Models
 
         public string? Description { get; set; }
 
-        public int? SenderId { get; set; }
-
-        [ForeignKey("SenderId")]
-        public User Sender { get; set; }
-
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]

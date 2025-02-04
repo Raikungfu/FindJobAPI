@@ -89,7 +89,6 @@ namespace FindJobsApplication.Controllers
                 IsRead = false,
                 Url = "job/" + jobApply.JobId,
                 Type = "JobApplication",
-                SenderId = employee.UserId,
                 UserId = employer.UserId
             };
 

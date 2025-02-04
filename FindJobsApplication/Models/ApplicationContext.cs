@@ -24,6 +24,7 @@ namespace FindJobsApplication.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -108,6 +109,11 @@ namespace FindJobsApplication.Models
                 .WithMany(r => r.Messages)
                 .HasForeignKey(m => m.ToRoomId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Notifications)
+                .WithOne(r => r.User)
+                .HasForeignKey(r => r.UserId);
 
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, Username = "admin", PasswordHash = "admin123", Email = "admin@example.com", Phone = "0123456789", UserType = UserType.Admin },

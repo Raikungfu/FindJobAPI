@@ -34,5 +34,7 @@ namespace FindJobsApplication.Models
         public ICollection<Order> Orders { get; set; }
 
         public ICollection<Room> Rooms { get; set; }
+
+        public ICollection<Notification> Notifications { get; set; }
     }
 }
