@@ -36,7 +36,6 @@ namespace FindJobsApplication.Controllers
 
             var jobApply = new JobApply { JobApplyId = hireVm.JobApplyId, Status = JobApplyStatus.Accepted };
             jobApply = await _unitOfWork.JobApply.UpdateStatusAsync(jobApply);
-            await _unitOfWork.SaveAsync();
 
             Hire hire = _mapper.Map<Hire>(hireVm);
 
