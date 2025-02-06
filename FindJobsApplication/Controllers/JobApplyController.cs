@@ -124,8 +124,6 @@ namespace FindJobsApplication.Controllers
                 x.JobSalary,
                 x.JobTitle,
                 x.JobId,
-                x.IsAccept,
-                x.IsRefuse,
                 JobDetail = x.Job != null ? new
                 {
                     x.Job.JobCategory.JobCategoryName,

@@ -2,8 +2,6 @@
 {
     public class EmployerViewModel
     {
-        public int EmployerId { get; set; }
-
         public string? Name { get; set; }
         public string? Description { get; set; }
         public string? CompanyName { get; set; }
